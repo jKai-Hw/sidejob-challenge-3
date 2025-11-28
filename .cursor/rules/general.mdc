@@ -1,0 +1,34 @@
+---
+description: プロジェクト全般のルール
+globs: "**/*"
+alwaysApply: true
+---
+
+# プロジェクト概要
+
+このプロジェクトはFigmaデザインをWordPressブロックテーマとして実装するプロジェクトです。
+
+## コミュニケーション
+- 日本語で応答してください
+- 実装の意図や理由を説明してください
+- 不明点があれば確認してください
+
+## 開発環境
+- WordPress: Docker (wp-env) またはクラウドホスティング
+- MCP: Figma MCP + GitHub MCP
+- エディタ: Cursor
+
+## 品質基準
+- アクセシビリティ（WCAG 2.1 AA準拠）
+- パフォーマンス（Core Web Vitals考慮）
+- SEO最適化
+- モバイルファースト
+
+## Git運用
+- 機能ごとにブランチを切る
+- コミットメッセージは日本語OK
+- PRベースでマージ
+
+## ファイル命名規則
+- ケバブケース（kebab-case）を使用
+- 例: `header-main.html`, `hero-section.html`

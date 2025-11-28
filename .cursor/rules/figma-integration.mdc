@@ -1,0 +1,70 @@
+---
+description: Figma MCP連携ルール
+globs: "**/*"
+alwaysApply: true
+---
+
+# Figma MCP連携ガイドライン
+
+## FigmaデザインURLの扱い方
+- Figmaのフレーム/コンポーネントのURLを受け取ったら、MCPを通じてデザイン情報を取得
+- デザインの構造、色、フォント、余白などを正確に読み取る
+
+## デザイントークンの変換
+Figmaのデザイントークンは以下のようにWordPressに変換：
+
+### カラー
+```json
+// theme.json
+{
+  "settings": {
+    "color": {
+      "palette": [
+        { "slug": "primary", "color": "#Figmaの色", "name": "Primary" }
+      ]
+    }
+  }
+}
+```
+
+### タイポグラフィ
+```json
+{
+  "settings": {
+    "typography": {
+      "fontFamilies": [
+        { "fontFamily": "Figmaのフォント", "slug": "heading", "name": "Heading" }
+      ],
+      "fontSizes": [
+        { "slug": "small", "size": "14px", "name": "Small" }
+      ]
+    }
+  }
+}
+```
+
+### スペーシング
+```json
+{
+  "settings": {
+    "spacing": {
+      "spacingSizes": [
+        { "slug": "10", "size": "8px", "name": "1" }
+      ]
+    }
+  }
+}
+```
+
+## 実装優先順位
+1. グローバルスタイル（theme.json）
+2. ヘッダー/フッター（parts/）
+3. 共通パターン（patterns/）
+4. 個別テンプレート（templates/）
+
+## 品質チェックリスト
+- [ ] Figmaデザインとの色の一致
+- [ ] フォントサイズ・行間の一致
+- [ ] 余白・マージンの一致
+- [ ] レスポンシブ対応
+- [ ] アクセシビリティ対応

@@ -1,0 +1,73 @@
+---
+description: WordPressブロックテーマ開発ルール
+globs: 
+  - "wp-theme/**/*.php"
+  - "wp-theme/**/patterns/*.html"
+  - "wp-theme/**/parts/*.html"
+  - "wp-theme/**/templates/*.html"
+  - "wp-theme/theme.json"
+alwaysApply: true
+---
+
+# WordPressブロックテーマ開発ガイドライン
+
+## 基本方針
+- WordPress 6.x以降のフルサイト編集（FSE）対応ブロックテーマを開発
+- Figmaデザインに忠実に実装しつつ、WordPressのベストプラクティスに従う
+- アクセシビリティ（WCAG 2.1 AA準拠）を意識
+
+## ディレクトリ構造
+```
+wp-theme/
+├── parts/          # ヘッダー、フッターなどの再利用パーツ（HTML）
+├── patterns/       # ブロックパターン（HTML）
+├── templates/      # ページテンプレート（HTML）
+├── assets/
+│   ├── css/
+│   ├── js/
+│   └── images/
+├── functions.php
+├── style.css
+└── theme.json
+```
+
+## コーディング規約
+- PHPはWordPress Coding Standardsに準拠
+- theme.jsonでグローバルスタイルを定義
+- ブロックパターンは再利用可能な単位で分割
+- CSS変数を活用してFigmaのデザイントークンを反映
+
+## theme.json設定のポイント
+- `settings.color.palette` でFigmaのカラーパレットを定義
+- `settings.typography.fontFamilies` でフォントを定義
+- `settings.spacing.spacingSizes` で余白サイズを定義
+- `styles` でグローバルスタイルを設定
+
+## Figmaからの実装時の注意点
+- FigmaのAuto Layoutは Flexbox/Grid に変換
+- Figmaのカラースタイルは theme.json の palette に定義
+- Figmaのテキストスタイルは theme.json の typography に定義
+- 画像は適切なサイズでエクスポートし、WebP形式を優先
+
+## レスポンシブ対応
+- モバイルファースト設計
+- ブレークポイント:
+  - sm: 640px
+  - md: 768px
+  - lg: 1024px
+  - xl: 1280px
+
+## ブロックパターンの書き方
+パターンファイルの先頭には以下のコメントを含める：
+```html
+<?php
+/**
+ * Title: パターン名
+ * Slug: theme-name/pattern-slug
+ * Categories: featured, banner
+ */
+?>
+<!-- wp:group {"layout":{"type":"constrained"}} -->
+...
+<!-- /wp:group -->
+```
