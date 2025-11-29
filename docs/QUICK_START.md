@@ -468,6 +468,104 @@ git push origin main
 
 ---
 
+## 📦 STEP 8: 納品（自分でやる）
+
+### 納品に含めるもの / 含めないもの
+
+| フォルダ・ファイル | 納品に含める？ | 理由 |
+|-------------------|---------------|------|
+| `wp-theme/` | ✅ 含める | WordPressテーマ本体 |
+| `.cursor/` | ❌ 含めない | 開発ツールの設定 |
+| `.git/` | ❌ 含めない | バージョン管理履歴 |
+| `node_modules/` | ❌ 含めない | 開発用パッケージ |
+| `docs/` | ❌ 含めない | 自分用ドキュメント |
+| `docker-compose.yml` | ❌ 含めない | ローカル開発環境用 |
+| `package.json` | ❌ 含めない | npm設定 |
+| `README.md` | ❌ 含めない | 自分用 |
+
+### 納品前の最終準備
+
+```bash
+# 1. SCSSを本番用にビルド（圧縮）
+npm run build:css
+
+# 2. 不要ファイルの確認
+#    - console.log が残っていないか
+#    - var_dump が残っていないか
+#    - コメントアウトしたコードが残っていないか
+```
+
+### 納品用ZIPの作成
+
+#### 方法1: スクリプトを使う（推奨）
+
+プロジェクトルートに `create-delivery.sh` があります。
+
+```bash
+# 実行権限を付与（初回のみ）
+chmod +x create-delivery.sh
+
+# 納品用ZIPを作成
+./create-delivery.sh
+```
+
+実行すると `delivery/案件名_theme_YYYYMMDD.zip` が作成されます。
+
+#### 方法2: 手動でZIP作成
+
+```bash
+# wp-themeフォルダだけをZIP化
+zip -r テーマ名_theme.zip wp-theme -x "*.DS_Store" -x "*__MACOSX*" -x "*.scss" -x "*node_modules*"
+```
+
+### 納品物の確認
+
+ZIPを作成したら、中身を確認しましょう：
+
+- [ ] `wp-theme/` フォルダが含まれているか
+- [ ] `.cursor/` が含まれていないか
+- [ ] `node_modules/` が含まれていないか
+- [ ] `.git/` が含まれていないか
+- [ ] SCSSソースファイルが含まれていないか（必要に応じて）
+
+### 納品方法
+
+1. **ギガファイル便**で共有
+   - https://gigafile.nu/
+   - ZIPファイルをアップロード
+   - ダウンロードURLをクライアントに送付
+
+2. **その他の方法**
+   - Google Drive
+   - Dropbox
+   - 直接サーバーにアップロード
+
+### 納品時の連絡テンプレート
+
+```
+お疲れ様です。○○です。
+
+WordPressテーマの納品ファイルをお送りします。
+
+■ ダウンロードURL
+[ギガファイル便のURL]
+
+■ ファイル内容
+- wp-theme/ : WordPressテーマ一式
+
+■ 設置方法
+1. ZIPを解凍
+2. wp-theme フォルダを wp-content/themes/ にアップロード
+3. WordPress管理画面「外観」→「テーマ」から有効化
+
+■ 必要なプラグイン
+- Advanced Custom Fields（ACF）
+
+ご確認よろしくお願いいたします。
+```
+
+---
+
 ## 📚 参考資料
 
 - [WordPress テーマ開発ハンドブック](https://developer.wordpress.org/themes/)
@@ -481,4 +579,3 @@ git push origin main
 
 案件を進める中で気づいたことがあれば、このガイドを更新していきましょう。
 経験を蓄積することで、次の案件がもっとスムーズになります。
-

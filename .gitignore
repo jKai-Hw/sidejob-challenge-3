@@ -42,3 +42,5 @@ temp/
 dist/
 build/
 
+# Delivery (納品用ZIP)
+delivery/
