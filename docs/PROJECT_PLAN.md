@@ -39,32 +39,39 @@
 ## 🔄 ワークフロー（決定済み）
 
 ```
+⚠️ 重要: Figmaのページ全体・ファイル全体を一気に渡すのは絶対NG
+   → トークン爆発、精度低下、コスト無駄の原因になる
+
 Phase 0: デザイン受け取り
 ├── デザイナーさんからFigmaのURLを受け取る
 ├── デザインの意図・注意点があれば確認
+├── 各セクションのNode IDを控えておく
 └── 不明点があればデザイナーさんに質問
 
-Phase 1: 全体構造の把握（ページ全体をMCPで取得）
-├── Figma MCP でページ全体の情報を取得
-├── セクション構成をリストアップ
+Phase 1: スタイルガイド読み込み（Node ID指定・1回だけ）
+├── Figma MCP でスタイルガイドのNode IDだけを取得
 ├── デザイントークン抽出（カラー、フォント、余白）
-└── 共通コンポーネントの洗い出し
+├── _variables.scss を生成
+└── ※ページ全体は絶対に渡さない
 
-Phase 2: ベース構築
-├── SCSS変数ファイル作成（_variables.scss）
+Phase 2: 構造把握 & ベース構築
+├── ページ構成のみ確認（詳細データは取得しない）
+├── セクションリストをメモに記録
 ├── theme.json にWordPress用設定
 ├── 共通コンポーネントのSCSS作成
 └── ビルド環境セットアップ（npm）
 
-Phase 3: セクション実装（1つずつ）
-├── セクションのFigma URLを渡す
+Phase 3: セクション実装（Node ID指定・1つずつ）
+├── セクションのNode IDを指定して取得
 ├── HTMLマークアップ作成（patterns/）
-├── SCSS でスタイリング
+├── SCSS でスタイリング（変数を使用）
 ├── jQuery でインタラクション（必要なら）
+├── 画像は手動書き出し or プレースホルダー
 ├── レスポンシブ確認
 └── → 次のセクションへ
 
-Phase 4: テンプレート組み立て & 確認
+Phase 4: 動的化 & テンプレート組み立て
+├── ACFフィールド設計・実装
 ├── セクションを組み合わせてテンプレート作成
 ├── 全体通しで確認
 ├── デザイナーさんに確認依頼
@@ -123,15 +130,27 @@ wp-theme/
 
 ## 🎨 Figmaデータの渡し方（決定済み）
 
-### ハイブリッドアプローチ
-1. **最初にページ全体を渡す**（構造把握用）
-   - 全体構造を把握
-   - デザイントークン抽出
-   - セクションリスト作成
+### ⛔ 絶対NG
+- ファイル全体を一気に渡す
+- ページ全体を一気に渡す
 
-2. **実装はセクションごと**（精度重視）
-   - 1つずつ確認しながら進める
-   - 品質を保つ
+### ✅ 2段階アプローチ（推奨）
+
+**【フェーズ1】脳を作る = スタイルガイドだけを渡す（最初に1回）**
+- スタイルガイド/Typography/ColorsのNode IDを指定
+- `_variables.scss` を生成
+- これが「全体把握」の代わりになる
+
+**【フェーズ2】手を作る = セクションごとに渡す（都度）**
+- 各セクションのNode IDを指定
+- 変数を使ってコーディング
+- 高精度なHTML/CSSを生成
+
+### Node IDの取得方法
+```
+FigmaのURL: https://www.figma.com/design/xxxxx/FileName?node-id=123-456
+                                                        ↑ これがNode ID
+```
 
 ---
 
@@ -140,10 +159,11 @@ wp-theme/
 | 項目 | 決定内容 |
 |------|----------|
 | CSS | SCSS を使用 |
+| CSS設計 | BEM記法（.block__element--modifier） |
 | JavaScript | jQuery OK（WordPress同梱版を使用） |
 | 開発環境 | Docker（ローカル） |
 | SCSSコンパイル | AI（Cursor）が実行 |
-| Figmaの渡し方 | ハイブリッド（全体→セクション） |
+| Figmaの渡し方 | **2段階アプローチ（スタイルガイド→セクション）** |
 | スライダー | Swiper.js |
 | フォーム | Contact Form 7 または MW WP Form |
 
@@ -157,7 +177,7 @@ wp-theme/
 |-----------|------|---------|
 | `general.mdc` | プロジェクト全般のルール | 全ファイル |
 | `wordpress-theme.mdc` | WordPressブロックテーマ開発ルール | wp-theme/ |
-| `figma-integration.mdc` | Figma MCP連携ルール | 全ファイル |
+| `figma-integration.mdc` | Figma MCP連携ルール（API最適化、プロンプトテンプレート） | 全ファイル |
 | `coding-standards.mdc` | コーディング規約（命名、インデント、コメント） | .php, .scss, .js, .html |
 | `responsive-design.mdc` | レスポンシブデザイン実装ルール | .scss, .css, .html |
 | `wordpress-advanced.mdc` | CPT、ACF、動的要素の実装ルール | wp-theme/ |
@@ -165,6 +185,13 @@ wp-theme/
 | `git-workflow.mdc` | Git運用ルール（ブランチ、コミット） | 全ファイル |
 
 ### ルールの主な内容
+
+#### Figma MCP連携（figma-integration.mdc）
+- ⛔ 全体渡しは絶対NG（3つの罠を回避）
+- 2段階アプローチ（スタイルガイド→セクション）
+- Node ID指定でピンポイント取得
+- プロンプトテンプレート集
+- 画像は手動書き出しが必要
 
 #### コーディング規約
 - インデント: スペース2つ
@@ -192,20 +219,20 @@ wp-theme/
   - [x] general.mdc
   - [x] wordpress-theme.mdc
   - [x] figma-integration.mdc
-  - [x] coding-standards.mdc（NEW）
-  - [x] responsive-design.mdc（NEW）
-  - [x] wordpress-advanced.mdc（NEW）
-  - [x] quality-checklist.mdc（NEW）
-  - [x] git-workflow.mdc（NEW）
+  - [x] coding-standards.mdc
+  - [x] responsive-design.mdc
+  - [x] wordpress-advanced.mdc
+  - [x] quality-checklist.mdc
+  - [x] git-workflow.mdc
 - [x] Docker Compose設定ファイル作成
 - [x] SCSS基本ファイル作成（_variables, _mixins, style.scss）
 - [x] package.json作成（SCSSビルド用）
 - [x] main.js作成（jQueryテンプレート）
+- [x] inc/フォルダ作成（CPT, タクソノミー登録ファイル）
 
 ### 未完了
 - [ ] Figma MCP設定（APIトークン取得後）
 - [ ] npm install（実際の開発開始時）
-- [x] inc/フォルダ作成（CPT, タクソノミー登録ファイル）
 
 ---
 
@@ -232,7 +259,7 @@ docker-compose down
 
 ## 📚 参考リンク
 
-- [Figma MCPサーバーガイド](https://help.figma.com/hc/ja/articles/32132100833559)
+- [Figma MCPサーバーガイド](https://developers.figma.com/docs/figma-mcp-server)
 - [WordPress ブロックテーマ開発](https://developer.wordpress.org/block-editor/)
 - [Cursor Rules ドキュメント](https://learn-cursor.com/ja/rules)
 - [ACF ドキュメント](https://www.advancedcustomfields.com/resources/)
@@ -246,6 +273,7 @@ docker-compose down
 - Docker環境は計画段階では起動しない（実装フェーズで起動）
 - デザイナーさんが作ったFigmaを変更しない（参照のみ）
 - このプロジェクトは「型」を作るためのもの。実際の案件ではこれをベースにする
+- **画像アセットはFigmaから手動書き出し**（MCPでは自動ダウンロード不可）
 
 ---
 
@@ -254,7 +282,6 @@ docker-compose down
 ### 優先度高
 1. Figma MCP設定（APIトークン取得）
 2. テストデザインでワークフロー検証
-3. inc/フォルダのPHPファイル作成（CPT, タクソノミー）
 
 ### 必要に応じて
 - 実際のデザインを使った実装練習
