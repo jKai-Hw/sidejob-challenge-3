@@ -1,0 +1,357 @@
+---
+description: レスポンシブデザイン実装ルール
+globs:
+  - "**/*.scss"
+  - "**/*.css"
+  - "**/*.html"
+alwaysApply: true
+---
+
+# レスポンシブデザイン実装ガイドライン
+
+> モバイルファーストで一貫性のあるレスポンシブ実装を行う
+
+## 🎯 基本方針
+
+- **モバイルファースト**: ベースをSP（スマートフォン）で書き、大きい画面に向けて拡張
+- **ブレークポイントは最小限**: むやみに増やさない
+- **コンテンツ起点**: デバイスではなくコンテンツに合わせて調整
+
+---
+
+## 📱 ブレークポイント定義
+
+### 標準ブレークポイント
+```scss
+// _variables.scss
+$breakpoint-sm: 640px;   // 小型タブレット
+$breakpoint-md: 768px;   // タブレット（iPad縦）
+$breakpoint-lg: 1024px;  // PC / タブレット（iPad横）
+$breakpoint-xl: 1280px;  // 大画面PC
+$breakpoint-2xl: 1536px; // ワイドモニター
+```
+
+### メディアクエリMixin
+```scss
+// _mixins.scss
+
+// SP（〜767px）
+@mixin sp {
+  @media (max-width: #{$breakpoint-md - 1px}) {
+    @content;
+  }
+}
+
+// タブレット（768px〜1023px）
+@mixin tablet {
+  @media (min-width: $breakpoint-md) and (max-width: #{$breakpoint-lg - 1px}) {
+    @content;
+  }
+}
+
+// タブレット以上（768px〜）
+@mixin tablet-up {
+  @media (min-width: $breakpoint-md) {
+    @content;
+  }
+}
+
+// PC（1024px〜）
+@mixin pc {
+  @media (min-width: $breakpoint-lg) {
+    @content;
+  }
+}
+
+// 大画面PC（1280px〜）
+@mixin pc-lg {
+  @media (min-width: $breakpoint-xl) {
+    @content;
+  }
+}
+
+// カスタムブレークポイント（必要な場合のみ）
+@mixin mq($min: null, $max: null) {
+  @if $min and $max {
+    @media (min-width: $min) and (max-width: $max) { @content; }
+  } @else if $min {
+    @media (min-width: $min) { @content; }
+  } @else if $max {
+    @media (max-width: $max) { @content; }
+  }
+}
+```
+
+---
+
+## 📐 モバイルファーストの書き方
+
+### 基本パターン
+```scss
+// ✅ 正しい書き方（モバイルファースト）
+.section {
+  // ベース: SP（モバイル）
+  padding: $spacing-md;
+  
+  // タブレット以上で変更
+  @include tablet-up {
+    padding: $spacing-lg;
+  }
+  
+  // PCで変更
+  @include pc {
+    padding: $spacing-xl;
+  }
+}
+
+// ❌ 避けるべき書き方（PCファースト）
+.section {
+  padding: $spacing-xl;
+  
+  @include tablet {
+    padding: $spacing-lg;
+  }
+  
+  @include sp {
+    padding: $spacing-md;
+  }
+}
+```
+
+### グリッドレイアウトの例
+```scss
+.card-grid {
+  // SP: 1カラム
+  display: grid;
+  gap: $spacing-md;
+  grid-template-columns: 1fr;
+  
+  // タブレット: 2カラム
+  @include tablet-up {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-lg;
+  }
+  
+  // PC: 3カラム
+  @include pc {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+```
+
+---
+
+## 📏 レスポンシブ単位の使い分け
+
+### 推奨単位
+| 用途 | 単位 | 理由 |
+|------|------|------|
+| フォントサイズ | `rem` | ルートフォントサイズ基準で一貫性 |
+| 余白・マージン | `rem` | フォントと同じ基準で比例 |
+| コンテナ幅 | `%`, `max-width` | 画面幅に応じて伸縮 |
+| 画像 | `%`, `max-width` | 親要素に合わせる |
+| ボーダー | `px` | 細い線は固定値が適切 |
+
+### フォントサイズの可変（clamp）
+```scss
+// 画面幅に応じてスムーズに変化
+.heading-xl {
+  // 最小24px、最大48px、画面幅に応じて可変
+  font-size: clamp(1.5rem, 4vw, 3rem);
+}
+
+// Mixin化
+@mixin fluid-text($min, $max, $min-vw: 375px, $max-vw: 1280px) {
+  font-size: clamp(
+    #{$min},
+    calc(#{$min} + (#{strip-unit($max)} - #{strip-unit($min)}) * ((100vw - #{$min-vw}) / (#{strip-unit($max-vw)} - #{strip-unit($min-vw)}))),
+    #{$max}
+  );
+}
+
+// 使用例
+h1 {
+  @include fluid-text(1.75rem, 3rem);
+}
+```
+
+---
+
+## 🖼️ 画像のレスポンシブ対応
+
+### 基本設定
+```scss
+// ベーススタイル（_base.scss）
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+```
+
+### アスペクト比を維持
+```scss
+.image-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9; // モダンブラウザ
+  
+  img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+```
+
+### WordPress srcset対応
+```php
+<!-- 自動でsrcsetが出力される -->
+<?php the_post_thumbnail('large', ['class' => 'responsive-image']); ?>
+
+<!-- カスタム出力 -->
+<?php
+echo wp_get_attachment_image(
+  get_post_thumbnail_id(),
+  'large',
+  false,
+  [
+    'class'   => 'responsive-image',
+    'loading' => 'lazy',
+    'sizes'   => '(max-width: 768px) 100vw, 50vw'
+  ]
+);
+?>
+```
+
+---
+
+## 📦 コンテナ幅の設計
+
+### 標準コンテナ
+```scss
+// _variables.scss
+$container-sm: 640px;
+$container-md: 768px;
+$container-lg: 1024px;
+$container-xl: 1200px;   // デフォルトコンテンツ幅
+$container-2xl: 1400px;  // 広いコンテンツ用
+
+// _base.scss
+.container {
+  width: 100%;
+  max-width: $container-xl;
+  margin-inline: auto;
+  padding-inline: $spacing-md;
+  
+  @include pc {
+    padding-inline: $spacing-lg;
+  }
+  
+  // バリエーション
+  &--narrow {
+    max-width: $container-md;
+  }
+  
+  &--wide {
+    max-width: $container-2xl;
+  }
+  
+  &--full {
+    max-width: none;
+    padding-inline: 0;
+  }
+}
+```
+
+---
+
+## 🍔 ナビゲーションのレスポンシブ
+
+### 典型的なパターン
+```scss
+.header-nav {
+  // SP: ハンバーガーメニュー
+  display: none;
+  
+  &.is-open {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: $color-background;
+    z-index: $z-nav;
+    padding: $spacing-xl $spacing-md;
+  }
+  
+  // PC: 横並び
+  @include pc {
+    display: flex;
+    position: static;
+    background: transparent;
+    padding: 0;
+    gap: $spacing-lg;
+  }
+}
+
+.hamburger {
+  display: block;
+  
+  @include pc {
+    display: none;
+  }
+}
+```
+
+---
+
+## 🔤 タイポグラフィのレスポンシブ
+
+### 見出しサイズマップ
+```scss
+// 見出しのレスポンシブサイズ
+$heading-sizes: (
+  h1: (sp: 1.75rem, pc: 2.5rem),
+  h2: (sp: 1.5rem,  pc: 2rem),
+  h3: (sp: 1.25rem, pc: 1.5rem),
+  h4: (sp: 1.125rem, pc: 1.25rem),
+);
+
+// Mixin
+@each $heading, $sizes in $heading-sizes {
+  #{$heading},
+  .#{$heading} {
+    font-size: map-get($sizes, sp);
+    line-height: 1.4;
+    
+    @include pc {
+      font-size: map-get($sizes, pc);
+    }
+  }
+}
+```
+
+---
+
+## 📋 レスポンシブチェックリスト
+
+### 実装時の確認
+- [ ] ベースはSP（モバイル）で書いているか
+- [ ] 不要なブレークポイントを増やしていないか
+- [ ] 画像に`max-width: 100%`が適用されているか
+- [ ] タップターゲットは最低44x44pxあるか
+- [ ] 横スクロールが発生していないか
+
+### デバイステスト（優先度順）
+1. **SP**: iPhone SE (375px), iPhone 14 (390px)
+2. **タブレット**: iPad (768px), iPad Pro (1024px)
+3. **PC**: 1280px, 1440px, 1920px
+
+### ブラウザ実機テスト
+- [ ] Chrome（Windows/Mac）
+- [ ] Safari（Mac/iOS）
+- [ ] Firefox
+- [ ] Edge
+- [ ] iOS Safari
+- [ ] Android Chrome

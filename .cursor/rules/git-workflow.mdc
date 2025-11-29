@@ -1,0 +1,323 @@
+---
+description: Git運用ルール（ブランチ、コミット、PR）
+globs: "**/*"
+alwaysApply: true
+---
+
+# Git運用ガイドライン
+
+> チーム開発・個人開発で一貫したGit運用を行うためのルール
+
+## 🎯 基本方針
+
+- **mainブランチは常にデプロイ可能な状態**
+- **機能ごとにブランチを切る**
+- **コミットは小さく、頻繁に**
+- **日本語コミットメッセージOK**
+
+---
+
+## 🌿 ブランチ戦略
+
+### ブランチ種類
+| ブランチ名 | 用途 | 例 |
+|------------|------|-----|
+| `main` | 本番環境用（保護） | - |
+| `develop` | 開発統合用（任意） | - |
+| `feature/xxx` | 新機能開発 | `feature/hero-section` |
+| `fix/xxx` | バグ修正 | `fix/header-responsive` |
+| `hotfix/xxx` | 緊急修正（本番直接） | `hotfix/contact-form-error` |
+| `refactor/xxx` | リファクタリング | `refactor/scss-structure` |
+
+### ブランチ命名規則
+```bash
+# 形式: {種類}/{内容}（ケバブケース）
+
+# 機能追加
+feature/hero-section
+feature/service-archive
+feature/contact-form
+
+# バグ修正
+fix/navigation-mobile
+fix/image-loading
+
+# 緊急修正
+hotfix/form-validation
+
+# リファクタリング
+refactor/css-variables
+```
+
+### 基本フロー
+```
+main ─────────────────────────────────────────► 本番
+  │                                    ▲
+  │                                    │ マージ
+  └──► feature/xxx ──► レビュー ────────┘
+```
+
+### 個人開発の場合（シンプル版）
+```
+main ─────────────────────────────────────────► 本番
+  │                           ▲
+  └──► feature/xxx ───────────┘ 直接マージ
+```
+
+---
+
+## 💬 コミットメッセージ
+
+### 形式
+```
+{絵文字} {種類}: {変更内容}
+
+{詳細説明（任意）}
+```
+
+### 種類と絵文字
+| 絵文字 | 種類 | 説明 | 例 |
+|--------|------|------|-----|
+| ✨ | feat | 新機能 | `✨ feat: ヒーローセクション実装` |
+| 🐛 | fix | バグ修正 | `🐛 fix: SPでナビが閉じない問題を修正` |
+| 🎨 | style | スタイル調整 | `🎨 style: ボタンのホバー色を調整` |
+| ♻️ | refactor | リファクタリング | `♻️ refactor: SCSS変数を整理` |
+| 📝 | docs | ドキュメント | `📝 docs: READMEを更新` |
+| 🔧 | chore | 設定・雑務 | `🔧 chore: package.jsonを更新` |
+| 🚀 | perf | パフォーマンス改善 | `🚀 perf: 画像を最適化` |
+| ✅ | test | テスト追加 | `✅ test: フォームのテストを追加` |
+| 🔥 | remove | 削除 | `🔥 remove: 未使用のSCSSを削除` |
+| 🚧 | wip | 作業中 | `🚧 wip: サービス一覧ページ作成中` |
+
+### 良いコミットメッセージの例
+```bash
+# ✅ 良い例
+✨ feat: トップページのヒーローセクションを実装
+🐛 fix: SP時にハンバーガーメニューが動作しない問題を修正
+🎨 style: カードコンポーネントの余白を調整
+♻️ refactor: メディアクエリのmixinを統一
+📝 docs: 開発環境のセットアップ手順を追加
+
+# 詳細説明付き
+✨ feat: サービス一覧ページの絞り込み機能を実装
+
+- カテゴリーボタンでAjax絞り込み
+- ローディングアニメーション追加
+- 結果なしの場合のメッセージ表示
+
+Closes #12
+```
+
+```bash
+# ❌ 悪い例
+update            # 何を更新したか不明
+fix bug           # どのバグか不明
+WIP               # 内容がわからない
+aaa               # 意味不明
+```
+
+### コミットの粒度
+```bash
+# ✅ 適切な粒度（1つの変更に1コミット）
+git commit -m "✨ feat: ヒーローセクションのHTML作成"
+git commit -m "🎨 style: ヒーローセクションのSCSS作成"
+git commit -m "🐛 fix: ヒーローセクションのSP表示崩れを修正"
+
+# ❌ 大きすぎる粒度
+git commit -m "✨ feat: トップページ全体を実装"
+```
+
+---
+
+## 🔀 マージ・プルリクエスト
+
+### PRテンプレート
+```markdown
+## 概要
+<!-- 何を実装/修正したか -->
+
+## 変更内容
+- [ ] 機能A
+- [ ] 機能B
+
+## スクリーンショット
+<!-- 見た目の変更がある場合 -->
+
+## 確認項目
+- [ ] SP/タブレット/PCで表示確認
+- [ ] リンク先が正しいか確認
+- [ ] エラーが出ていないか確認
+
+## 関連Issue
+Closes #XX
+```
+
+### マージ方法
+| 状況 | マージ方法 |
+|------|-----------|
+| 通常の機能追加 | Squash and merge（コミットをまとめる） |
+| 履歴を残したい | Create a merge commit |
+| 小さな修正 | Rebase and merge |
+
+---
+
+## 🏷️ タグ・リリース
+
+### バージョニング（セマンティックバージョニング）
+```
+v{メジャー}.{マイナー}.{パッチ}
+
+v1.0.0  # 初回リリース
+v1.1.0  # 機能追加（後方互換あり）
+v1.1.1  # バグ修正
+v2.0.0  # 破壊的変更
+```
+
+### タグ作成
+```bash
+# タグ作成
+git tag -a v1.0.0 -m "初回リリース"
+
+# タグをpush
+git push origin v1.0.0
+```
+
+---
+
+## 📁 .gitignore
+
+### WordPress テーマ用
+```gitignore
+# 依存関係
+node_modules/
+vendor/
+
+# ビルド成果物（管理する場合はコメントアウト）
+# assets/css/
+
+# 環境設定
+.env
+.env.local
+
+# エディタ・OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+*.sublime-*
+
+# ログ
+*.log
+npm-debug.log*
+
+# WordPress
+wp-config.php
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/backup*/
+wp-content/cache/
+wp-content/debug.log
+
+# Docker
+docker-compose.override.yml
+```
+
+---
+
+## 🔄 よく使うGitコマンド
+
+### ブランチ操作
+```bash
+# ブランチ作成 & 切り替え
+git checkout -b feature/hero-section
+
+# ブランチ一覧
+git branch -a
+
+# ブランチ削除（ローカル）
+git branch -d feature/hero-section
+
+# ブランチ削除（リモート）
+git push origin --delete feature/hero-section
+```
+
+### コミット操作
+```bash
+# ステージング
+git add .
+git add path/to/file
+
+# コミット
+git commit -m "✨ feat: 〇〇を実装"
+
+# 直前のコミットメッセージ修正
+git commit --amend -m "新しいメッセージ"
+
+# 直前のコミットに追加（メッセージ変更なし）
+git add .
+git commit --amend --no-edit
+```
+
+### 履歴確認
+```bash
+# ログ確認（グラフ表示）
+git log --oneline --graph
+
+# 変更ファイル確認
+git status
+
+# 差分確認
+git diff
+git diff --staged
+```
+
+### リモート操作
+```bash
+# プッシュ
+git push origin feature/hero-section
+
+# プル（リベース）
+git pull --rebase origin main
+
+# フェッチ
+git fetch origin
+```
+
+### 取り消し・リセット
+```bash
+# ステージング取り消し
+git reset HEAD path/to/file
+
+# 変更を破棄（未コミット）
+git checkout -- path/to/file
+
+# 直前のコミットを取り消し（変更は保持）
+git reset --soft HEAD^
+
+# 直前のコミットを完全に取り消し
+git reset --hard HEAD^
+```
+
+---
+
+## ⚠️ 注意事項
+
+### やってはいけないこと
+- [ ] mainブランチに直接pushしない
+- [ ] force pushは基本的にしない（必要な場合はチームに確認）
+- [ ] 大きなバイナリファイルをコミットしない
+- [ ] 機密情報（パスワード、APIキー）をコミットしない
+
+### 困ったときは
+```bash
+# 現在の状態を確認
+git status
+
+# コンフリクト時
+git status  # コンフリクトファイルを確認
+# ファイルを編集して解決
+git add .
+git commit
+```
