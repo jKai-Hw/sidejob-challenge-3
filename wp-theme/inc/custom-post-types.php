@@ -97,15 +97,5 @@ function theme_register_news_post_type() {
 }
 add_action( 'init', 'theme_register_news_post_type' );
 
-/**
- * カスタム投稿タイプのパーマリンクをフラッシュ
- *
- * テーマ有効化時にパーマリンクを再構築します。
- * 通常は管理画面の「設定」→「パーマリンク設定」で「変更を保存」でも可。
- */
-function theme_rewrite_flush() {
-  theme_register_service_post_type();
-  theme_register_news_post_type();
-  flush_rewrite_rules();
-}
-register_activation_hook( __FILE__, 'theme_rewrite_flush' );
+// パーマリンクの再構築は、通常通り管理画面の
+// 「設定」→「パーマリンク設定」で「変更を保存」を実行してください。
