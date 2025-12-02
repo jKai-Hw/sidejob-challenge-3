@@ -51,6 +51,15 @@
 - [x] 進捗管理テンプレート（PROGRESS.md）
 - [x] デザインメモテンプレート（DESIGN_NOTES.md）
 - [x] Figma MCP接続
+- [x] ACF JSON自動同期設定（2024-12）
+- [x] ハンバーガーメニューJS実装（2024-12）
+- [x] SCSSディレクトリ構造（components/, sections/）（2024-12）
+- [x] 基本SCSSファイル作成（2024-12）
+  - _base.scss（リセット + 基本スタイル）
+  - components/_button.scss
+  - components/_card.scss
+  - sections/_header.scss
+  - sections/_footer.scss
 
 ---
 

@@ -208,3 +208,30 @@ function theme_localize_ajax_scripts() {
   ) );
 }
 add_action( 'wp_enqueue_scripts', 'theme_localize_ajax_scripts' );
+
+/**
+ * ============================================
+ * ACF JSON 自動同期設定
+ * ============================================
+ * フィールドグループをJSONファイルとして保存し、Git管理を可能にする
+ */
+
+/**
+ * ACF JSONの保存先を設定
+ */
+function theme_acf_json_save_point( $path ) {
+  return get_template_directory() . '/acf-json';
+}
+add_filter( 'acf/settings/save_json', 'theme_acf_json_save_point' );
+
+/**
+ * ACF JSONの読み込み先を設定
+ */
+function theme_acf_json_load_point( $paths ) {
+  // デフォルトのパスを削除
+  unset( $paths[0] );
+  // テーマ内のacf-jsonフォルダを追加
+  $paths[] = get_template_directory() . '/acf-json';
+  return $paths;
+}
+add_filter( 'acf/settings/load_json', 'theme_acf_json_load_point' );

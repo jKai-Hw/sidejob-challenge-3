@@ -1,8 +1,10 @@
 /**
  * メインJavaScriptファイル（テンプレート）
- * 
+ *
  * jQuery を使用したカスタムスクリプト
  * 実際の案件では必要な機能を追加してください
+ *
+ * @package Figma_Theme
  */
 
 (function($) {
@@ -12,7 +14,6 @@
   // DOM Ready
   // ==========================================================================
   $(function() {
-    // 初期化
     init();
   });
 
@@ -20,56 +21,86 @@
   // 初期化
   // ==========================================================================
   function init() {
-    // 各機能の初期化をここに追加
-    // setupMobileMenu();
-    // setupSmoothScroll();
+    setupMobileMenu();
+    setupSmoothScroll();
+    // 案件に応じて以下を有効化
     // setupAccordion();
     // setupModal();
-    
-    console.log('Theme scripts initialized');
   }
 
   // ==========================================================================
-  // モバイルメニュー（サンプル）
+  // モバイルメニュー（ハンバーガーメニュー）
   // ==========================================================================
-  // function setupMobileMenu() {
-  //   var $menuToggle = $('.js-menu-toggle');
-  //   var $mobileMenu = $('.js-mobile-menu');
-  //   var $body = $('body');
-  //
-  //   $menuToggle.on('click', function(e) {
-  //     e.preventDefault();
-  //     $mobileMenu.toggleClass('is-open');
-  //     $body.toggleClass('is-menu-open');
-  //     
-  //     // アクセシビリティ対応
-  //     var isOpen = $mobileMenu.hasClass('is-open');
-  //     $menuToggle.attr('aria-expanded', isOpen);
-  //   });
-  // }
+  function setupMobileMenu() {
+    var $hamburger = $('.site-header__hamburger');
+    var $nav = $('.site-header__nav');
+    var $body = $('body');
+    var $menuLinks = $('.site-header__nav a');
+
+    // ハンバーガーボタンクリック
+    $hamburger.on('click', function() {
+      var isOpen = $nav.hasClass('is-open');
+
+      $nav.toggleClass('is-open');
+      $hamburger.toggleClass('is-open');
+      $body.toggleClass('is-menu-open');
+
+      // アクセシビリティ: aria-expanded を更新
+      $(this).attr('aria-expanded', !isOpen);
+      $(this).attr('aria-label', isOpen ? 'メニューを開く' : 'メニューを閉じる');
+    });
+
+    // メニュー内リンクをクリックしたら閉じる
+    $menuLinks.on('click', function() {
+      $nav.removeClass('is-open');
+      $hamburger.removeClass('is-open');
+      $body.removeClass('is-menu-open');
+      $hamburger.attr('aria-expanded', 'false');
+      $hamburger.attr('aria-label', 'メニューを開く');
+    });
+
+    // ESCキーで閉じる
+    $(document).on('keydown', function(e) {
+      if (e.key === 'Escape' && $nav.hasClass('is-open')) {
+        $nav.removeClass('is-open');
+        $hamburger.removeClass('is-open');
+        $body.removeClass('is-menu-open');
+        $hamburger.attr('aria-expanded', 'false');
+        $hamburger.focus();
+      }
+    });
+  }
 
   // ==========================================================================
-  // スムーススクロール（サンプル）
+  // スムーススクロール
   // ==========================================================================
-  // function setupSmoothScroll() {
-  //   $('a[href^="#"]').on('click', function(e) {
-  //     var target = $(this.hash);
-  //     if (target.length) {
-  //       e.preventDefault();
-  //       $('html, body').animate({
-  //         scrollTop: target.offset().top - 80 // ヘッダー高さ分オフセット
-  //       }, 500);
-  //     }
-  //   });
-  // }
+  function setupSmoothScroll() {
+    $('a[href^="#"]').on('click', function(e) {
+      var hash = this.hash;
+      if (!hash) return;
+
+      var $target = $(hash);
+      if ($target.length) {
+        e.preventDefault();
+        var headerHeight = $('.site-header').outerHeight() || 0;
+
+        $('html, body').animate({
+          scrollTop: $target.offset().top - headerHeight
+        }, 500);
+
+        // フォーカスを移動（アクセシビリティ）
+        $target.attr('tabindex', '-1').focus();
+      }
+    });
+  }
 
   // ==========================================================================
-  // アコーディオン（サンプル）
+  // アコーディオン（必要に応じて有効化）
   // ==========================================================================
   // function setupAccordion() {
-  //   var $accordionTrigger = $('.js-accordion-trigger');
+  //   var $trigger = $('.js-accordion-trigger');
   //
-  //   $accordionTrigger.on('click', function(e) {
+  //   $trigger.on('click', function(e) {
   //     e.preventDefault();
   //     var $this = $(this);
   //     var $content = $this.next('.js-accordion-content');
@@ -77,35 +108,37 @@
   //
   //     $this.toggleClass('is-open');
   //     $content.slideToggle(300);
-  //     
-  //     // アクセシビリティ対応
   //     $this.attr('aria-expanded', !isOpen);
   //   });
   // }
 
   // ==========================================================================
-  // モーダル（サンプル）
+  // モーダル（必要に応じて有効化）
   // ==========================================================================
   // function setupModal() {
-  //   var $modalOpen = $('[data-modal-open]');
-  //   var $modalClose = $('[data-modal-close]');
   //   var $body = $('body');
   //
-  //   $modalOpen.on('click', function(e) {
+  //   // 開く
+  //   $('[data-modal-open]').on('click', function(e) {
   //     e.preventDefault();
   //     var modalId = $(this).data('modal-open');
-  //     var $modal = $('#' + modalId);
-  //     
-  //     $modal.addClass('is-open');
+  //     $('#' + modalId).addClass('is-open');
   //     $body.addClass('is-modal-open');
   //   });
   //
-  //   $modalClose.on('click', function(e) {
+  //   // 閉じる
+  //   $('[data-modal-close]').on('click', function(e) {
   //     e.preventDefault();
-  //     var $modal = $(this).closest('.js-modal');
-  //     
-  //     $modal.removeClass('is-open');
+  //     $(this).closest('.js-modal').removeClass('is-open');
   //     $body.removeClass('is-modal-open');
+  //   });
+  //
+  //   // ESCキーで閉じる
+  //   $(document).on('keydown', function(e) {
+  //     if (e.key === 'Escape') {
+  //       $('.js-modal.is-open').removeClass('is-open');
+  //       $body.removeClass('is-modal-open');
+  //     }
   //   });
   // }
 

@@ -3,100 +3,74 @@
 // ==========================================================================
 // このファイルをコンパイルして assets/css/style.css を生成する
 // コマンド: npm run build:css
+//
+// 【使い方】
+// 1. Figmaからデザインを受け取る
+// 2. _variables.scss をFigmaに合わせて更新
+// 3. 各SCSSファイルをFigmaに合わせて調整
+// 4. 必要なセクションの @use コメントを解除
 
 // --------------------------------------------------------------------------
-// 設定・ユーティリティ
+// 設定・ユーティリティ（常に読み込み）
 // --------------------------------------------------------------------------
 @use 'variables' as *;
 @use 'mixins' as *;
 
 // --------------------------------------------------------------------------
-// ベース
+// ベース（常に読み込み）
 // --------------------------------------------------------------------------
-// @use 'reset';        // リセットCSS（必要に応じて）
-// @use 'base';         // ベーススタイル
-// @use 'typography';   // タイポグラフィ
+@use 'base';
 
 // --------------------------------------------------------------------------
-// コンポーネント
+// コンポーネント（案件に応じて有効化）
 // --------------------------------------------------------------------------
-// @use 'components/button';
-// @use 'components/card';
-// @use 'components/navigation';
-// @use 'components/form';
+@use 'components/button';
+@use 'components/card';
+// @use 'components/form';     // フォームがある場合
+// @use 'components/modal';    // モーダルがある場合
+// @use 'components/accordion'; // アコーディオンがある場合
 
 // --------------------------------------------------------------------------
-// セクション
+// セクション（案件に応じて有効化）
 // --------------------------------------------------------------------------
-// @use 'sections/header';
-// @use 'sections/footer';
-// @use 'sections/hero';
+@use 'sections/header';
+@use 'sections/footer';
+// @use 'sections/hero';       // ヒーローセクション
+// @use 'sections/cta';        // CTAセクション
 
 // --------------------------------------------------------------------------
-// ページ固有
+// ページ固有（案件に応じて作成・有効化）
 // --------------------------------------------------------------------------
 // @use 'pages/home';
 // @use 'pages/about';
+// @use 'pages/service';
+// @use 'pages/contact';
 
 // ==========================================================================
-// 以下はサンプル（実際の案件では削除または置き換え）
+// 開発用ユーティリティ（本番前に削除またはコメントアウト）
 // ==========================================================================
 
-// ベーススタイル（サンプル）
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: $font-family-base;
-  font-size: $font-size-base;
-  line-height: $line-height-base;
-  color: $color-text;
-  background-color: $color-bg;
-}
-
-// コンテナ（サンプル）
-.container {
-  @include container;
-}
-
-// ボタン（サンプル）
-.btn {
-  @include button-base;
-  
-  &--primary {
-    @include button-primary;
-  }
-  
-  &--secondary {
-    @include button-secondary;
-  }
-}
-
-// レスポンシブ確認用（開発時のみ）
-// .debug-breakpoint {
-//   &::after {
-//     content: 'SP';
-//     position: fixed;
-//     bottom: 10px;
-//     right: 10px;
-//     background: red;
-//     color: white;
-//     padding: 5px 10px;
-//     font-size: 12px;
-//     z-index: 9999;
-    
-//     @include tablet {
-//       content: 'Tablet';
-//       background: orange;
-//     }
-    
-//     @include pc {
-//       content: 'PC';
-//       background: green;
-//     }
+// ブレークポイント確認用
+// body::after {
+//   content: 'SP';
+//   position: fixed;
+//   bottom: 10px;
+//   right: 10px;
+//   background: red;
+//   color: white;
+//   padding: 5px 10px;
+//   font-size: 12px;
+//   z-index: 9999;
+//   border-radius: 4px;
+//
+//   @media (min-width: $breakpoint-md) {
+//     content: 'Tablet';
+//     background: orange;
+//   }
+//
+//   @media (min-width: $breakpoint-lg) {
+//     content: 'PC';
+//     background: green;
 //   }
 // }
 
