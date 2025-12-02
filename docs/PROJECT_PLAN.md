@@ -1,38 +1,16 @@
-# Figma → WordPress プロジェクト計画メモ
+# 📋 プロジェクト計画
 
-> 最終更新: 2024年11月30日
-> ステータス: **クラシックテーマ準備完了** ✅
-
----
-
-## ✅ 完了した作業
-
-### クラシックテーマへの移行（完了）
-1. **ルールファイルの修正**
-   - `wordpress-theme.mdc` をクラシックテーマ用に書き換え ✅
-   - `figma-integration.mdc` のテンプレート記述を `.php` に修正 ✅
-
-2. **ディレクトリ構造の変更**
-   - `templates/*.html` → ルート直下の `*.php` に変換 ✅
-   - `parts/*.html` → `header.php`, `footer.php` に変換 ✅
-   - `template-parts/` フォルダ作成 ✅
-   - `patterns/`, `templates/`, `parts/`, `theme.json` 削除 ✅
-
-3. **functions.php の調整**
-   - ナビゲーションメニュー登録追加 ✅
-   - ブロックパターン関連削除 ✅
+> **このファイルについて**
+>
+> このファイルは**プロジェクトの計画・設計**を記録するためのファイルです。
+> 案件ごとにカスタマイズして使用してください。
 
 ---
 
 ## 📌 プロジェクト概要
 
-### 目的
-- **ルール・ワークフロー・テンプレートを作成するためのプロジェクト**
-- Figma MCPを活用して、FigmaデザインをWordPressテーマとして効率的に構築する型を作る
-- 実際の案件プロジェクトではない
-- **外注やクライアントに回しやすい形を目指す**
-
 ### 対象サイト想定
+
 | 項目 | 内容 |
 |------|------|
 | サイト規模 | 企業サイト 5〜10ページ |
@@ -41,18 +19,24 @@
 | 動的要素 | スライダー、絞り込み検索、お問い合わせフォーム |
 
 ### 役割分担
-- **デザイナーさん**: Figmaでデザイン作成（別の方）
-- **自分**: コーディング（WordPress実装）
-- **AI（Cursor）**: コーディング支援、SCSS/jQueryの実装
+
+| 役割 | 担当 | 備考 |
+|------|------|------|
+| デザイン | デザイナーさん | Figmaで作成 |
+| コーディング | 自分 | WordPress実装 |
+| AI支援 | Cursor | SCSS/jQuery実装、コンパイル |
 
 ### 技術スタック
-- WordPress（**クラシックテーマ**）
-- **SCSS**（CSSプリプロセッサ）→ **npm で自動コンパイル**
-- **jQuery**（JavaScript）
-- **ACF**（Advanced Custom Fields）
-- **Swiper.js**（スライダー）
-- Docker（ローカル開発環境）
-- Git / GitHub
+
+| 項目 | 技術 |
+|------|------|
+| CMS | WordPress（**クラシックテーマ**） |
+| CSS | **SCSS**（npm で自動コンパイル） |
+| JavaScript | **jQuery**（WordPress同梱版） |
+| カスタムフィールド | **ACF**（Advanced Custom Fields） |
+| スライダー | **Swiper.js** |
+| 開発環境 | Docker |
+| バージョン管理 | Git / GitHub |
 
 ---
 
@@ -98,56 +82,56 @@ Phase 4: 動的化 & テンプレート組み立て
 
 ---
 
-## 📁 ディレクトリ構造（クラシックテーマ版）
+## 📁 ディレクトリ構造
 
 ```
 wp-theme/
 ├── assets/
 │   ├── scss/
-│   │   ├── _variables.scss
-│   │   ├── _mixins.scss
-│   │   ├── _reset.scss
-│   │   ├── _base.scss
-│   │   ├── _typography.scss
-│   │   ├── components/
+│   │   ├── _variables.scss      # Figmaから抽出した変数
+│   │   ├── _mixins.scss         # メディアクエリ等
+│   │   ├── _reset.scss          # リセットCSS
+│   │   ├── _base.scss           # ベーススタイル
+│   │   ├── _typography.scss     # タイポグラフィ
+│   │   ├── components/          # 共通コンポーネント
 │   │   │   ├── _button.scss
 │   │   │   ├── _card.scss
 │   │   │   └── _navigation.scss
-│   │   ├── sections/
+│   │   ├── sections/            # セクション別スタイル
 │   │   │   ├── _header.scss
 │   │   │   ├── _footer.scss
 │   │   │   └── _hero.scss
-│   │   └── style.scss
+│   │   └── style.scss           # メインファイル
 │   ├── css/
-│   │   └── style.css          # npm run build:css で生成
+│   │   └── style.css            # npm run build:css で生成
 │   ├── js/
 │   │   ├── main.js
 │   │   ├── slider.js
 │   │   └── filter.js
 │   └── images/
 ├── inc/
-│   ├── custom-post-types.php
-│   ├── custom-taxonomies.php
-│   └── acf-fields.php
-├── template-parts/            # 再利用パーツ
+│   ├── custom-post-types.php    # CPT登録
+│   ├── custom-taxonomies.php    # タクソノミー登録
+│   └── acf-fields.php           # ACFフィールド（コード管理する場合）
+├── template-parts/              # 再利用パーツ
 │   ├── card-post.php
 │   ├── card-service.php
 │   └── section-cta.php
-├── header.php                 # ヘッダー
-├── footer.php                 # フッター
-├── front-page.php             # トップページ
-├── page.php                   # 汎用固定ページ
-├── page-about.php             # 会社概要
-├── page-contact.php           # お問い合わせ
-├── archive-service.php        # サービス一覧
-├── single-service.php         # サービス詳細
-├── archive.php                # 汎用アーカイブ（ニュース等）
-├── single.php                 # 汎用投稿詳細
-├── 404.php                    # 404エラー
-├── index.php                  # フォールバック
+├── header.php                   # ヘッダー
+├── footer.php                   # フッター
+├── front-page.php               # トップページ
+├── page.php                     # 汎用固定ページ
+├── page-about.php               # 会社概要
+├── page-contact.php             # お問い合わせ
+├── archive-service.php          # サービス一覧
+├── single-service.php           # サービス詳細
+├── archive.php                  # 汎用アーカイブ（ニュース等）
+├── single.php                   # 汎用投稿詳細
+├── 404.php                      # 404エラー
+├── index.php                    # フォールバック
 ├── functions.php
-├── style.css                  # テーマ情報
-└── screenshot.png             # テーマサムネイル
+├── style.css                    # テーマ情報
+└── screenshot.png               # テーマサムネイル
 ```
 
 ---
@@ -155,6 +139,7 @@ wp-theme/
 ## 🎨 Figmaデータの渡し方
 
 ### ⛔ 絶対NG
+
 - ファイル全体を一気に渡す
 - ページ全体を一気に渡す
 
@@ -169,6 +154,7 @@ wp-theme/
 - 変数を使ってコーディング
 
 ### Node IDの取得方法
+
 ```
 FigmaのURL: https://www.figma.com/design/xxxxx/FileName?node-id=123-456
                                                         ↑ これがNode ID
@@ -176,7 +162,7 @@ FigmaのURL: https://www.figma.com/design/xxxxx/FileName?node-id=123-456
 
 ---
 
-## ✅ 決定事項
+## ✅ 技術決定事項
 
 | 項目 | 決定内容 |
 |------|----------|
@@ -194,36 +180,18 @@ FigmaのURL: https://www.figma.com/design/xxxxx/FileName?node-id=123-456
 
 ## 📋 Cursor Rules 一覧
 
-### 作成済みルールファイル（.cursor/rules/）
+`.cursor/rules/` に配置されているルールファイル：
 
-| ファイル名 | 説明 | 状態 |
-|-----------|------|------|
-| `general.mdc` | プロジェクト全般のルール | ✅ OK |
-| `wordpress-theme.mdc` | WordPressテーマ開発ルール | ✅ OK |
-| `figma-integration.mdc` | Figma MCP連携ルール | ✅ OK |
-| `coding-standards.mdc` | コーディング規約 | ✅ OK |
-| `responsive-design.mdc` | レスポンシブ実装ルール | ✅ OK |
-| `wordpress-advanced.mdc` | CPT、ACF、動的要素 | ✅ OK |
-| `quality-checklist.mdc` | 品質チェックリスト | ✅ OK |
-| `git-workflow.mdc` | Git運用ルール | ✅ OK |
-
----
-
-## 🔧 セットアップ状況
-
-### 完了 ✅
-- [x] GitHubリポジトリ作成
-- [x] Cursor Rules作成（8ファイル）
-- [x] Docker Compose設定
-- [x] SCSS基本ファイル作成
-- [x] package.json作成（SCSSビルド用）
-- [x] inc/フォルダ作成（CPT, タクソノミー）
-- [x] **クラシックテーマへの移行完了**
-
-### 未完了 / 今後の作業
-- [ ] Figma MCP設定（APIトークン取得後）
-- [ ] npm install
-- [ ] Figmaデザイン受け取り後、実装開始
+| ファイル名 | 説明 |
+|-----------|------|
+| `general.mdc` | プロジェクト全般のルール |
+| `wordpress-theme.mdc` | WordPressテーマ開発ルール |
+| `figma-integration.mdc` | Figma MCP連携ルール |
+| `coding-standards.mdc` | コーディング規約 |
+| `responsive-design.mdc` | レスポンシブ実装ルール |
+| `wordpress-advanced.mdc` | CPT、ACF、動的要素 |
+| `quality-checklist.mdc` | 品質チェックリスト |
+| `git-workflow.mdc` | Git運用ルール |
 
 ---
 
@@ -254,14 +222,3 @@ docker-compose down
 - [WordPress テーマ開発](https://developer.wordpress.org/themes/)
 - [ACF ドキュメント](https://www.advancedcustomfields.com/resources/)
 - [Swiper.js ドキュメント](https://swiperjs.com/get-started)
-
----
-
-## 💬 メモ・備考
-
-- Figma APIトークンは後で設定する
-- Docker環境は計画段階では起動しない（実装フェーズで起動）
-- デザイナーさんが作ったFigmaを変更しない（参照のみ）
-- このプロジェクトは「型」を作るためのもの
-- **画像アセットはFigmaから手動書き出し**
-- **外注やクライアントに回しやすいクラシックテーマを採用**
