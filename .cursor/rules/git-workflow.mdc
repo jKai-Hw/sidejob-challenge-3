@@ -1,7 +1,7 @@
 ---
 description: Git運用ルール（ブランチ、コミット、PR）
 globs: "**/*"
-alwaysApply: true
+alwaysApply: false
 ---
 
 # Git運用ガイドライン
@@ -14,6 +14,28 @@ alwaysApply: true
 - **機能ごとにブランチを切る**
 - **コミットは小さく、頻繁に**
 - **日本語コミットメッセージOK**
+
+---
+
+## ⚠️ develop専用ファイル（mainに含めない）
+
+以下のファイルは **developブランチ専用** です。
+mainへのマージ時は必ず除外してください：
+
+```
+TEMPLATE_DEV.md   ← テンプレート開発メモ（案件では不要）
+```
+
+### mainマージ時の手順（AI向け）
+
+```bash
+# developの変更をmainにマージする時
+git checkout main
+git merge develop --no-commit
+git reset HEAD TEMPLATE_DEV.md
+git checkout -- TEMPLATE_DEV.md
+git commit -m "🔀 merge: developからマージ"
+```
 
 ---
 

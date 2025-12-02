@@ -1,0 +1,165 @@
+// ==========================================================================
+// ベーススタイル
+// ==========================================================================
+// リセット + 基本要素のスタイル
+// Figmaデザインに合わせて調整してください
+
+@use 'variables' as *;
+
+// --------------------------------------------------------------------------
+// リセット
+// --------------------------------------------------------------------------
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 100%; // 16px
+  scroll-behavior: smooth;
+
+  // 固定ヘッダーがある場合のスクロール位置調整
+  // scroll-padding-top: 80px;
+}
+
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-base;
+  color: $color-text;
+  background-color: $color-bg;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  // メニューオープン時のスクロール禁止
+  &.is-menu-open {
+    overflow: hidden;
+  }
+}
+
+// --------------------------------------------------------------------------
+// タイポグラフィ
+// --------------------------------------------------------------------------
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-heading;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+}
+
+p {
+  margin-bottom: $spacing-sm;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// --------------------------------------------------------------------------
+// リンク
+// --------------------------------------------------------------------------
+a {
+  color: $color-primary;
+  text-decoration: none;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $color-primary-hover;
+  }
+
+  &:focus {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+}
+
+// --------------------------------------------------------------------------
+// 画像
+// --------------------------------------------------------------------------
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// --------------------------------------------------------------------------
+// リスト
+// --------------------------------------------------------------------------
+ul, ol {
+  list-style: none;
+}
+
+// --------------------------------------------------------------------------
+// フォーム要素
+// --------------------------------------------------------------------------
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+// --------------------------------------------------------------------------
+// その他
+// --------------------------------------------------------------------------
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+// visually-hidden（スクリーンリーダー用）
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// --------------------------------------------------------------------------
+// コンテナ
+// --------------------------------------------------------------------------
+.container {
+  width: 100%;
+  max-width: $content-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $spacing-sm;
+  padding-right: $spacing-sm;
+
+  @media (min-width: $breakpoint-lg) {
+    padding-left: $spacing-md;
+    padding-right: $spacing-md;
+  }
+
+  &--narrow {
+    max-width: 800px;
+  }
+
+  &--wide {
+    max-width: $wide-width;
+  }
+}

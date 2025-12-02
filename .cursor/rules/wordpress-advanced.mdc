@@ -4,7 +4,7 @@ globs:
   - "wp-theme/**/*.php"
   - "wp-theme/**/templates/*.html"
   - "wp-theme/**/patterns/*.html"
-alwaysApply: true
+alwaysApply: false
 ---
 
 # WordPress拡張機能実装ガイドライン

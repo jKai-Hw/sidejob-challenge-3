@@ -4,7 +4,7 @@ globs:
   - "**/*.scss"
   - "**/*.css"
   - "**/*.html"
-alwaysApply: true
+alwaysApply: false
 ---
 
 # レスポンシブデザイン実装ガイドライン

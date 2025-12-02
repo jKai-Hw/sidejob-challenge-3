@@ -5,7 +5,7 @@ globs:
   - "**/*.scss"
   - "**/*.js"
   - "**/*.html"
-alwaysApply: true
+alwaysApply: false
 ---
 
 # コーディング規約

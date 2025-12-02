@@ -136,9 +136,9 @@
   background-color: $color-primary;
   color: $color-white;
   border: none;
-  
+
   &:hover {
-    background-color: darken($color-primary, 10%);
+    background-color: $color-primary-hover;
   }
 }
 

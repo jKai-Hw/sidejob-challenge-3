@@ -4,7 +4,7 @@ globs:
   - "wp-theme/**/*.php"
   - "wp-theme/**/*.scss"
   - "wp-theme/style.css"
-alwaysApply: true
+alwaysApply: false
 ---
 
 # WordPressクラシックテーマ開発ガイドライン

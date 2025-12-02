@@ -1,0 +1,179 @@
+// ==========================================================================
+// ヘッダー
+// ==========================================================================
+//
+// 【AI向け指示】
+// このファイルはFigmaのヘッダーデザインを実装するテンプレートです。
+// 基本構造は用意済み。Figmaに合わせて以下を調整してください：
+//
+// 1. 色・サイズ → _variables.scss の変数を使う
+// 2. レイアウト → Figmaの配置に合わせて調整
+// 3. ハンバーガーメニュー → main.js と連携済み
+//
+// 対応するPHP: header.php
+// 対応するJS: assets/js/main.js（setupMobileMenu）
+//
+
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: $color-white;
+  box-shadow: $shadow-sm;
+
+  &__inner {
+    @include flex-between;
+    max-width: $content-width;
+    margin: 0 auto;
+    padding: $spacing-sm;
+    
+    @include pc {
+      padding: $spacing-sm $spacing-md;
+    }
+  }
+
+  // ----- ロゴ -----
+  &__logo {
+    a {
+      display: block;
+      font-size: $font-size-lg;
+      font-weight: $font-weight-bold;
+      color: $color-text;
+
+      &:hover {
+        color: $color-primary;
+      }
+    }
+
+    img {
+      max-height: 40px;
+      width: auto;
+    }
+  }
+
+  // ----- ナビゲーション -----
+  &__nav {
+    // SP: 全画面オーバーレイ
+    @include sp {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: $color-white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity $transition-base, visibility $transition-base;
+      z-index: 99;
+
+      &.is-open {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+
+  &__menu {
+    display: flex;
+    gap: $spacing-lg;
+
+    @include sp {
+      flex-direction: column;
+      align-items: center;
+      gap: $spacing-md;
+    }
+
+    li {
+      a {
+        display: block;
+        padding: $spacing-xs 0;
+        color: $color-text;
+        font-weight: $font-weight-medium;
+        transition: color $transition-base;
+
+        @include sp {
+          font-size: $font-size-lg;
+          padding: $spacing-sm;
+        }
+
+        &:hover {
+          color: $color-primary;
+        }
+      }
+    }
+  }
+
+  // ----- ハンバーガーボタン -----
+  &__hamburger {
+    position: relative;
+    z-index: 101;
+    width: 32px;
+    height: 24px;
+    cursor: pointer;
+
+    @include pc {
+      display: none;
+    }
+
+    &:focus {
+      outline: 2px solid $color-primary;
+      outline-offset: 4px;
+    }
+  }
+
+  &__hamburger-line {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: $color-text;
+    transition: transform $transition-base, opacity $transition-base;
+
+    &:nth-child(1) {
+      top: 0;
+    }
+
+    &:nth-child(2) {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    &:nth-child(3) {
+      bottom: 0;
+    }
+
+    // オープン時のアニメーション
+    .site-header__hamburger.is-open & {
+      &:nth-child(1) {
+        top: 50%;
+        transform: translateY(-50%) rotate(45deg);
+      }
+
+      &:nth-child(2) {
+        opacity: 0;
+      }
+
+      &:nth-child(3) {
+        bottom: 50%;
+        transform: translateY(50%) rotate(-45deg);
+      }
+    }
+  }
+}
+
+// ヘッダー固定時の余白（bodyに適用）
+body {
+  padding-top: 60px; // ヘッダー高さに合わせて調整
+
+  @include pc {
+    padding-top: 80px;
+  }
+}

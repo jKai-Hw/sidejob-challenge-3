@@ -1,0 +1,87 @@
+// ==========================================================================
+// ボタンコンポーネント
+// ==========================================================================
+//
+// 【AI向け指示】
+// ボタンの共通スタイルです。
+// Figmaに合わせて以下を調整してください：
+//
+// 1. パディング → $spacing-xs $spacing-md 等
+// 2. 角丸 → $border-radius-base
+// 3. フォント → $font-weight-semibold
+//
+// 使い方（PHP側）:
+// <a href="#" class="btn btn--primary">ボタン</a>
+//
+
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.btn {
+  @include button-base;
+
+  // ----- プライマリボタン -----
+  &--primary {
+    background-color: $color-primary;
+    color: $color-white;
+    border: 2px solid $color-primary;
+
+    &:hover {
+      background-color: $color-primary-hover;
+      border-color: $color-primary-hover;
+    }
+  }
+
+  // ----- セカンダリボタン（アウトライン） -----
+  &--secondary {
+    background-color: transparent;
+    color: $color-primary;
+    border: 2px solid $color-primary;
+
+    &:hover {
+      background-color: $color-primary;
+      color: $color-white;
+    }
+  }
+
+  // ----- 白ボタン（暗い背景用） -----
+  &--white {
+    background-color: $color-white;
+    color: $color-primary;
+    border: 2px solid $color-white;
+
+    &:hover {
+      background-color: transparent;
+      color: $color-white;
+    }
+  }
+
+  // ----- サイズ -----
+  &--sm {
+    padding: $spacing-xs $spacing-sm;
+    font-size: $font-size-sm;
+  }
+
+  &--lg {
+    padding: $spacing-sm $spacing-xl;
+    font-size: $font-size-lg;
+  }
+
+  // ----- フル幅 -----
+  &--full {
+    width: 100%;
+  }
+
+  // ----- 矢印付き -----
+  &--arrow {
+    &::after {
+      content: '→';
+      margin-left: $spacing-xs;
+      transition: transform $transition-base;
+    }
+
+    &:hover::after {
+      transform: translateX(4px);
+    }
+  }
+}

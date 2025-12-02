@@ -1,41 +1,60 @@
 // ==========================================================================
-// 変数定義（テンプレート）
+// 変数定義
 // ==========================================================================
-// Figmaからデザイントークンを抽出して、ここに定義する
-// theme.json の値と同期させること
+//
+// 【AI向け指示】
+// このファイルはFigmaのデザイントークンを定義する最重要ファイルです。
+// 「FIGMA:」コメントがある箇所は、Figmaから取得した値に置き換えてください。
+//
+// 案件開始時のフロー:
+// 1. FigmaのスタイルガイドからNode IDを取得
+// 2. 色、フォント、余白の値を抽出
+// 3. このファイルの値を更新
+//
 
 // --------------------------------------------------------------------------
 // カラー
 // --------------------------------------------------------------------------
-$color-primary: #3B82F6;
-$color-secondary: #10B981;
-$color-accent: #F59E0B;
-$color-dark: #1F2937;
-$color-light: #F9FAFB;
+// FIGMA: デザインのカラーパレットに合わせて変更
+
+// メインカラー
+$color-primary: #3B82F6;        // FIGMA: プライマリカラー
+$color-primary-hover: #2563EB;  // FIGMA: プライマリのホバー色（10%暗く）
+$color-secondary: #10B981;      // FIGMA: セカンダリカラー
+$color-secondary-hover: #059669;
+$color-accent: #F59E0B;         // FIGMA: アクセントカラー（あれば）
+
+// ベースカラー
+$color-dark: #1F2937;           // FIGMA: 最も暗い色（見出し等）
+$color-light: #F9FAFB;          // FIGMA: 薄い背景色
 $color-white: #FFFFFF;
 
 // テキストカラー
-$color-text: $color-dark;
-$color-text-light: #6B7280;
-$color-text-inverse: $color-white;
+$color-text: $color-dark;              // FIGMA: 本文テキスト色
+$color-text-light: #6B7280;            // FIGMA: 補足テキスト色
+$color-text-inverse: $color-white;     // 暗い背景上のテキスト
 
 // 背景カラー
-$color-bg: $color-white;
-$color-bg-alt: $color-light;
+$color-bg: $color-white;        // FIGMA: メイン背景色
+$color-bg-alt: $color-light;    // FIGMA: セクション背景色（交互に使う等）
 
 // ボーダーカラー
-$color-border: #E5E7EB;
+$color-border: #E5E7EB;         // FIGMA: 線・区切りの色
 
 // --------------------------------------------------------------------------
 // タイポグラフィ
 // --------------------------------------------------------------------------
-$font-family-base: 'Noto Sans JP', sans-serif;
-$font-family-heading: 'Noto Sans JP', sans-serif;
+// FIGMA: デザインのフォント設定に合わせて変更
+
+// フォントファミリー
+$font-family-base: 'Noto Sans JP', sans-serif;     // FIGMA: 本文フォント
+$font-family-heading: 'Noto Sans JP', sans-serif;  // FIGMA: 見出しフォント
 
 // フォントサイズ
+// FIGMA: デザインの文字サイズに合わせて調整
 $font-size-xs: 0.75rem;   // 12px
 $font-size-sm: 0.875rem;  // 14px
-$font-size-base: 1rem;    // 16px
+$font-size-base: 1rem;    // 16px - FIGMA: 本文サイズ
 $font-size-lg: 1.25rem;   // 20px
 $font-size-xl: 1.5rem;    // 24px
 $font-size-2xl: 2rem;     // 32px
@@ -49,47 +68,58 @@ $font-weight-semibold: 600;
 $font-weight-bold: 700;
 
 // 行間
-$line-height-tight: 1.3;
-$line-height-base: 1.75;
-$line-height-relaxed: 2;
+$line-height-tight: 1.3;    // 見出し用
+$line-height-base: 1.75;    // FIGMA: 本文の行間
+$line-height-relaxed: 2;    // ゆったり
 
 // --------------------------------------------------------------------------
 // スペーシング
 // --------------------------------------------------------------------------
+// FIGMA: デザインの余白に合わせて調整
+// 8pxグリッドが一般的
+
 $spacing-xs: 0.5rem;   // 8px
 $spacing-sm: 1rem;     // 16px
 $spacing-md: 1.5rem;   // 24px
 $spacing-lg: 2rem;     // 32px
 $spacing-xl: 3rem;     // 48px
 $spacing-2xl: 4rem;    // 64px
+$spacing-3xl: 5rem;    // 80px - FIGMA: セクション間余白
 
 // --------------------------------------------------------------------------
 // ブレークポイント
 // --------------------------------------------------------------------------
-$breakpoint-sm: 640px;
-$breakpoint-md: 768px;
-$breakpoint-lg: 1024px;
-$breakpoint-xl: 1280px;
+// 基本的に変更不要（レスポンシブの基準）
+
+$breakpoint-sm: 640px;   // 小型タブレット
+$breakpoint-md: 768px;   // タブレット
+$breakpoint-lg: 1024px;  // PC
+$breakpoint-xl: 1280px;  // 大画面
 
 // --------------------------------------------------------------------------
 // レイアウト
 // --------------------------------------------------------------------------
-$content-width: 1200px;
-$wide-width: 1400px;
+// FIGMA: コンテンツ幅に合わせて調整
+
+$content-width: 1200px;  // FIGMA: メインコンテンツ幅
+$wide-width: 1400px;     // 広いセクション用
 
 // --------------------------------------------------------------------------
 // その他
 // --------------------------------------------------------------------------
-$border-radius-sm: 0.25rem;  // 4px
-$border-radius-base: 0.5rem; // 8px
-$border-radius-lg: 1rem;     // 16px
-$border-radius-full: 9999px;
 
+// 角丸
+$border-radius-sm: 0.25rem;  // 4px
+$border-radius-base: 0.5rem; // 8px  - FIGMA: 標準の角丸
+$border-radius-lg: 1rem;     // 16px
+$border-radius-full: 9999px; // 完全な丸
+
+// トランジション
 $transition-fast: 0.15s ease;
 $transition-base: 0.3s ease;
 $transition-slow: 0.5s ease;
 
+// シャドウ
 $shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
 $shadow-base: 0 4px 6px rgba(0, 0, 0, 0.1);
 $shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-
