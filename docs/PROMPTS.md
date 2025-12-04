@@ -7,6 +7,28 @@
 ## 🆕 新フロー: 2段階アプローチ（HTML → PHP）
 
 > Figma MCP → PHP 直接生成ではなく、HTML経由で実装するフロー
+>
+> **ポイント:** 全セクションをHTML化してから、まとめてPHP化する
+
+### 📋 全体の流れ
+
+```
+【Phase 1】スタイルガイド → _variables.scss
+
+【Phase 2】全セクションHTML化（セクションごとに繰り返し）
+  Step 0: 品質チェック & データ保存
+  Step 1: MD整理 or 数値抽出
+  Step 2: SCSS作成
+  Step 3: HTML作成
+  → 全セクション完了後、ブラウザで全体確認
+
+【Phase 3】全セクションPHP化（まとめて実行）
+  Step 4: HTML → PHP変換
+
+【Phase 4】ACF動的化
+```
+
+---
 
 ### Step 0: 品質チェック & データ保存（最初に実行）
 

@@ -63,16 +63,26 @@ alwaysApply: true
 ### 📋 セクション実装時の標準フロー（2段階アプローチ）
 
 ```
-1. Figmaからデータ取得（Node ID指定）→ figma-data/[name].json 保存
-2. 品質チェック → 良い/悪いを報告
-3. 【良い】MD整理 / 【悪い】数値抽出 + 画像
-4. SCSS作成（変数使用）→ style.scss に @use 追加
-5. SCSSビルド
-6. HTML作成 → static-preview/ でブラウザ確認
-7. PHP化 → wp-theme/template-parts/
+【Phase 1】スタイルガイド → _variables.scss
+
+【Phase 2】全セクションHTML化（セクションごとに繰り返し）
+  1. Figmaからデータ取得（Node ID指定）→ figma-data/[name].json 保存
+  2. 品質チェック → 良い/悪いを報告
+  3. 【良い】MD整理 / 【悪い】数値抽出 + 画像
+  4. SCSS作成（変数使用）→ style.scss に @use 追加
+  5. SCSSビルド
+  6. HTML作成 → static-preview/sections/
+  
+  → 全セクション完了後、ブラウザで全体確認
+
+【Phase 3】全セクションPHP化（まとめて実行）
+  → wp-theme/template-parts/
+
+【Phase 4】ACF動的化
 ```
 
 ※直接PHPを生成せず、HTML経由で確認してからPHP化する
+※全セクションをHTML化してから、まとめてPHP化する
 
 ---
 

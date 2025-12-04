@@ -45,27 +45,28 @@ Figma MCP → JSON保存 → 品質チェック → HTML + SCSS → PHP
 - 中間確認（HTMLプレビュー）ができない
 - トークン消費が大きい
 
+**ポイント:** 全セクションをHTML化してから、まとめてPHP化する
+
 ### フロー詳細
 
 ```
-1. セクション実装依頼（Node ID指定）
-   ↓
-2. MCPでデータ取得 → figma-data/[name].json 保存
-   ※セクション単位で取得（全部一気にではない）
-   ↓
-3. AIが品質チェック → 報告
-   ├─【良い】→ MD整理（figma-data/[name].md）
-   └─【悪い】→ 数値抽出（figma-data/[name]-values.md）+ 画像保存
-   ↓
-4. SCSS作成 → wp-theme/assets/scss/sections/_[name].scss
-   ↓
-5. npm run build:css
-   ↓
-6. HTML作成 → static-preview/sections/[name].html
-   ↓
-7. ブラウザで確認・調整
-   ↓
-8. PHP化 → wp-theme/template-parts/section-[name].php
+【Phase 1】スタイルガイド → _variables.scss
+
+【Phase 2】全セクションHTML化（セクションごとに繰り返し）
+   1. MCPでデータ取得 → figma-data/[name].json 保存
+   2. AIが品質チェック → 報告
+      ├─【良い】→ MD整理
+      └─【悪い】→ 数値抽出 + 画像保存
+   3. SCSS作成 → wp-theme/assets/scss/sections/_[name].scss
+   4. npm run build:css
+   5. HTML作成 → static-preview/sections/[name].html
+   
+   → 全セクション完了後、ブラウザで全体確認
+
+【Phase 3】全セクションPHP化（まとめて実行）
+   → wp-theme/template-parts/section-[name].php
+
+【Phase 4】ACF動的化
 ```
 
 ---

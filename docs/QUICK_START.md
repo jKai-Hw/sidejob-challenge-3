@@ -263,7 +263,7 @@ npm run watch:css
 
 ---
 
-## 🔨 STEP 5: セクションごとの実装（AI支援）
+## 🔨 STEP 5: 全セクションHTML化（AI支援）
 
 ### 実装順序（推奨）
 
@@ -275,26 +275,37 @@ npm run watch:css
 
 ### 2段階アプローチ（HTML → PHP）
 
-直接PHPを生成せず、HTMLで確認してからPHP化します。
+**ポイント:** 全セクションをHTML化してから、まとめてPHP化します。
 
 ```
-1. MCPでデータ取得 → JSON保存
-2. 品質チェック → 良い/悪いを報告
-3. SCSS作成 → ビルド
-4. HTML作成 → ブラウザで確認
-5. PHP化
+【Phase 2】全セクションHTML化
+  ├─ ヘッダー: MCP → SCSS → HTML
+  ├─ ヒーロー: MCP → SCSS → HTML
+  ├─ About:   MCP → SCSS → HTML
+  ├─ ...
+  └─ フッター: MCP → SCSS → HTML
+  
+  → ブラウザで全体確認・調整
+
+【Phase 3】全セクションPHP化（まとめて）
+  ├─ ヘッダー → PHP
+  ├─ ヒーロー → PHP
+  └─ ...
 ```
 
-### 自分でやること
+### メリット
 
-1. 実装するセクションのNode IDを用意
-2. Cursorで以下のプロンプトを順番に実行
-3. HTMLをブラウザで確認・調整
-4. PHP化してWordPressで確認
+- 同じ作業に集中できる（HTML作成 → PHP変換）
+- 全体の統一感を確認しやすい
+- クライアントにHTMLで確認してもらえる
 
 ---
 
-### Step 0: 品質チェック & データ保存
+### 各セクションで繰り返すステップ（Step 0〜3）
+
+以下を **各セクションごとに** 繰り返します。
+
+#### Step 0: 品質チェック & データ保存
 
 ```markdown
 @Figma
@@ -310,9 +321,7 @@ figma-data/[セクション名].json に保存してください。
 
 AIが「良いFigma」「悪いFigma」を判断して報告します。
 
----
-
-### Step 1: データ整理
+#### Step 1: データ整理
 
 **良いFigmaの場合:**
 ```markdown
@@ -328,9 +337,7 @@ figma-data/[セクション名]-values.md に保存してください。
 ※画像は figma-data/images/ に手動で保存してください。
 ```
 
----
-
-### Step 2: SCSS作成
+#### Step 2: SCSS作成
 
 ```markdown
 [セクション名] のSCSSを作成してください。
@@ -345,9 +352,7 @@ figma-data/[セクション名]-values.md に保存してください。
 作成後、npm run build:css でビルドしてください。
 ```
 
----
-
-### Step 3: HTML作成
+#### Step 3: HTML作成
 
 ```markdown
 [セクション名] のHTMLを作成してください。
@@ -364,11 +369,44 @@ figma-data/[セクション名]-values.md に保存してください。
 
 ---
 
-### Step 4: PHP化
+### 🔁 全セクション完了後：全体確認
+
+```markdown
+static-preview/index.html に全セクションを組み込んで、
+ブラウザで全体を確認してください。
+
+チェック項目:
+- [ ] 全体の統一感（色、フォント、余白）
+- [ ] セクション間のつながり
+- [ ] レスポンシブ（SP/PC）
+```
+
+---
+
+## 🔧 STEP 6: 全セクションPHP化（AI支援）
+
+**全セクションのHTMLが完成したら**、まとめてPHP化します。
+
+### 各セクションのPHP化
 
 ```markdown
 static-preview/sections/[セクション名].html を
 wp-theme/template-parts/section-[セクション名].php に変換してください。
+
+変換内容:
+- 画像パス → get_template_directory_uri()
+- 必要に応じてWordPress関数を使用
+```
+
+### 一括PHP化（複数セクション）
+
+```markdown
+以下のHTMLファイルをすべてPHPに変換してください：
+
+- static-preview/sections/hero.html → wp-theme/template-parts/section-hero.php
+- static-preview/sections/about.html → wp-theme/template-parts/section-about.php
+- static-preview/sections/service.html → wp-theme/template-parts/section-service.php
+- ...
 
 変換内容:
 - 画像パス → get_template_directory_uri()
