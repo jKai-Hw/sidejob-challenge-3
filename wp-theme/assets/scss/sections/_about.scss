@@ -1,0 +1,157 @@
+// ==========================================================================
+// Aboutセクション
+// ==========================================================================
+//
+// 対応するHTML: static-preview/sections/about.html
+// 対応するPHP: front-page.php / template-parts/section-about.php
+//
+// Figma Node ID: 124-2065
+//
+
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.about {
+  position: relative;
+  padding: 100px 0;
+  overflow: hidden; 
+  background-color: #FAFAF8; // 少し温かみのある白
+
+  &__inner {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 $spacing-md;
+    min-height: 600px; // 画像配置のためのスペース確保
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  // ----- 画像レイアウト -----
+  &__images {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+
+    @include mq-max($breakpoint-lg) {
+      position: relative;
+      height: auto;
+      transform: none;
+      left: 0;
+      margin-bottom: $spacing-xl;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+  }
+
+  &__image {
+    position: absolute;
+    opacity: 0; // 初期状態は非表示
+    transform: translateY(20px); // 少し下から
+    transition: opacity 0.8s ease, transform 0.8s ease;
+
+    // クラスが付与されたら表示
+    &.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    @include mq-max($breakpoint-lg) {
+      position: relative;
+      top: auto !important;
+      bottom: auto !important;
+      left: auto !important;
+      right: auto !important;
+      width: 120px !important;
+      height: auto !important;
+      opacity: 1; // SPはアニメーションなし（または別途調整）
+      transform: none;
+    }
+
+    // 画像1: 山羊（左上）
+    &--1 {
+      top: 0;
+      left: 0;
+      width: 280px;
+      transition-delay: 0.2s; // 時間差
+    }
+
+    // 画像2: トマト（右上）
+    &--2 {
+      top: 20px;
+      right: 40px;
+      width: 220px;
+      transition-delay: 0.4s;
+    }
+
+    // 画像3: 人（左下）
+    &--3 {
+      bottom: 40px;
+      left: 80px;
+      width: 240px;
+      transition-delay: 0.6s;
+    }
+
+    // 画像4: 牛（右下）
+    &--4 {
+      bottom: 0;
+      right: 20px;
+      width: 300px;
+      transition-delay: 0.8s;
+    }
+  }
+
+  // ----- コンテンツ -----
+  &__content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 600px;
+  }
+
+  &__logo {
+    margin-bottom: $spacing-lg;
+
+    img {
+      width: 240px;
+      height: auto;
+    }
+  }
+
+  &__text {
+    margin-bottom: $spacing-xl;
+  }
+
+  &__text-p {
+    font-family: "Yu Gothic", "YuGothic", sans-serif;
+    font-size: 16px;
+    line-height: 2;
+    color: $color-text;
+    margin-bottom: $spacing-md;
+    font-weight: 500;
+
+    @include mq-max($breakpoint-lg) {
+      font-size: 14px;
+      text-align: justify;
+    }
+  }
+
+  &__btn {
+    margin-top: $spacing-lg;
+  }
+}

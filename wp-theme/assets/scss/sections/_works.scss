@@ -1,0 +1,179 @@
+@use '../variables' as *;
+@use '../mixins' as *;
+
+/* ==========================================================================
+   Works Section
+   ========================================================================== */
+.works {
+  padding: $spacing-3xl 0;
+  background-color: transparent; // Let body/wrapper bg show through
+  position: relative;
+
+  &__inner {
+    @include container;
+    padding: 0 $spacing-md; // Ensure some side padding on mobile
+  }
+
+  /* Card Container */
+  &__card {
+    background-color: $color-white;
+    border-radius: 0 100px 0 100px; // FIGMA: rectangleCornerRadii: [0, 100, 0, 100]
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.16); // FIGMA: Drop Shadow
+    padding: $spacing-2xl 0 $spacing-lg; // Adjust padding as needed
+    overflow: hidden; // Clip content to border-radius
+    margin-bottom: $spacing-xl;
+  }
+
+  &__title {
+    margin-bottom: $spacing-xl;
+    // FIGMA: 40px Bold, Center aligned within card
+    font-size: 40px;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.1em;
+    text-align: center; // Title is centered in Figma
+    color: $color-text;
+
+    @include mq(sm) {
+      text-align: left; // FIGMA seems to show left alignment for content generally, but title is often centered. Keeping center for title based on common patterns, but can adjust. 
+      // Wait, user said "left aligned". Let's check the image. 
+      // Image shows Title "活動紹介" top left-ish aligned relative to tabs? 
+      // Actually in the image provided, Title is top left of the content block.
+      padding-left: $spacing-2xl; // Add left padding for alignment
+      text-align: left;
+    }
+  }
+
+  /* Tabs */
+  &__tabs {
+    display: flex;
+    justify-content: center; // Default center for mobile
+    gap: $spacing-md;
+    margin-bottom: $spacing-xl;
+    flex-wrap: wrap;
+    padding: 0 $spacing-lg;
+
+    @include mq(sm) {
+      justify-content: flex-start; // Left align on larger screens
+      padding-left: $spacing-2xl;
+    }
+  }
+
+  &__tab {
+    // FIGMA: 190x65 rectangle
+    width: 160px; // Responsive adjustment
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    border-radius: 20px; // FIGMA: 20px radius
+    background-color: $color-white;
+    color: #F7B560; // FIGMA: Gold/Orange text
+    font-size: 18px; // FIGMA: 20px
+    font-weight: $font-weight-bold;
+    cursor: pointer;
+    transition: all $transition-base;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16); // FIGMA shadow
+    border: none;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+
+    &.is-active {
+      background-color: #93C572; // FIGMA: Green active bg
+      color: $color-white;
+      box-shadow: none; // Often shadows are removed or changed on active state
+    }
+
+    @include mq(md) {
+      width: 190px;
+      height: 65px;
+      font-size: 20px;
+    }
+  }
+
+  /* Content Area */
+  &__content {
+    max-width: 100%;
+    margin-bottom: $spacing-2xl;
+    padding: 0 $spacing-lg;
+
+    @include mq(sm) {
+      padding-left: $spacing-2xl;
+    }
+  }
+
+  &__text {
+    font-size: 16px; // FIGMA: 16px
+    line-height: 24px; // FIGMA: 24px
+    color: #555555; // FIGMA: #555555
+    font-weight: $font-weight-medium; // FIGMA: Medium
+    text-align: left;
+    
+    // Fade animation for text change
+    transition: opacity $transition-base;
+    &.is-hidden {
+      opacity: 0;
+    }
+  }
+
+  /* Slider (Marquee) */
+  &__slider-wrapper {
+    width: 100%;
+    overflow: hidden;
+    padding-bottom: $spacing-lg;
+    margin-top: $spacing-xl;
+  }
+
+  &__slider {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    display: flex;
+  }
+
+  &__slider-track {
+    display: flex;
+    gap: $spacing-md;
+    animation: marquee 40s linear infinite;
+    padding-left: $spacing-md;
+
+    &:hover {
+      animation-play-state: paused;
+    }
+  }
+
+  &__slider-item {
+    flex: 0 0 auto;
+    width: 250px;
+    height: 180px;
+    border-radius: 20px; // FIGMA: 20px radius
+    overflow: hidden;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform $transition-base;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+
+    @include mq(md) {
+      width: 300px;
+      height: 250px; // FIGMA: 300x250
+    }
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

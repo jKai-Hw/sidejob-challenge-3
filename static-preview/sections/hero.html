@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero Section - Preview</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- ビルド済みCSS -->
+  <link rel="stylesheet" href="../../wp-theme/assets/css/style.css">
+  <style>
+    /* プレビュー用の調整 */
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    
+    /* スクロール動作確認用に高さを確保 */
+    .spacer {
+      height: 100vh;
+      background: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================
+       Hero Section (First View)
+       ============================================ -->
+  
+  <section class="hero" id="hero">
+    <!-- 背景画像 -->
+    <div class="hero__bg"></div>
+
+    <!-- コンテンツ -->
+    <div class="hero__content">
+      <div class="hero__main">
+        <div class="hero__logo">
+          <!-- 縦組みロゴ -->
+          <img src="../../wp-theme/assets/img/logo-2.svg" alt="自然の恵み農園">
+        </div>
+        <h2 class="hero__copy">
+          <span class="hero__copy-line">自然の恵みを感じ、</span><span class="hero__copy-line">豊かな未来を。</span>
+        </h2>
+      </div>
+    </div>
+    
+    <!-- スクロールダウン -->
+    <div class="hero__scroll">
+      <span class="hero__scroll-text">SCROLL</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+
+    <!-- Newsエリア -->
+    <div class="hero__news" id="hero-news">
+      <a href="#" class="hero__news-link">
+        <div class="hero__news-label">News</div>
+        <div class="hero__news-date">2023.10.20</div>
+        <div class="hero__news-title">季節の農作物のお知らせ、見学ツアーのご案内、オンライン販売セールのお知らせなど...</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+
+  <div class="spacer">
+    Scroll Down Content
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="../../wp-theme/assets/js/main.js"></script>
+  <!-- プレビュー用スクリプト -->
+  <script>
+    $(function() {
+      const $hero = $('#hero');
+      const $news = $('#hero-news');
+      const heroHeight = $hero.outerHeight();
+
+      $(window).on('scroll', function() {
+        const scrollPos = $(this).scrollTop();
+        
+        // FVを過ぎたらNewsを非表示にする
+        // 少し余裕を持って非表示にする（heroHeight * 0.8 くらいでフェードアウト開始とか）
+        if (scrollPos > heroHeight * 0.8) {
+          $news.addClass('is-hidden');
+        } else {
+          $news.removeClass('is-hidden');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

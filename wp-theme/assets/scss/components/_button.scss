@@ -44,6 +44,19 @@
     }
   }
 
+  // ----- アクセントボタン（オレンジ） -----
+  &--accent {
+    background-color: $color-accent;
+    color: $color-white;
+    border: 2px solid $color-accent;
+
+    &:hover {
+      // 少し濃くするか薄くするか
+      background-color: darken($color-accent, 10%);
+      border-color: darken($color-accent, 10%);
+    }
+  }
+
   // ----- 白ボタン（暗い背景用） -----
   &--white {
     background-color: $color-white;

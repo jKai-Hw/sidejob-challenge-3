@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
   <!-- ビルド済みCSS -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="../wp-theme/assets/css/style.css">
 </head>
 <body>
   <!-- ============================================
@@ -64,6 +64,202 @@
           <div class="about__text">
             <p>会社や サービスの紹介文がここに入ります。Figmaのデザインに合わせて内容を調整してください。</p>
             <a href="#" class="about__link">もっと見る →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Worksセクション -->
+    <section class="works" id="works">
+      <div class="works__inner">
+        <!-- Card Container -->
+        <div class="works__card">
+          <h2 class="works__title section-title">
+            <span class="section-title__ja">活動紹介</span>
+          </h2>
+
+          <div class="works__tabs">
+            <button class="works__tab is-active" data-target="farm">農園</button>
+            <button class="works__tab" data-target="ranch">牧場</button>
+            <button class="works__tab" data-target="online">オンライン販売</button>
+          </div>
+
+          <div class="works__content">
+            <div class="works__text" id="works-text">
+              私たちは、「持続可能な農業」を掲げて、自然の恵みに感謝しながら、農作物を育てています。<br>
+              無農薬で、体にも環境にも優しく、季節ごとに異なる品種を育て、提供しています。<br>
+              ぜひ一度、農園にお越し頂き、自分の手で収穫した新鮮な野菜、果物をお召し上がりください。
+            </div>
+          </div>
+
+          <div class="works__slider-wrapper">
+            <div class="works__slider" data-target="farm" aria-hidden="false">
+              <div class="works__slider-track">
+                <div class="works__slider-item"><img src="../wp-theme/assets/img/work-nouen01.png" alt="農園の様子1"></div>
+                <div class="works__slider-item"><img src="../wp-theme/assets/img/work-nouen02.png" alt="農園の様子2"></div>
+                <div class="works__slider-item"><img src="../wp-theme/assets/img/work-nouen03.png" alt="農園の様子3"></div>
+                <div class="works__slider-item"><img src="../wp-theme/assets/img/work-nouen04.png" alt="農園の様子4"></div>
+                <!-- Duplicate -->
+                <div class="works__slider-item"><img src="../wp-theme/assets/img/work-nouen01.png" alt="農園の様子1"></div>
+                <div class="works__slider-item"><img src="../wp-theme/assets/img/work-nouen02.png" alt="農園の様子2"></div>
+                <div class="works__slider-item"><img src="../wp-theme/assets/img/work-nouen03.png" alt="農園の様子3"></div>
+                <div class="works__slider-item"><img src="../wp-theme/assets/img/work-nouen04.png" alt="農園の様子4"></div>
+              </div>
+            </div>
+            
+            <div class="works__slider" data-target="ranch" aria-hidden="true" style="display: none;">
+              <div class="works__slider-track">
+                <div class="works__slider-item"><img src="../wp-theme/assets/img/work-bokujo01.png" alt="牧場の様子1"></div>
+                <div class="works__slider-item"><img src="../wp-theme/assets/img/work-bokujo02.png" alt="牧場の様子2"></div>
+                <div class="works__slider-item"><img src="../wp-theme/assets/img/work-bokujo03.png" alt="牧場の様子3"></div>
+                <div class="works__slider-item"><img src="../wp-theme/assets/img/work-bokujo04.png" alt="牧場の様子4"></div>
+                <!-- Duplicate -->
+                <div class="works__slider-item"><img src="../wp-theme/assets/img/work-bokujo01.png" alt="牧場の様子1"></div>
+                <div class="works__slider-item"><img src="../wp-theme/assets/img/work-bokujo02.png" alt="牧場の様子2"></div>
+                <div class="works__slider-item"><img src="../wp-theme/assets/img/work-bokujo03.png" alt="牧場の様子3"></div>
+                <div class="works__slider-item"><img src="../wp-theme/assets/img/work-bokujo04.png" alt="牧場の様子4"></div>
+              </div>
+            </div>
+
+            <div class="works__slider" data-target="online" aria-hidden="true" style="display: none;">
+              <div class="works__slider-track">
+                <div class="works__slider-item"><img src="../wp-theme/assets/img/work-ec01.png" alt="オンライン販売の商品1"></div>
+                <div class="works__slider-item"><img src="../wp-theme/assets/img/work-ec02.png" alt="オンライン販売の商品2"></div>
+                <div class="works__slider-item"><img src="../wp-theme/assets/img/work-ec03.png" alt="オンライン販売の商品3"></div>
+                <div class="works__slider-item"><img src="../wp-theme/assets/img/work-ec04.png" alt="オンライン販売の商品4"></div>
+                <!-- Duplicate -->
+                <div class="works__slider-item"><img src="../wp-theme/assets/img/work-ec01.png" alt="オンライン販売の商品1"></div>
+                <div class="works__slider-item"><img src="../wp-theme/assets/img/work-ec02.png" alt="オンライン販売の商品2"></div>
+                <div class="works__slider-item"><img src="../wp-theme/assets/img/work-ec03.png" alt="オンライン販売の商品3"></div>
+                <div class="works__slider-item"><img src="../wp-theme/assets/img/work-ec04.png" alt="オンライン販売の商品4"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsセクション -->
+    <section class="news" id="news">
+      <div class="news__inner">
+        <div class="news__content">
+          <h2 class="news__title section-title">
+            <span class="section-title__ja">お知らせ</span>
+          </h2>
+          <p class="news__desc">
+            季節の農作物のお知らせ、見学ツアーのご案内、<br>
+            オンライン販売セールのお知らせなど、自然の恵み農園<br>
+            の最新情報をお届けします。
+          </p>
+          <a href="#" class="news__button button button--outline">View More</a>
+        </div>
+
+        <div class="news__card">
+          <ul class="news__list">
+            <li class="news__item">
+              <div class="news__meta">
+                <time class="news__date" datetime="2023-01-01">YYYY.MM.DD</time>
+                <span class="news__category">カテゴリ</span>
+              </div>
+              <a href="#" class="news__link">タイトルが入ります。タイトルが入ります。タイトルが入ります。</a>
+            </li>
+            <li class="news__item">
+              <div class="news__meta">
+                <time class="news__date" datetime="2023-01-01">YYYY.MM.DD</time>
+                <span class="news__category">カテゴリ</span>
+              </div>
+              <a href="#" class="news__link">タイトルが入ります。タイトルが入ります。タイトルが入ります。</a>
+            </li>
+            <li class="news__item">
+              <div class="news__meta">
+                <time class="news__date" datetime="2023-01-01">YYYY.MM.DD</time>
+                <span class="news__category">カテゴリ</span>
+              </div>
+              <a href="#" class="news__link">タイトルが入ります。タイトルが入ります。タイトルが入ります。</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQセクション -->
+    <section class="faq" id="faq">
+      <div class="faq__inner">
+        <h2 class="faq__title section-title">
+          <span class="section-title__ja">よくあるご質問</span>
+        </h2>
+
+        <div class="faq__list">
+          <!-- Item 1 -->
+          <div class="faq__item">
+            <button class="faq__question js-accordion-trigger" aria-expanded="false">
+              <span class="faq__label-q">Q</span>
+              <span class="faq__question-text">農園で提供される季節ごとの野菜や果物の品種は何ですか？</span>
+              <span class="faq__icon"></span>
+            </button>
+            <div class="faq__answer" aria-hidden="true">
+              <div class="faq__answer-inner">
+                <span class="faq__label-a">A</span>
+                <p class="faq__answer-text">
+                  春にはイチゴ、夏にはトマトや茄子、秋にはカボチャやリンゴ、冬にはブロッコリーやみかん<br>
+                  など、季節に応じた野菜、果物を提供、収穫体験することができます。
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="faq__item is-open">
+            <button class="faq__question js-accordion-trigger" aria-expanded="true">
+              <span class="faq__label-q">Q</span>
+              <span class="faq__question-text">農園での見学や体験ツアーは行っていますか？</span>
+              <span class="faq__icon"></span>
+            </button>
+            <div class="faq__answer" aria-hidden="false" style="display: block;">
+              <div class="faq__answer-inner">
+                <span class="faq__label-a">A</span>
+                <p class="faq__answer-text">
+                  はい、農園での見学や体験ツアーを随時開催しています。<br>
+                  農場の日常や農作業を親しみやすく説明し、実際に農園での体験を楽しむことができます。
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="faq__item">
+            <button class="faq__question js-accordion-trigger" aria-expanded="false">
+              <span class="faq__label-q">Q</span>
+              <span class="faq__question-text">オンラインで注文した農産物はどのように配送されますか？</span>
+              <span class="faq__icon"></span>
+            </button>
+            <div class="faq__answer" aria-hidden="true">
+              <div class="faq__answer-inner">
+                <span class="faq__label-a">A</span>
+                <p class="faq__answer-text">
+                  オンラインで注文いただいた農産物は、専用の梱包で新鮮さを保ったまま、<br>
+                  指定された配送先にお届けします。
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="faq__item">
+            <button class="faq__question js-accordion-trigger" aria-expanded="false">
+              <span class="faq__label-q">Q</span>
+              <span class="faq__question-text">農園で提供される季節ごとの野菜や果物の品種は何ですか？</span>
+              <span class="faq__icon"></span>
+            </button>
+            <div class="faq__answer" aria-hidden="true">
+              <div class="faq__answer-inner">
+                <span class="faq__label-a">A</span>
+                <p class="faq__answer-text">
+                  春にはイチゴ、夏にはトマトや茄子、秋にはカボチャやリンゴ、冬にはブロッコリーやみかん<br>
+                  など、季節に応じた野菜、果物を提供、収穫体験することができます。
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

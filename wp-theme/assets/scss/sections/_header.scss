@@ -2,16 +2,10 @@
 // ヘッダー
 // ==========================================================================
 //
-// 【AI向け指示】
-// このファイルはFigmaのヘッダーデザインを実装するテンプレートです。
-// 基本構造は用意済み。Figmaに合わせて以下を調整してください：
-//
-// 1. 色・サイズ → _variables.scss の変数を使う
-// 2. レイアウト → Figmaの配置に合わせて調整
-// 3. ハンバーガーメニュー → main.js と連携済み
-//
 // 対応するPHP: header.php
 // 対応するJS: assets/js/main.js（setupMobileMenu）
+//
+// Figma Node ID: 124-2148
 //
 
 @use '../variables' as *;
@@ -19,54 +13,89 @@
 
 .site-header {
   position: fixed;
-  top: 0;
+  top: $spacing-sm; // SP
   left: 0;
   right: 0;
   z-index: 100;
-  background-color: $color-white;
-  box-shadow: $shadow-sm;
+  background-color: transparent;
+  padding: 0 $spacing-sm; // SPは画面端の余白
+  transition: top $transition-base;
+
+  @include pc {
+    top: 32px; // 推定値またはFigmaから読み取った値
+    padding: 0 $spacing-md;
+  }
+
+  // スクロール時の挙動
+  &.is-scrolled {
+    top: 0;
+    padding: 0;
+    
+    .site-header__inner {
+      border-radius: 0;
+      max-width: 100%;
+      height: 70px; // スクロール時は少しコンパクトに
+    }
+  }
 
   &__inner {
     @include flex-between;
-    max-width: $content-width;
+    width: 100%;
+    max-width: 1292px; // Figma: 1292px
+    height: 60px; // SP
     margin: 0 auto;
-    padding: $spacing-sm;
-    
+    background-color: $color-white;
+    border-radius: 100px; // Figma: 100px
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.16); // Figma values
+    padding: 0 $spacing-md; // SP
+
     @include pc {
-      padding: $spacing-sm $spacing-md;
+      height: 90px; // Figma: 90px
+      // Figma padding: Left 44px, Right 30px (Button end)
+      // Button padding adjustment is handled in button style
+      padding: 0 30px 0 44px;
     }
   }
 
   // ----- ロゴ -----
   &__logo {
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    
     a {
       display: block;
-      font-size: $font-size-lg;
-      font-weight: $font-weight-bold;
       color: $color-text;
+      line-height: 1;
+      transition: opacity $transition-base;
 
       &:hover {
-        color: $color-primary;
+        opacity: 0.8;
       }
     }
 
     img {
-      max-height: 40px;
+      height: 24px; // SP
       width: auto;
+      
+      @include pc {
+        height: 23px; // Figmaロゴ高さ推定
+      }
     }
   }
 
   // ----- ナビゲーション -----
   &__nav {
-    // SP: 全画面オーバーレイ
-    @include sp {
+    // SP・タブレット: 全画面オーバーレイ
+    @include mq-max($breakpoint-lg) {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: $color-white;
+      background-color: rgba($color-white, 0.95);
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       opacity: 0;
@@ -79,35 +108,60 @@
         visibility: visible;
       }
     }
+    
+    @include pc {
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
   }
 
   &__menu {
     display: flex;
-    gap: $spacing-lg;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 
-    @include sp {
+    @include mq-max($breakpoint-lg) {
       flex-direction: column;
-      align-items: center;
-      gap: $spacing-md;
+      gap: $spacing-lg;
+      margin-bottom: $spacing-lg;
+    }
+
+    @include pc {
+      gap: 20px; // Figma: 20px
     }
 
     li {
       a {
         display: block;
-        padding: $spacing-xs 0;
-        color: $color-text;
-        font-weight: $font-weight-medium;
+        color: #3B4043; // Figma: #3B4043
+        font-family: "Yu Gothic", "YuGothic", sans-serif;
+        font-weight: 700; // Figma: Bold
+        font-size: 16px; // Figma: 16px
+        letter-spacing: 0.05em; // Figma: 5% (0.8px)
+        text-decoration: none;
         transition: color $transition-base;
+        white-space: nowrap;
 
-        @include sp {
+        @include mq-max($breakpoint-lg) {
           font-size: $font-size-lg;
-          padding: $spacing-sm;
         }
 
         &:hover {
           color: $color-primary;
         }
       }
+    }
+  }
+
+  // ----- CTAボタンエリア -----
+  &__cta {
+    margin-left: 20px; // Menu to Button gap (Figma: 20px)
+
+    @include mq-max($breakpoint-lg) {
+      margin-left: 0;
     }
   }
 
@@ -118,14 +172,16 @@
     width: 32px;
     height: 24px;
     cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 0;
 
     @include pc {
       display: none;
     }
 
     &:focus {
-      outline: 2px solid $color-primary;
-      outline-offset: 4px;
+      outline: none;
     }
   }
 
@@ -136,6 +192,7 @@
     height: 2px;
     background-color: $color-text;
     transition: transform $transition-base, opacity $transition-base;
+    border-radius: 2px;
 
     &:nth-child(1) {
       top: 0;
@@ -152,6 +209,8 @@
 
     // オープン時のアニメーション
     .site-header__hamburger.is-open & {
+      background-color: $color-text;
+
       &:nth-child(1) {
         top: 50%;
         transform: translateY(-50%) rotate(45deg);
@@ -169,11 +228,24 @@
   }
 }
 
-// ヘッダー固定時の余白（bodyに適用）
-body {
-  padding-top: 60px; // ヘッダー高さに合わせて調整
-
-  @include pc {
-    padding-top: 80px;
+// ボタンのカスタマイズ（ヘッダー内）
+.btn--header {
+  border-radius: 24px; // Figma: 24px
+  background-color: $color-accent; // Figma: #F7B560
+  color: $color-white;
+  font-weight: 700;
+  font-size: 16px;
+  height: 48px; // Figma: 48px
+  min-width: 148px; // Figma: 148px
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1em; // 文字数増えた場合の保険
+  text-decoration: none;
+  transition: opacity $transition-base;
+  
+  &:hover {
+    opacity: 0.9;
+    color: $color-white;
   }
 }

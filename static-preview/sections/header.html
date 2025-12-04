@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Header - Preview</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- ビルド済みCSS -->
+  <link rel="stylesheet" href="../../wp-theme/assets/css/style.css">
+  <style>
+    body {
+      background: #f5f5f5;
+      /* ヘッダー固定を確認するための余白 */
+      height: 200vh; 
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================
+       Header Section
+       ============================================ -->
+  
+  <header class="site-header">
+    <div class="site-header__inner">
+      <!-- ロゴ -->
+      <h1 class="site-header__logo">
+        <a href="/">
+          <img src="../../wp-theme/assets/img/logo.svg" alt="自然の恵み農園">
+        </a>
+      </h1>
+
+      <!-- ナビゲーション -->
+      <nav class="site-header__nav">
+        <ul class="site-header__menu">
+          <li><a href="#">私たちについて</a></li>
+          <li><a href="#">活動紹介</a></li>
+          <li><a href="#">よくあるご質問</a></li>
+          <li><a href="#">お知らせ</a></li>
+          <li><a href="#">アクセス</a></li>
+        </ul>
+        <div class="site-header__cta">
+          <a href="#" class="btn btn--accent btn--header">お問い合わせ</a>
+        </div>
+      </nav>
+
+      <!-- ハンバーガーメニュー -->
+      <button class="site-header__hamburger" aria-label="メニューを開閉する">
+        <span class="site-header__hamburger-line"></span>
+        <span class="site-header__hamburger-line"></span>
+        <span class="site-header__hamburger-line"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============================================ -->
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="../../wp-theme/assets/js/main.js"></script>
+</body>
+</html>
+

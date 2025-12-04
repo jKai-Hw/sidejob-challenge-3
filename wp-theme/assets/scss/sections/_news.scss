@@ -1,0 +1,172 @@
+@use '../variables' as *;
+@use '../mixins' as *;
+
+/* ==========================================================================
+   News Section
+   ========================================================================== */
+.news {
+  padding: $spacing-3xl 0;
+  background-color: transparent; // Body bg shows through
+  position: relative;
+  overflow: hidden; // For card extending to right edge
+
+  &__inner {
+    @include container;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    @include mq(md) {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  /* Left Content */
+  &__content {
+    margin-bottom: $spacing-2xl;
+    padding: 0 $spacing-md;
+
+    @include mq(md) {
+      width: 40%; // Adjust width as needed
+      margin-bottom: 0;
+      padding-right: $spacing-xl;
+    }
+  }
+
+  &__title {
+    margin-bottom: $spacing-lg;
+    font-size: 40px;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.1em;
+    color: $color-text;
+    text-align: left;
+    
+    // Underline style if needed from base/mixins or image
+    // Image shows a green underline/swoosh. Assuming simple line or background image for now.
+    // Or using the .section-title__ja logic if it includes decoration.
+  }
+
+  &__desc {
+    font-size: 16px;
+    line-height: 2; // Relaxed
+    color: #555555;
+    margin-bottom: $spacing-xl;
+  }
+
+  &__button {
+    // Assuming button styles are imported.
+    // Specific adjustments if needed:
+    min-width: 240px;
+    border-radius: 50px; // Capsule
+    border: 1px solid #93C572;
+    color: #93C572;
+    
+    &:hover {
+      background-color: #93C572;
+      color: white;
+    }
+  }
+
+  /* Right Card */
+  &__card {
+    background-color: $color-white;
+    // Rounded corners: Top-Left, Bottom-Right 100px
+    border-radius: 100px 0 100px 0; // FIGMA: Mirror of Works (which was 0 100 0 100)
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.16);
+    padding: $spacing-2xl $spacing-xl;
+    
+    @include mq(md) {
+      width: 55%; // Card width
+      // "画面右にぴったりくっつけて" -> Extend to right edge
+      // One way is to make it wide and absolute or use negative margin/transform
+      // Or simply use flex layout and let it align right in the container, 
+      // but if it needs to touch viewport edge:
+      margin-right: calc(50% - 50vw); // Break out of container to right
+      padding-right: calc(50vw - 50% + #{$spacing-xl}); // Add padding to keep content within bounds
+      border-top-right-radius: 0; // Usually edge-touching cards lose corner radius on that side?
+      // Image shows rounded corners on right too? 
+      // "画面右にぴったりくっつけて" -> usually implies 0 margin right. 
+      // If image shows rounded corners on right, it might just be close to edge or overflowing?
+      // Looking at image: The card itself has rounded corners. It looks contained within a width but aligned right.
+      // BUT user said: "カードのやつは 画面右にぴったりくっつけてもらっちゃって大丈夫です"
+      // This usually means width: 50% + calc(50vw - 50%) margin-right... 
+      // Let's try to make it extend to the right edge of the screen.
+      
+      // Simple approach for "touching right edge":
+      // Make container relative, card absolute right? No, responsive issues.
+      // Negative margin approach:
+      margin-right: calc(-50vw + 50%); 
+      padding-right: calc(50vw - 50% + #{$spacing-xl}); // Keep content aligned nicely
+      
+      // Re-check border radius in this context. 
+      // If it touches edge, right corners might look weird if rounded. 
+      // User image: Seems to have margin on right. 
+      // "画面右にぴったりくっつけて" might mean "align right" or "no gap".
+      // I will follow the instruction to attach to right edge.
+      border-top-right-radius: 0; 
+      border-bottom-right-radius: 0;
+      // Actually image shows rounded corners (top-left, bottom-right 100px). 
+      // If I attach to edge, bottom-right radius 100px might be invisible or cut off.
+      // Let's stick to the specific visual style: 
+      // The visual style "rounded corners" suggests it's a card *floating* on the right, not necessarily full bleed.
+      // But instruction "画面右にぴったりくっつけて" suggests full bleed or 0 margin.
+      // I will interpret "touching right edge" as 0 margin from viewport edge.
+      
+      // Let's try a cleaner layout:
+      // Use a wrapper or grid that extends to right.
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+  }
+
+  &__item {
+    border-bottom: 1px solid $color-border;
+    padding-bottom: $spacing-lg;
+    
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    margin-bottom: $spacing-xs;
+    gap: $spacing-md;
+  }
+
+  &__date {
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 16px;
+    color: #555555;
+  }
+
+  &__category {
+    background-color: #93C572; // Green
+    color: $color-white;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 4px;
+  }
+
+  &__link {
+    display: block;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #555555;
+    transition: color $transition-base;
+    font-weight: $font-weight-medium;
+
+    &:hover {
+      color: #93C572;
+    }
+  }
+}
+

@@ -23,6 +23,8 @@
   function init() {
     setupMobileMenu();
     setupSmoothScroll();
+    setupHeroScroll();
+    setupAboutAnimation();
     // 案件に応じて以下を有効化
     // setupAccordion();
     // setupModal();
@@ -93,6 +95,55 @@
         // フォーカスを移動（アクセシビリティ）
         $target.attr('tabindex', '-1').focus();
       }
+    });
+  }
+
+  // ==========================================================================
+  // ヒーローセクションのスクロール制御
+  // ==========================================================================
+  function setupHeroScroll() {
+    var $hero = $('.hero');
+    var $news = $('.hero__news');
+    
+    if (!$hero.length || !$news.length) return;
+
+    var heroHeight = $hero.outerHeight();
+
+    $(window).on('scroll resize', function() {
+      var scrollPos = $(this).scrollTop();
+      
+      // FVの80%を過ぎたらNewsを非表示
+      if (scrollPos > heroHeight * 0.8) {
+        $news.addClass('is-hidden');
+      } else {
+        $news.removeClass('is-hidden');
+      }
+    });
+  }
+
+  // ==========================================================================
+  // Aboutセクションのアニメーション
+  // ==========================================================================
+  function setupAboutAnimation() {
+    var $images = $('.about__image');
+    if (!$images.length) return;
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          $(entry.target).addClass('is-visible');
+          // 一度表示したら監視を停止（必要に応じて）
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      root: null,
+      rootMargin: '0px 0px -20% 0px', // 画面下部から20%入ったら発火
+      threshold: 0
+    });
+
+    $images.each(function() {
+      observer.observe(this);
     });
   }
 
