@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[セクション名] - Preview</title>
+  <!-- Google Fonts（案件に合わせて変更） -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- ビルド済みCSS -->
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* プレビュー用の追加スタイル（必要に応じて） */
+    body {
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .preview-info {
+      background: #333;
+      color: #fff;
+      padding: 10px 20px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .preview-info code {
+      background: #555;
+      padding: 2px 6px;
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+  <!-- プレビュー情報（確認用、PHP化時は削除） -->
+  <div class="preview-info">
+    📄 セクション: <code>[セクション名]</code> |
+    📁 SCSS: <code>sections/_[name].scss</code> |
+    📁 PHP: <code>template-parts/section-[name].php</code>
+  </div>
+
+  <!-- ============================================
+       ここにセクションのHTMLを書く
+       ============================================ -->
+
+  <section class="[section-name]">
+    <div class="[section-name]__inner">
+      <h2 class="[section-name]__title">セクションタイトル</h2>
+      <p class="[section-name]__text">説明文がここに入ります。</p>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+
+  <!-- jQuery（必要に応じて） -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script>
+    // このセクション用のJS（必要に応じて）
+    $(function() {
+      console.log('[セクション名] preview loaded');
+    });
+  </script>
+</body>
+</html>
+

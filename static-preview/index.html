@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>トップページ - Preview</title>
+  <!-- Google Fonts（案件に合わせて変更） -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- ビルド済みCSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- ============================================
+       このファイルはプレビュー用のサンプルです。
+       案件では、各セクションのHTMLをここに組み込むか、
+       sections/ 内の個別ファイルで確認してください。
+       ============================================ -->
+
+  <!-- ヘッダー -->
+  <header class="header">
+    <div class="header__inner">
+      <a href="#" class="header__logo">
+        <img src="https://placehold.co/150x40?text=LOGO" alt="サイト名">
+      </a>
+      <nav class="header__nav">
+        <ul class="header__nav-list">
+          <li class="header__nav-item"><a href="#">ホーム</a></li>
+          <li class="header__nav-item"><a href="#">サービス</a></li>
+          <li class="header__nav-item"><a href="#">会社概要</a></li>
+          <li class="header__nav-item"><a href="#">お問い合わせ</a></li>
+        </ul>
+      </nav>
+      <button class="header__hamburger js-hamburger" aria-label="メニューを開く">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ヒーローセクション -->
+    <section class="hero">
+      <div class="hero__inner">
+        <h1 class="hero__title">メインキャッチコピー</h1>
+        <p class="hero__text">サブテキストやサービスの説明文がここに入ります。</p>
+        <a href="#" class="hero__button button button--primary">詳しく見る</a>
+      </div>
+      <div class="hero__bg">
+        <img src="https://placehold.co/1920x800?text=Hero+Image" alt="">
+      </div>
+    </section>
+
+    <!-- Aboutセクション -->
+    <section class="about">
+      <div class="about__inner">
+        <h2 class="about__title section-title">私たちについて</h2>
+        <div class="about__content">
+          <div class="about__image">
+            <img src="https://placehold.co/600x400?text=About+Image" alt="">
+          </div>
+          <div class="about__text">
+            <p>会社や サービスの紹介文がここに入ります。Figmaのデザインに合わせて内容を調整してください。</p>
+            <a href="#" class="about__link">もっと見る →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTAセクション -->
+    <section class="cta">
+      <div class="cta__inner">
+        <h2 class="cta__title">お気軽にお問い合わせください</h2>
+        <p class="cta__text">ご質問・ご相談はこちらから</p>
+        <a href="#" class="cta__button button button--secondary">お問い合わせ</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- フッター -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__logo">
+        <img src="https://placehold.co/150x40?text=LOGO" alt="サイト名">
+      </div>
+      <nav class="footer__nav">
+        <ul class="footer__nav-list">
+          <li><a href="#">ホーム</a></li>
+          <li><a href="#">サービス</a></li>
+          <li><a href="#">会社概要</a></li>
+          <li><a href="#">プライバシーポリシー</a></li>
+        </ul>
+      </nav>
+      <p class="footer__copyright">&copy; 2024 サイト名. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- jQuery（必要に応じて） -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/preview.js"></script>
+</body>
+</html>
+

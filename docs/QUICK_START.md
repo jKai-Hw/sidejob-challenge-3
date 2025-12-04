@@ -273,63 +273,119 @@ npm run watch:css
 4. **各セクション** → 上から順に
 5. **下層ページ** → 共通部分ができてから
 
+### 2段階アプローチ（HTML → PHP）
+
+直接PHPを生成せず、HTMLで確認してからPHP化します。
+
+```
+1. MCPでデータ取得 → JSON保存
+2. 品質チェック → 良い/悪いを報告
+3. SCSS作成 → ビルド
+4. HTML作成 → ブラウザで確認
+5. PHP化
+```
+
 ### 自分でやること
 
 1. 実装するセクションのNode IDを用意
-2. Cursorで以下のプロンプトを実行
-3. 生成されたコードを確認・調整
-4. ブラウザで表示確認
-5. レスポンシブ確認（SP/タブレット/PC）
+2. Cursorで以下のプロンプトを順番に実行
+3. HTMLをブラウザで確認・調整
+4. PHP化してWordPressで確認
 
-### Cursorに依頼するプロンプト（例：ヘッダー）
+---
 
-```markdown
-@Figma
-ツール `get_figma_data` を使用して、Node ID: [ヘッダーのID] のデータを取得してください。
-
-取得したAuto Layoutの構造とスタイル情報を元に、以下を実装してください：
-
-**ファイル:**
-1. PHP: `wp-theme/header.php`
-2. SCSS: `wp-theme/assets/scss/sections/_header.scss`
-
-**要件:**
-- `_variables.scss` の変数を必ず使用（ハードコード禁止）
-- ロゴはトップページへのリンク（`home_url()`）
-- ナビゲーションは `wp_nav_menu()` を使用
-- SP時はハンバーガーメニュー化
-- BEM記法を厳守（.block__element--modifier）
-- レスポンシブ対応（SP/PC）を含める
-```
-
-### Cursorに依頼するプロンプト（例：汎用セクション）
+### Step 0: 品質チェック & データ保存
 
 ```markdown
 @Figma
-ツール `get_figma_data` を使用して、Node ID: [セクションのID] のデータを取得してください。
+Node ID: [NODE_ID] のデータを取得して、
+figma-data/[セクション名].json に保存してください。
 
-取得した情報を元に、以下を実装してください：
+保存後、以下を報告してください：
+1. Figmaの品質評価（良い/悪い）
+2. 推奨アプローチ
 
-**ファイル:**
-1. PHP: `wp-theme/template-parts/section-[セクション名].php`
-2. SCSS: `wp-theme/assets/scss/sections/_[セクション名].scss`
-
-**要件:**
-- `_variables.scss` の変数を使用（色、フォントサイズ、余白すべて）
-- BEM記法を使用（.block__element--modifier）
-- レスポンシブ対応（SP/PC）を含める
-- 画像はプレースホルダー（`https://placehold.jp/WIDTHxHEIGHT.png`）を使用
-- セマンティックなHTML構造（section, h2, ul/li 等）
+※コード生成はまだしないでください。
 ```
+
+AIが「良いFigma」「悪いFigma」を判断して報告します。
+
+---
+
+### Step 1: データ整理
+
+**良いFigmaの場合:**
+```markdown
+figma-data/[セクション名].json を読み込んで、
+figma-data/[セクション名].md に整理してください。
+```
+
+**悪いFigmaの場合:**
+```markdown
+figma-data/[セクション名].json から数値だけ抽出して、
+figma-data/[セクション名]-values.md に保存してください。
+
+※画像は figma-data/images/ に手動で保存してください。
+```
+
+---
+
+### Step 2: SCSS作成
+
+```markdown
+[セクション名] のSCSSを作成してください。
+
+ファイル: wp-theme/assets/scss/sections/_[セクション名].scss
+
+要件:
+- _variables.scss の変数を使用
+- BEM記法
+- レスポンシブ対応
+
+作成後、npm run build:css でビルドしてください。
+```
+
+---
+
+### Step 3: HTML作成
+
+```markdown
+[セクション名] のHTMLを作成してください。
+
+ファイル: static-preview/sections/[セクション名].html
+
+要件:
+- BEM記法のクラス名
+- ../css/style.css を読み込み
+- 画像はプレースホルダー使用
+```
+
+→ ブラウザで `static-preview/sections/[セクション名].html` を開いて確認
+
+---
+
+### Step 4: PHP化
+
+```markdown
+static-preview/sections/[セクション名].html を
+wp-theme/template-parts/section-[セクション名].php に変換してください。
+
+変換内容:
+- 画像パス → get_template_directory_uri()
+- 必要に応じてWordPress関数を使用
+```
+
+---
 
 ### 確認すること
 
-- [ ] PHPファイルが生成されたか
+- [ ] `figma-data/[name].json` が保存されたか
 - [ ] SCSSファイルが生成されたか
 - [ ] `style.scss` に `@use` で読み込みが追加されたか
-- [ ] ブラウザで表示が崩れていないか
+- [ ] HTMLがブラウザで正しく表示されるか
 - [ ] SP/タブレット/PCで確認したか
-- [ ] Figmaデザインと見比べて大きなズレがないか
+- [ ] PHPファイルが生成されたか
+- [ ] WordPressで表示が崩れていないか
 
 ### 画像について
 
@@ -337,13 +393,17 @@ npm run watch:css
 
 1. **プレースホルダーを使う**（開発中）
    ```html
-   <img src="https://placehold.jp/800x600.png" alt="">
+   <img src="https://placehold.co/800x600" alt="">
    ```
 
 2. **Figmaから手動で書き出し**（最終的には必要）
    - Figmaで画像を選択
    - 右パネル「Export」から書き出し
    - `wp-theme/assets/images/` に配置
+
+3. **悪いFigmaの場合**（レイアウト参考用）
+   - セクションのスクリーンショットを撮る
+   - `figma-data/images/[セクション名].png` に保存
 
 ---
 

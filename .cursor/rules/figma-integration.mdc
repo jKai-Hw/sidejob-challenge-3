@@ -30,31 +30,110 @@ alwaysApply: true
 2. 右クリック → 「リンクをコピー」
 3. URLの `node-id=XXX-XXX` がNode ID
 
-## 🔄 実装フロー
+---
+
+## 🔄 実装フロー（2段階アプローチ）
+
+### 概要
 
 ```
-【Phase 1】スタイルガイドのNode ID → _variables.scss 生成
-【Phase 2】各セクションのNode ID → PHP + SCSS 作成
-【Phase 3】ACF動的化
+Figma MCP → JSON保存 → 品質チェック → HTML + SCSS → PHP
 ```
+
+**直接PHPを生成しない理由:**
+- 一度に処理する情報が多すぎる
+- 中間確認（HTMLプレビュー）ができない
+- トークン消費が大きい
+
+### フロー詳細
+
+```
+1. セクション実装依頼（Node ID指定）
+   ↓
+2. MCPでデータ取得 → figma-data/[name].json 保存
+   ※セクション単位で取得（全部一気にではない）
+   ↓
+3. AIが品質チェック → 報告
+   ├─【良い】→ MD整理（figma-data/[name].md）
+   └─【悪い】→ 数値抽出（figma-data/[name]-values.md）+ 画像保存
+   ↓
+4. SCSS作成 → wp-theme/assets/scss/sections/_[name].scss
+   ↓
+5. npm run build:css
+   ↓
+6. HTML作成 → static-preview/sections/[name].html
+   ↓
+7. ブラウザで確認・調整
+   ↓
+8. PHP化 → wp-theme/template-parts/section-[name].php
+```
+
+---
+
+## ⚠️ データ品質の判断
+
+### 良いデータ ✅
+
+- Auto Layout使用（layoutMode あり）
+- 意味のあるレイヤー名（header, nav, button等）
+- 整理された構造
+
+→ **MCPデータから構造+数値を使用**
+
+### 悪いデータ ⚠️
+
+- 絶対座標のみ（x, y だけ）
+- 「Rectangle 1」「Group 2」など意味不明な名前
+- DX→Figma変換など
+
+→ **画像メイン + MCP数値のハイブリッド**
+
+### AIの判断基準
+
+MCPデータ取得後、以下をチェック：
+
+1. `layoutMode` が存在するか（Auto Layout）
+2. `name` プロパティが意味を持つか
+3. 構造が入れ子で整理されているか
+
+→ 判断結果をユーザーに報告し、アプローチを確認
+
+---
+
+## 📁 ファイル保存場所
+
+| データ種別 | 保存先 |
+|-----------|--------|
+| MCPの生データ | `figma-data/[name].json` |
+| 整理済みデータ | `figma-data/[name].md` |
+| 数値のみ抽出 | `figma-data/[name]-values.md` |
+| 参考画像 | `figma-data/images/[name].png` |
+| HTMLプレビュー | `static-preview/sections/[name].html` |
+| SCSS | `wp-theme/assets/scss/sections/_[name].scss` |
+| PHP | `wp-theme/template-parts/section-[name].php` |
+
+---
+
+## 🖼️ 画像について
+
+MCPは画像をダウンロードできない。
+
+**対応方法:**
+- コード内ではプレースホルダー使用（`https://placehold.co/`）
+- 実際の画像はFigmaから手動書き出し
+- 悪いFigmaの場合、レイアウト参考用に `figma-data/images/` に保存
+
+---
 
 ## 📋 プロンプトテンプレート
 
 詳細は `docs/PROMPTS.md` を参照。
 
-## ⚠️ データ品質の判断
-
-### 良いデータ ✅
-- Auto Layout使用（layoutMode あり）
-- 意味のあるレイヤー名
-
-### 悪いデータ ⚠️
-- 絶対座標のみ（x, y だけ）
-- 「Rectangle 1」「Group 2」など意味不明な名前
-
-→ 悪いデータの場合：座標は無視、視覚的配置からFlexbox/Gridを推論
-
-## 🖼️ 画像について
-
-MCPは画像をダウンロードできない。
-→ プレースホルダー使用 or Figmaから手動書き出し
+主なプロンプト:
+- Step 0: 品質チェック & データ保存
+- Step 1a: MD整理（良いFigma）
+- Step 1b: 数値抽出（悪いFigma）
+- Step 2: SCSS作成
+- Step 3: HTML作成
+- Step 4: ブラウザ確認
+- Step 5: PHP化
