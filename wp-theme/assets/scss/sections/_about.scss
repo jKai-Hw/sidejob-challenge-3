@@ -19,13 +19,17 @@
 
   &__inner {
     position: relative;
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 $spacing-md;
-    min-height: 600px; // 画像配置のためのスペース確保
+    min-height: 700px; // 画像配置のためのスペース確保
     display: flex;
     align-items: center;
     justify-content: center;
+
+    @include mq-max($breakpoint-lg) {
+      min-height: auto;
+    }
   }
 
   // ----- 画像レイアウト -----
@@ -85,34 +89,50 @@
 
     // 画像1: 山羊（左上）
     &--1 {
-      top: 0;
-      left: 0;
-      width: 280px;
+      top: 50px;
+      left: 50px;
+      width: 260px;
       transition-delay: 0.2s; // 時間差
+
+      @include mq-max($breakpoint-lg) {
+        width: 140px;
+      }
     }
 
     // 画像2: トマト（右上）
     &--2 {
-      top: 20px;
-      right: 40px;
-      width: 220px;
+      top: 30px;
+      right: 60px;
+      width: 260px;
       transition-delay: 0.4s;
+
+      @include mq-max($breakpoint-lg) {
+        width: 140px;
+      }
     }
 
     // 画像3: 人（左下）
     &--3 {
-      bottom: 40px;
-      left: 80px;
+      bottom: 60px;
+      left: 100px;
       width: 240px;
       transition-delay: 0.6s;
+
+      @include mq-max($breakpoint-lg) {
+        width: 130px;
+      }
     }
 
     // 画像4: 牛（右下）
     &--4 {
-      bottom: 0;
-      right: 20px;
-      width: 300px;
+      bottom: 40px;
+      right: 80px;
+      width: 280px;
       transition-delay: 0.8s;
+
+      @include mq-max($breakpoint-lg) {
+        width: 150px;
+      }
     }
   }
 
@@ -121,15 +141,24 @@
     position: relative;
     z-index: 2;
     text-align: center;
-    max-width: 600px;
+    max-width: 650px;
+    padding: $spacing-xl 0;
+
+    @include mq-max($breakpoint-lg) {
+      padding: $spacing-lg 0;
+    }
   }
 
   &__logo {
-    margin-bottom: $spacing-lg;
+    margin-bottom: $spacing-xl;
 
     img {
-      width: 240px;
+      width: 280px;
       height: auto;
+
+      @include mq-max($breakpoint-lg) {
+        width: 200px;
+      }
     }
   }
 
@@ -139,15 +168,20 @@
 
   &__text-p {
     font-family: "Yu Gothic", "YuGothic", sans-serif;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 2;
     color: $color-text;
-    margin-bottom: $spacing-md;
+    margin-bottom: $spacing-lg;
     font-weight: 500;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
 
     @include mq-max($breakpoint-lg) {
       font-size: 14px;
-      text-align: justify;
+      line-height: 1.9;
+      margin-bottom: $spacing-md;
     }
   }
 

@@ -19,53 +19,120 @@
        ============================================ -->
 
   <!-- ヘッダー -->
-  <header class="header">
-    <div class="header__inner">
-      <a href="#" class="header__logo">
-        <img src="https://placehold.co/150x40?text=LOGO" alt="サイト名">
-      </a>
-      <nav class="header__nav">
-        <ul class="header__nav-list">
-          <li class="header__nav-item"><a href="#">ホーム</a></li>
-          <li class="header__nav-item"><a href="#">サービス</a></li>
-          <li class="header__nav-item"><a href="#">会社概要</a></li>
-          <li class="header__nav-item"><a href="#">お問い合わせ</a></li>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <!-- ロゴ -->
+      <h1 class="site-header__logo">
+        <a href="/">
+          <img src="../wp-theme/assets/img/logo.svg" alt="自然の恵み農園">
+        </a>
+      </h1>
+
+      <!-- ナビゲーション -->
+      <nav class="site-header__nav">
+        <ul class="site-header__menu">
+          <li><a href="#about">私たちについて</a></li>
+          <li><a href="#works">活動紹介</a></li>
+          <li><a href="#faq">よくあるご質問</a></li>
+          <li><a href="#news">お知らせ</a></li>
+          <li><a href="#access">アクセス</a></li>
         </ul>
+        <div class="site-header__cta">
+          <a href="#contact" class="btn btn--accent btn--header">お問い合わせ</a>
+        </div>
       </nav>
-      <button class="header__hamburger js-hamburger" aria-label="メニューを開く">
-        <span></span>
-        <span></span>
-        <span></span>
+
+      <!-- ハンバーガーメニュー -->
+      <button class="site-header__hamburger" aria-label="メニューを開閉する">
+        <span class="site-header__hamburger-line"></span>
+        <span class="site-header__hamburger-line"></span>
+        <span class="site-header__hamburger-line"></span>
       </button>
     </div>
   </header>
 
   <main>
     <!-- ヒーローセクション -->
-    <section class="hero">
-      <div class="hero__inner">
-        <h1 class="hero__title">メインキャッチコピー</h1>
-        <p class="hero__text">サブテキストやサービスの説明文がここに入ります。</p>
-        <a href="#" class="hero__button button button--primary">詳しく見る</a>
+    <section class="hero" id="hero">
+      <!-- 背景画像 -->
+      <div class="hero__bg"></div>
+
+      <!-- コンテンツ -->
+      <div class="hero__content">
+        <div class="hero__main">
+          <div class="hero__logo">
+            <!-- 縦組みロゴ -->
+            <img src="../wp-theme/assets/img/logo-2.svg" alt="自然の恵み農園">
+          </div>
+          <h2 class="hero__copy">
+            <span class="hero__copy-line">自然の恵みを感じ、</span><span class="hero__copy-line">豊かな未来を。</span>
+          </h2>
+        </div>
       </div>
-      <div class="hero__bg">
-        <img src="https://placehold.co/1920x800?text=Hero+Image" alt="">
+      
+      <!-- スクロールダウン -->
+      <div class="hero__scroll">
+        <span class="hero__scroll-text">SCROLL</span>
+        <div class="hero__scroll-line"></div>
+      </div>
+
+      <!-- Newsエリア -->
+      <div class="hero__news" id="hero-news">
+        <a href="#" class="hero__news-link">
+          <div class="hero__news-label">News</div>
+          <div class="hero__news-date">2023.10.20</div>
+          <div class="hero__news-title">季節の農作物のお知らせ、見学ツアーのご案内、オンライン販売セールのお知らせなど...</div>
+        </a>
       </div>
     </section>
 
     <!-- Aboutセクション -->
-    <section class="about">
+    <section class="about" id="about">
       <div class="about__inner">
-        <h2 class="about__title section-title">私たちについて</h2>
-        <div class="about__content">
-          <div class="about__image">
-            <img src="https://placehold.co/600x400?text=About+Image" alt="">
+        
+        <!-- 装飾画像（散らばる画像） -->
+        <div class="about__images">
+          <div class="about__image about__image--1">
+            <img src="../wp-theme/assets/img/about-image01.png" alt="">
           </div>
-          <div class="about__text">
-            <p>会社や サービスの紹介文がここに入ります。Figmaのデザインに合わせて内容を調整してください。</p>
-            <a href="#" class="about__link">もっと見る →</a>
+          <div class="about__image about__image--2">
+            <img src="../wp-theme/assets/img/about-image02.png" alt="">
+          </div>
+          <div class="about__image about__image--3">
+            <img src="../wp-theme/assets/img/about-image03.png" alt="">
+          </div>
+          <div class="about__image about__image--4">
+            <img src="../wp-theme/assets/img/about-image04.png" alt="">
           </div>
         </div>
+
+        <!-- コンテンツ -->
+        <div class="about__content">
+          <!-- ロゴ（セクションタイトル代わり） -->
+          <div class="about__logo">
+            <img src="../wp-theme/assets/img/logo.svg" alt="自然の恵み農園">
+          </div>
+
+          <!-- リード文 -->
+          <div class="about__text">
+            <p class="about__text-p">
+              自然の恵み農園は、<br>
+              自然の恵みと動物の尊さが調和する特別な場所です。<br>
+              新鮮で美味しい農産物を栽培し、<br class="u-mobile-only">心温まる動物たちと触れ合える場所でもあります。
+            </p>
+            <p class="about__text-p">
+              自然の恵みを受け、<br class="u-mobile-only">動物たちとの特別なひとときを楽しんでいただける場所として、<br>
+              私たちは誇りを持って活動をしています。<br>
+              一緒に自然と動物の美しさを共有しましょう。
+            </p>
+          </div>
+
+          <!-- ボタン -->
+          <div class="about__btn">
+            <a href="#" class="btn btn--primary btn--rounded">私たちについて</a>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -222,82 +289,141 @@
       </div>
     </section>
 
-    <!-- Newsセクション -->
+
+    <!-- お知らせセクション -->
     <section class="news" id="news">
       <div class="news__inner">
         <div class="news__content">
-          <div class="news__header">
-            <h2 class="news__title section-title">
-              <span class="section-title__ja">お知らせ</span>
-            </h2>
-            <p class="news__desc">
-              季節の農作物のお知らせ、見学ツアーのご案内、<br>
-              オンライン販売セールのお知らせなど、自然の恵み農園<br>
-              の最新情報をお届けします。
-            </p>
-            <a href="#" class="news__button">View More</a>
+          <h2 class="news__title section-title">
+            <span class="section-title__ja">お知らせ</span>
+          </h2>
+          <p class="news__description">
+            季節の農作物のお知らせ、見学ツアーのご案内、<br>
+            オンライン販売セールのお知らせなど、自然の恵み農園<br>
+            の最新情報をお届けします。
+          </p>
+          <a href="#" class="news__button button button--outline">View More</a>
+        </div>
+
+        <div class="news__card">
+          <ul class="news__list">
+            <li class="news__item">
+              <time class="news__date">YYYY.MM.DD</time>
+              <span class="news__category">カテゴリ</span>
+              <h3 class="news__item-title">タイトルが入ります。タイトルが入ります。タイトルが入ります。</h3>
+            </li>
+            <li class="news__item">
+              <time class="news__date">YYYY.MM.DD</time>
+              <span class="news__category">カテゴリ</span>
+              <h3 class="news__item-title">タイトルが入ります。タイトルが入ります。タイトルが入ります。</h3>
+            </li>
+            <li class="news__item">
+              <time class="news__date">YYYY.MM.DD</time>
+              <span class="news__category">カテゴリ</span>
+              <h3 class="news__item-title">タイトルが入ります。タイトルが入ります。タイトルが入ります。</h3>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- アクセスセクション -->
+    <section class="access" id="access">
+      <div class="access__inner">
+        <h2 class="access__title section-title">
+          <span class="section-title__ja">アクセス</span>
+        </h2>
+
+        <div class="access__content">
+          <div class="access__labels">
+            <div class="access__label-item">会社名</div>
+            <div class="access__label-item">所在地</div>
+            <div class="access__label-item">電話番号</div>
+            <div class="access__label-item">営業時間</div>
           </div>
 
-          <div class="news__list-card">
-            <ul class="news__list">
-              <li class="news__item">
-                <div class="news__meta">
-                  <time class="news__date" datetime="2024-01-01">YYYY.MM.DD</time>
-                  <span class="news__category">カテゴリ</span>
-                </div>
-                <a href="#" class="news__link">
-                  <h3 class="news__item-title">タイトルが入ります。タイトルが入ります。タイトルが入ります。</h3>
-                </a>
-              </li>
-              <li class="news__item">
-                <div class="news__meta">
-                  <time class="news__date" datetime="2024-01-01">YYYY.MM.DD</time>
-                  <span class="news__category">カテゴリ</span>
-                </div>
-                <a href="#" class="news__link">
-                  <h3 class="news__item-title">タイトルが入ります。タイトルが入ります。タイトルが入ります。</h3>
-                </a>
-              </li>
-              <li class="news__item">
-                <div class="news__meta">
-                  <time class="news__date" datetime="2024-01-01">YYYY.MM.DD</time>
-                  <span class="news__category">カテゴリ</span>
-                </div>
-                <a href="#" class="news__link">
-                  <h3 class="news__item-title">タイトルが入ります。タイトルが入ります。タイトルが入ります。</h3>
-                </a>
-              </li>
-            </ul>
+          <div class="access__values">
+            <div class="access__value-item">株式会社自然の恵み農園</div>
+            <div class="access__value-item">〒123-4567 千葉県○○市×××町丁目23-45</div>
+            <div class="access__value-item">012-3456-7890</div>
+            <div class="access__value-item">10:00〜18:00（土日祝を除く）</div>
+
+            <div class="access__map-link">
+              <a href="#" class="access__map-button">
+                Googleマップ<br>
+                拡大地図を表示
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- CTAセクション -->
-    <section class="cta">
-      <div class="cta__inner">
-        <h2 class="cta__title">お気軽にお問い合わせください</h2>
-        <p class="cta__text">ご質問・ご相談はこちらから</p>
-        <a href="#" class="cta__button button button--secondary">お問い合わせ</a>
+    <!-- お問い合わせセクション -->
+    <section class="contact" id="contact">
+      <div class="contact__inner">
+        <div class="contact__card">
+          <h2 class="contact__title">お問い合わせ</h2>
+          <p class="contact__description">
+            お仕事のご相談、農園体験、牧場の見学、その他ご質問<br>
+            お気軽にお問い合わせください。
+          </p>
+          <a href="#" class="contact__button">お問い合わせ</a>
+          <div class="contact__info">
+            <p class="contact__tel">問い合わせ電話：<span class="contact__tel-number">123-4567-8910</span></p>
+            <p class="contact__hours">【受付時間】10:00～18:00（土日祝を除く）</p>
+          </div>
+        </div>
       </div>
     </section>
+
+
   </main>
 
   <!-- フッター -->
   <footer class="footer">
     <div class="footer__inner">
-      <div class="footer__logo">
-        <img src="https://placehold.co/150x40?text=LOGO" alt="サイト名">
+      <div class="footer__top">
+        <div class="footer__logo-section">
+          <a href="#" class="footer__logo">
+            <img src="../wp-theme/assets/img/logo.svg" alt="自然の恵み農園">
+          </a>
+        </div>
+        <nav class="footer__nav">
+          <ul class="footer__nav-list">
+            <li class="footer__nav-item"><a href="#">ホーム</a></li>
+            <li class="footer__nav-item"><a href="#about">私たちについて</a></li>
+            <li class="footer__nav-item"><a href="#works">活動紹介</a></li>
+            <li class="footer__nav-item"><a href="#faq">よくあるご質問</a></li>
+            <li class="footer__nav-item"><a href="#news">お知らせ</a></li>
+            <li class="footer__nav-item"><a href="#access">アクセス</a></li>
+          </ul>
+        </nav>
       </div>
-      <nav class="footer__nav">
-        <ul class="footer__nav-list">
-          <li><a href="#">ホーム</a></li>
-          <li><a href="#">サービス</a></li>
-          <li><a href="#">会社概要</a></li>
-          <li><a href="#">プライバシーポリシー</a></li>
-        </ul>
-      </nav>
-      <p class="footer__copyright">&copy; 2024 サイト名. All rights reserved.</p>
+      <div class="footer__bottom">
+        <div class="footer__info">
+          <p class="footer__address">
+            〒123-4567<br>
+            千葉県○○市×××町1丁目23-45
+          </p>
+          <p class="footer__tel">
+            TEL:123-4567-8910<br>
+            FAX:12-345-6789
+          </p>
+        </div>
+        <div class="footer__social">
+          <a href="#" class="footer__social-link" aria-label="X (Twitter)">
+            <img src="../wp-theme/assets/img/x-icon.svg" alt="X">
+          </a>
+          <a href="#" class="footer__social-link" aria-label="Instagram">
+            <img src="../wp-theme/assets/img/insta-icon.svg" alt="Instagram">
+          </a>
+          <a href="#" class="footer__social-link" aria-label="YouTube">
+            <img src="../wp-theme/assets/img/youtube-icon.svg" alt="YouTube">
+          </a>
+        </div>
+      </div>
+      <p class="footer__copyright">&copy; shizen-no-megumi-nouen Inc .2023</p>
     </div>
   </footer>
 

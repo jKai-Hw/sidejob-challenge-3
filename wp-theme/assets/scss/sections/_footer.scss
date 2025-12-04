@@ -1,120 +1,164 @@
-// ==========================================================================
-// フッター
-// ==========================================================================
-//
-// 【AI向け指示】
-// このファイルはFigmaのフッターデザインを実装するテンプレートです。
-// 基本構造は用意済み。Figmaに合わせて以下を調整してください：
-//
-// 1. 背景色 → $color-dark または Figmaの色
-// 2. カラム数 → grid-template-columns を調整
-// 3. ロゴ・メニュー → Figmaの配置に合わせる
-//
-// 対応するPHP: footer.php
-//
-
 @use '../variables' as *;
 @use '../mixins' as *;
 
-.site-footer {
-  background-color: $color-dark;
-  color: $color-white;
-  padding: $spacing-xl 0 $spacing-md;
+/* ==========================================================================
+   Footer Section
+   ========================================================================== */
+.footer {
+  background-color: $color-light;
+  padding: $spacing-3xl 0 $spacing-lg;
 
   &__inner {
-    max-width: $content-width;
-    margin: 0 auto;
-    padding: 0 $spacing-sm;
+    @include container;
+    max-width: 1200px;
+  }
 
-    @include pc {
-      padding: 0 $spacing-md;
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 60px;
+    gap: $spacing-xl;
+
+    @include mq-max($breakpoint-md) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $spacing-lg;
+      margin-bottom: $spacing-xl;
     }
   }
 
-  // ----- グリッドレイアウト -----
-  &__grid {
-    display: grid;
-    gap: $spacing-lg;
-
-    @include tablet-up {
-      grid-template-columns: repeat(3, 1fr);
-      gap: $spacing-xl;
-    }
+  &__logo-section {
+    flex: 0 0 auto;
   }
 
-  &__column {
-    // Figmaに合わせて調整
-  }
-
-  // ----- ロゴ -----
   &__logo {
-    margin-bottom: $spacing-sm;
-
-    a {
-      color: $color-white;
-      font-size: $font-size-lg;
-      font-weight: $font-weight-bold;
-
-      &:hover {
-        color: rgba($color-white, 0.8);
-      }
-    }
+    display: block;
+    text-decoration: none;
 
     img {
-      max-height: 40px;
+      height: 50px;
       width: auto;
-      // ロゴが暗い場合は filter で反転など
-      // filter: brightness(0) invert(1);
     }
   }
 
-  &__description {
-    font-size: $font-size-sm;
-    color: rgba($color-white, 0.7);
-    line-height: $line-height-relaxed;
+  &__nav {
+    flex: 0 0 auto;
+
+    @include mq-max($breakpoint-md) {
+      width: 100%;
+    }
   }
 
-  // ----- 見出し -----
-  &__heading {
-    font-size: $font-size-base;
-    font-weight: $font-weight-bold;
-    margin-bottom: $spacing-sm;
-  }
-
-  // ----- ナビゲーション -----
-  &__menu {
+  &__nav-list {
     display: flex;
-    flex-direction: column;
-    gap: $spacing-xs;
+    flex-wrap: wrap;
+    gap: $spacing-sm $spacing-xl;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 
+    @include mq-max($breakpoint-md) {
+      flex-direction: column;
+      gap: $spacing-sm;
+    }
+  }
+
+  &__nav-item {
     a {
-      color: rgba($color-white, 0.8);
-      font-size: $font-size-sm;
+      font-size: 14px;
+      color: $color-text;
+      text-decoration: none;
       transition: color $transition-base;
 
+      @include mq($breakpoint-md) {
+        font-size: 16px;
+      }
+
       &:hover {
-        color: $color-white;
+        color: $color-primary;
       }
     }
   }
 
-  // ----- 連絡先 -----
-  &__contact {
-    font-size: $font-size-sm;
-    color: rgba($color-white, 0.8);
+  &__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 60px;
+
+    @include mq-max($breakpoint-md) {
+      flex-direction: column;
+      gap: $spacing-lg;
+      margin-bottom: $spacing-xl;
+    }
   }
 
-  // ----- 区切り線 -----
-  &__divider {
-    border: none;
-    border-top: 1px solid rgba($color-white, 0.2);
-    margin: $spacing-lg 0;
+  &__info {
+    flex: 0 0 auto;
   }
 
-  // ----- コピーライト -----
+  &__address {
+    font-size: 12px;
+    color: $color-text;
+    line-height: 1.8;
+    margin-bottom: $spacing-md;
+
+    @include mq($breakpoint-md) {
+      font-size: 14px;
+    }
+  }
+
+  &__tel {
+    font-size: 12px;
+    color: $color-text;
+    line-height: 1.8;
+
+    @include mq($breakpoint-md) {
+      font-size: 14px;
+    }
+  }
+
+  &__social {
+    display: flex;
+    gap: $spacing-md;
+    align-items: center;
+  }
+
+  &__social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #E8E8E8;
+    transition: all $transition-base;
+
+    img {
+      width: 24px;
+      height: 24px;
+      opacity: 0.6;
+    }
+
+    &:hover {
+      background-color: $color-primary;
+      transform: translateY(-2px);
+
+      img {
+        opacity: 1;
+        filter: brightness(0) invert(1);
+      }
+    }
+  }
+
   &__copyright {
     text-align: center;
-    font-size: $font-size-xs;
-    color: rgba($color-white, 0.6);
+    font-size: 11px;
+    color: $color-text-light;
+
+    @include mq($breakpoint-md) {
+      font-size: 12px;
+    }
   }
 }

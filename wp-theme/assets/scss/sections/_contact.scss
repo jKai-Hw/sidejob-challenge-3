@@ -1,0 +1,114 @@
+@use '../variables' as *;
+@use '../mixins' as *;
+
+/* ==========================================================================
+   Contact Section
+   ========================================================================== */
+.contact {
+  padding: $spacing-3xl 0;
+  background-color: $color-white;
+
+  &__inner {
+    @include container;
+    max-width: 900px;
+  }
+
+  &__card {
+    background-color: #F7B560; // Orange color from design
+    border-radius: 50px;
+    padding: $spacing-3xl $spacing-xl;
+    text-align: center;
+    box-shadow: $shadow-base;
+
+    @include mq($breakpoint-md) {
+      padding: $spacing-3xl $spacing-2xl;
+    }
+  }
+
+  &__title {
+    font-size: 28px;
+    font-weight: $font-weight-bold;
+    color: $color-white;
+    margin-bottom: $spacing-md;
+    letter-spacing: 0.1em;
+
+    @include mq($breakpoint-md) {
+      font-size: 36px;
+      margin-bottom: $spacing-lg;
+    }
+  }
+
+  &__description {
+    font-size: 14px;
+    color: $color-white;
+    line-height: 1.8;
+    margin-bottom: $spacing-xl;
+
+    @include mq($breakpoint-md) {
+      font-size: 16px;
+    }
+  }
+
+  &__button {
+    display: inline-block;
+    padding: $spacing-md $spacing-2xl;
+    background-color: $color-white;
+    color: $color-primary; // 緑色
+    border: 2px solid $color-primary; // 緑の枠線
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: $font-weight-bold;
+    text-decoration: none;
+    transition: all $transition-base;
+    margin-bottom: $spacing-xl;
+    box-shadow: $shadow-sm;
+
+    @include mq($breakpoint-md) {
+      font-size: 18px;
+      padding: $spacing-md $spacing-3xl;
+    }
+
+    &:hover {
+      background-color: $color-primary;
+      color: $color-white;
+      transform: translateY(-2px);
+      box-shadow: $shadow-lg;
+    }
+  }
+
+  &__info {
+    padding-top: $spacing-lg;
+    margin-top: $spacing-md;
+  }
+
+  &__tel {
+    font-size: 14px;
+    color: $color-white;
+    margin-bottom: $spacing-xs;
+
+    @include mq($breakpoint-md) {
+      font-size: 16px;
+    }
+  }
+
+  &__tel-number {
+    font-size: 18px;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.05em;
+
+    @include mq($breakpoint-md) {
+      font-size: 22px;
+    }
+  }
+
+  &__hours {
+    font-size: 12px;
+    color: $color-white;
+    margin-top: $spacing-xs;
+
+    @include mq($breakpoint-md) {
+      font-size: 14px;
+    }
+  }
+}
+

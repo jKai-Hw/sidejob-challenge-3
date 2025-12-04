@@ -110,6 +110,63 @@ $(function() {
   });
 
   // ========================================
+  // Hero: Newsエリアのスクロール処理
+  // ========================================
+  const $hero = $('#hero');
+  const $heroNews = $('#hero-news');
+  
+  if ($hero.length && $heroNews.length) {
+    const heroHeight = $hero.outerHeight();
+
+    $(window).on('scroll', function() {
+      const scrollPos = $(this).scrollTop();
+      
+      // FVを過ぎたらNewsを非表示にする
+      // 少し余裕を持って非表示にする（heroHeight * 0.8 くらいでフェードアウト開始）
+      if (scrollPos > heroHeight * 0.8) {
+        $heroNews.addClass('is-hidden');
+      } else {
+        $heroNews.removeClass('is-hidden');
+      }
+    });
+  }
+
+  // ========================================
+  // About: 画像のフェードインアニメーション
+  // ========================================
+  const $aboutSection = $('#about');
+  const $aboutImages = $('.about__image');
+  
+  if ($aboutSection.length && $aboutImages.length) {
+    let hasAnimated = false; // 一度だけアニメーション実行
+    
+    function checkAboutAnimation() {
+      if (hasAnimated) return;
+      
+      const scrollPos = $(window).scrollTop() + $(window).height();
+      const aboutTop = $aboutSection.offset().top;
+      const triggerPoint = aboutTop + 200; // セクションから200px程度でトリガー
+      
+      if (scrollPos > triggerPoint) {
+        // 時間差で1枚ずつis-visibleクラスを追加
+        $aboutImages.each(function(index) {
+          const $img = $(this);
+          setTimeout(function() {
+            $img.addClass('is-visible');
+          }, index * 200); // 200ms間隔で順番に表示
+        });
+        hasAnimated = true;
+      }
+    }
+    
+    // 初期チェック（ページ読み込み時に既に画面内にある場合）
+    checkAboutAnimation();
+    
+    // スクロール時にチェック
+    $(window).on('scroll', checkAboutAnimation);
+  }
+
+  // ========================================
   // 追加のインタラクションはここに
   // ========================================
 

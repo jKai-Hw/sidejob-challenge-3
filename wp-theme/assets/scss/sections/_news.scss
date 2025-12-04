@@ -6,100 +6,88 @@
    ========================================================================== */
 .news {
   padding: $spacing-3xl 0;
-  background-color: $color-bg;
-  position: relative;
+  background-color: $color-white;
+  overflow: hidden; // For card extending to edge
 
   &__inner {
-    @include container;
-    position: relative;
-  }
-
-  &__content {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    flex-direction: column;
+    gap: $spacing-2xl;
+    position: relative;
 
-    @include mq(md) {
-      flex-direction: row;
-      align-items: flex-start; // Align top for header vs list
+    @include mq-max($breakpoint-md) {
+      flex-direction: column;
+      padding: 0 $spacing-md;
+    }
+
+    @include mq($breakpoint-md) {
+      padding-left: $spacing-2xl;
     }
   }
 
-  /* Left Side: Header */
-  &__header {
-    width: 100%;
-    text-align: center;
-    margin-bottom: $spacing-xl;
+  /* Left Content */
+  &__content {
+    flex: 1;
+    max-width: 600px;
 
-    @include mq(md) {
-      width: 40%;
-      text-align: left;
-      padding-top: $spacing-xl; // Visual adjustment
+    @include mq-max($breakpoint-md) {
+      text-align: center;
+      max-width: 100%;
     }
   }
 
   &__title {
+    text-align: left;
     margin-bottom: $spacing-lg;
-    font-size: 40px;
+    font-size: 32px;
     font-weight: $font-weight-bold;
+    color: $color-dark;
     letter-spacing: 0.1em;
-    
-    // Decorative underline (from image)
-    // Ideally this would be an SVG or image background if complex, 
-    // but using simple border or pseudo for now if needed. 
-    // Using section-title standard for consistency unless specialized.
+
+    @include mq($breakpoint-md) {
+      font-size: 40px;
+    }
+
+    @include mq-max($breakpoint-md) {
+      text-align: center;
+    }
   }
 
-  &__desc {
-    font-size: 16px;
-    line-height: 2;
-    margin-bottom: $spacing-xl;
+  &__description {
+    font-size: 14px;
+    line-height: 1.8;
     color: $color-text;
+    margin-bottom: $spacing-xl;
+
+    @include mq($breakpoint-md) {
+      font-size: 16px;
+    }
   }
 
   &__button {
     display: inline-block;
-    padding: 15px 60px;
-    border: 1px solid #93C572; // Green border
-    border-radius: 50px;
-    color: #93C572;
-    font-family: 'Archivo Narrow', sans-serif;
-    font-size: 18px;
-    letter-spacing: 0.1em;
-    text-decoration: none;
-    transition: all $transition-base;
-    background: transparent;
-
-    &:hover {
-      background-color: #93C572;
-      color: $color-white;
-    }
   }
 
-  /* Right Side: News List Card */
-  &__list-card {
+  /* Right Card */
+  &__card {
+    flex: 0 0 auto;
     width: 100%;
+    max-width: 600px;
     background-color: $color-white;
-    border-radius: 50px 0 50px 0; // FIGMA: 50px top-left, bottom-right? 
-    // Image shows top-left rounded, bottom-right rounded? 
-    // Wait, image shows Card is on the RIGHT. 
-    // Shape looks like: Top-Left rounded significantly (maybe 100px?), Top-Right square (extends to edge), Bottom-Right square/rounded?, Bottom-Left square.
-    // Let's look at the provided image specifically.
-    // Image: White card on the right side.
-    // Top-Left corner: Rounded (large radius).
-    // Top-Right: Looks like it goes off screen or square. User said "画面右にぴったりくっつけてもらっちゃって大丈夫".
-    // So Top-Right and Bottom-Right are likely 0 radius if touching edge.
-    // Bottom-Left: Rounded (large radius).
+    border-radius: 100px 0 0 100px; // Rounded left corners, straight right edge
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.16);
+    padding: $spacing-2xl $spacing-xl $spacing-2xl $spacing-2xl;
     
-    padding: $spacing-2xl;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+    @include mq($breakpoint-md) {
+      // Extend to right edge of viewport
+      margin-right: calc(-100vw + 100%); // Negative margin to extend right
+      padding-right: calc(100vw - 100% + #{$spacing-xl}); // Compensate padding
+      max-width: 700px;
+    }
 
-    @include mq(md) {
-      width: 55%;
-      margin-right: calc(50% - 50vw); // Break out of container to the right
-      border-radius: 100px 0 0 100px; // Large radius on Left side (Top & Bottom)
-      padding: $spacing-3xl;
+    @include mq-max($breakpoint-md) {
+      border-radius: 50px;
+      max-width: 100%;
     }
   }
 
@@ -107,68 +95,54 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
   }
 
   &__item {
-    border-bottom: 1px solid #E5E7EB; // Light border
-    padding: $spacing-lg 0;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    padding-bottom: $spacing-lg;
+    border-bottom: 1px solid $color-border;
 
-    &:first-child {
-      padding-top: 0;
-    }
     &:last-child {
       border-bottom: none;
       padding-bottom: 0;
     }
   }
 
-  &__meta {
-    display: flex;
-    align-items: center;
-    margin-bottom: $spacing-xs;
-    gap: $spacing-md;
-  }
-
   &__date {
+    font-size: 14px;
+    color: $color-text-light;
     font-family: 'Archivo Narrow', sans-serif;
-    font-size: 16px;
-    color: #555555;
   }
 
   &__category {
     display: inline-block;
-    background-color: #93C572; // Green bg
+    padding: $spacing-xs $spacing-md;
+    background-color: $color-primary;
     color: $color-white;
+    border-radius: 20px;
     font-size: 12px;
-    padding: 4px 12px;
-    border-radius: 4px; // Small radius
-  }
+    font-weight: $font-weight-bold;
+    align-self: flex-start;
 
-  &__link {
-    text-decoration: none;
-    color: inherit;
-    transition: opacity $transition-base;
-
-    &:hover {
-      opacity: 0.7;
+    @include mq($breakpoint-md) {
+      font-size: 14px;
     }
   }
 
   &__item-title {
-    font-size: 16px;
-    line-height: 1.5;
+    font-size: 14px;
     font-weight: $font-weight-medium;
+    color: $color-dark;
+    line-height: 1.6;
     margin: 0;
-    
-    // Ellipsis if too long
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
 
-    @include mq(md) {
-      font-size: 18px;
+    @include mq($breakpoint-md) {
+      font-size: 16px;
     }
   }
 }
-

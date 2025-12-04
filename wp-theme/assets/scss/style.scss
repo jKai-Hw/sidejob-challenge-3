@@ -34,12 +34,14 @@
 // セクション（案件に応じて有効化）
 // --------------------------------------------------------------------------
 @use 'sections/header';
-@use 'sections/footer';
 @use 'sections/hero';       // ヒーローセクション
 @use 'sections/about';      // Aboutセクション
 @use 'sections/works';      // Worksセクション
 @use 'sections/faq';        // FAQセクション
 @use 'sections/news';       // Newsセクション
+@use 'sections/access';     // Accessセクション
+@use 'sections/contact';    // Contactセクション
+@use 'sections/footer';     // Footerセクション
 // @use 'sections/cta';        // CTAセクション
 
 // --------------------------------------------------------------------------
