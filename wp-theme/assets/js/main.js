@@ -77,7 +77,9 @@
   function setupSmoothScroll() {
     $('a[href^="#"]').on('click', function(e) {
       var hash = this.hash;
-      if (!hash) return;
+      if (!hash) {
+        return;
+      }
 
       var $target = $(hash);
       if ($target.length) {
@@ -85,7 +87,7 @@
         var headerHeight = $('.site-header').outerHeight() || 0;
 
         $('html, body').animate({
-          scrollTop: $target.offset().top - headerHeight
+          scrollTop: $target.offset().top - headerHeight,
         }, 500);
 
         // フォーカスを移動（アクセシビリティ）

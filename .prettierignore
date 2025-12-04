@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Build output
+wp-theme/assets/css/
+
+# WordPress
+*.php
+
+# Git
+.git/
+
+# IDE
+.cursor/
+.vscode/
+.idea/
+
+# Docker
+docker-compose.yml
+
+# Other
+*.min.js
+*.min.css
+

@@ -8,14 +8,6 @@ alwaysApply: true
 
 > Figma → WordPress のコーディング案件を効率的に進めるためのテンプレート
 
-## 🎯 このテンプレートの使い方
-
-1. デザイナーさんからFigmaデザインを受け取る
-2. このテンプレートをコピーして新規案件を開始
-3. Cursor（AI）と協力してコーディング
-
----
-
 ## 👤 役割分担
 
 | 役割 | 担当 | 内容 |
@@ -30,8 +22,6 @@ alwaysApply: true
 ## 🤖 AI（Cursor）の役割と自律性
 
 ### ✅ AIが自律的にやること（指示不要）
-
-以下は指示がなくても自動で行う：
 
 1. **ファイル作成時**
    - PHPとSCSSをセットで作成
@@ -53,43 +43,10 @@ alwaysApply: true
 
 ### 🙋 AIがユーザーに確認すること
 
-以下の場合は作業前に確認を求める：
-
 - デザインに曖昧な部分がある
 - 複数の実装方法が考えられる
 - 既存コードと矛盾する変更が必要
 - デザインにない状態（ホバー、エラーなど）の実装
-
-### 📋 セクション実装時の標準フロー（2段階アプローチ）
-
-```
-【Phase 1】スタイルガイド → _variables.scss
-
-【Phase 2】全セクションHTML化（セクションごとに繰り返し）
-
-   Step 1: データ取得 → 品質報告 → 待つ
-   ┌─────────────────────────────────────────────────┐
-   │ 1. MCPでデータ取得 → JSON保存                    │
-   │ 2. 品質チェック → 報告                          │
-   │ 3. ★ ユーザーの指示を待つ ★                    │
-   └─────────────────────────────────────────────────┘
-   
-   Step 2: 「続けて」と言われたら一括作成
-   ┌─────────────────────────────────────────────────┐
-   │ 4. 【良い】MD整理 / 【悪い】数値抽出 + 画像      │
-   │ 5. SCSS作成 → ビルド                           │
-   │ 6. HTML作成                                    │
-   └─────────────────────────────────────────────────┘
-   
-   → 全セクション完了後、ブラウザで全体確認
-
-【Phase 3】全セクションPHP化（まとめて実行）
-   → wp-theme/template-parts/section-[name].php
-
-【Phase 4】ACF動的化
-```
-
-**ポイント:** 全セクションをHTML化してから、まとめてPHP化する
 
 ---
 
@@ -109,37 +66,24 @@ alwaysApply: true
 
 ```
 figma-wordpress-project/
-├── figma-data/               ← 【開発用】MCPデータ保存
-│   ├── [name].json           ← MCPの生データ
-│   ├── [name].md             ← 整理済みデータ
-│   └── images/               ← 参考画像（悪いFigma時）
-│
-├── static-preview/           ← 【開発用】HTMLプレビュー
-│   ├── sections/             ← セクション別HTML
-│   └── css/                  ← ビルド済みCSS
-│
+├── figma-data/               ← MCPデータ保存
+├── static-preview/           ← HTMLプレビュー
 ├── wp-theme/                 ← 【納品対象】
 │   ├── assets/
 │   │   ├── scss/
-│   │   │   ├── _variables.scss  ← 【重要】Figmaから値を抽出
+│   │   │   ├── _variables.scss
 │   │   │   ├── _mixins.scss
 │   │   │   ├── _base.scss
-│   │   │   ├── style.scss       ← メイン（@use で読み込み）
-│   │   │   ├── components/      ← ボタン、カード等
-│   │   │   └── sections/        ← ヘッダー、フッター等
+│   │   │   ├── style.scss
+│   │   │   ├── components/
+│   │   │   └── sections/
 │   │   ├── css/
-│   │   │   └── style.css        ← ビルド後
 │   │   └── js/
-│   │       └── main.js
-│   ├── template-parts/           ← 再利用パーツ
-│   ├── inc/                      ← PHP機能ファイル
-│   ├── acf-json/                 ← ACFフィールド（自動保存）
-│   ├── header.php
-│   ├── footer.php
-│   ├── front-page.php
-│   ├── functions.php
-│   └── style.css                 ← テーマ情報
-└── ...
+│   ├── template-parts/
+│   ├── inc/
+│   ├── acf-json/
+│   └── ...
+└── docs/
 ```
 
 ---
@@ -147,14 +91,9 @@ figma-wordpress-project/
 ## 🔧 よく使うコマンド
 
 ```bash
-# SCSS監視（開発中）
-npm run watch:css
-
-# SCSSビルド（確認・納品前）
-npm run build:css
-
-# Docker起動
-docker-compose up -d
+npm run watch:css    # SCSS監視
+npm run build:css    # SCSSビルド
+docker-compose up -d # Docker起動
 ```
 
 ---

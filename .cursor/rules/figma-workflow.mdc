@@ -1,5 +1,5 @@
 ---
-description: Figma MCP連携ルール
+description: Figma MCP連携ワークフロー
 globs: "**/*"
 alwaysApply: true
 ---
@@ -34,16 +34,9 @@ alwaysApply: true
 
 ## 🔄 実装フロー（2段階アプローチ）
 
-### 概要
-
 ```
 Figma MCP → JSON保存 → 品質チェック → HTML + SCSS → PHP
 ```
-
-**直接PHPを生成しない理由:**
-- 一度に処理する情報が多すぎる
-- 中間確認（HTMLプレビュー）ができない
-- トークン消費が大きい
 
 **ポイント:** 全セクションをHTML化してから、まとめてPHP化する
 
@@ -112,16 +105,6 @@ Figma MCP → JSON保存 → 品質チェック → HTML + SCSS → PHP
 
 → **画像メイン + MCP数値のハイブリッド**
 
-### AIの判断基準
-
-MCPデータ取得後、以下をチェック：
-
-1. `layoutMode` が存在するか（Auto Layout）
-2. `name` プロパティが意味を持つか
-3. 構造が入れ子で整理されているか
-
-→ 判断結果をユーザーに報告し、アプローチを確認
-
 ---
 
 ## 📁 ファイル保存場所
@@ -152,12 +135,3 @@ MCPは画像をダウンロードできない。
 ## 📋 プロンプトテンプレート
 
 詳細は `docs/PROMPTS.md` を参照。
-
-主なプロンプト:
-- Step 0: 品質チェック & データ保存
-- Step 1a: MD整理（良いFigma）
-- Step 1b: 数値抽出（悪いFigma）
-- Step 2: SCSS作成
-- Step 3: HTML作成
-- Step 4: ブラウザ確認
-- Step 5: PHP化

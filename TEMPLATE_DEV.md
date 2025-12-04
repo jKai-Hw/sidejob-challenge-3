@@ -29,20 +29,32 @@
 | 11月 | ワークフロードキュメント整備 |
 | 12月 | テンプレート構造の整理（PROGRESS.md, DESIGN_NOTES.md追加） |
 | 12月 | developブランチ作成、TEMPLATE_DEV.md追加 |
+| 12月 | **全体リファクタリング実施** |
+
+### 2024年12月 リファクタリング詳細
+
+| 項目 | 変更内容 |
+|------|----------|
+| Cursor Rules | 8ファイル → 4ファイルに統合（重複削除） |
+| ドキュメント | README簡素化、docs/CHECKLISTS.md新設 |
+| 開発DX | stylelint, eslint, prettier 追加 |
+
+**Cursor Rules変更:**
+- `general.mdc` - プロジェクト概要（フロー図削除）
+- `figma-workflow.mdc` - Figma MCP連携（figma-integration.mdcからリネーム）
+- `coding-conventions.mdc` - コーディング規約+レスポンシブ（統合）
+- `wordpress-development.mdc` - WPテーマ+CPT+ACF（統合）
+- 削除: quality-checklist.mdc, git-workflow.mdc → docs/CHECKLISTS.mdに移動
 
 ---
 
 ## ✅ 完了した整備
 
-- [x] Cursor Rules 8ファイル作成
-  - general.mdc
-  - wordpress-theme.mdc
-  - figma-integration.mdc
-  - coding-standards.mdc
-  - responsive-design.mdc
-  - wordpress-advanced.mdc
-  - quality-checklist.mdc
-  - git-workflow.mdc
+- [x] Cursor Rules 4ファイル（リファクタリング後）
+  - general.mdc（プロジェクト概要）
+  - figma-workflow.mdc（Figma MCP連携）
+  - coding-conventions.mdc（コーディング規約+レスポンシブ）
+  - wordpress-development.mdc（WPテーマ+CPT+ACF）
 - [x] クラシックテーマへの移行
 - [x] SCSS構造の整備（_variables.scss, _mixins.scss）
 - [x] ワークフロードキュメント（QUICK_START.md, PROJECT_PLAN.md）

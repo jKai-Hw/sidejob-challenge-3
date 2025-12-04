@@ -3,12 +3,23 @@
   "version": "1.0.0",
   "description": "Figma → WordPress コーディング用のルール・テンプレートプロジェクト",
   "scripts": {
-    "build:css": "sass wp-theme/assets/scss/style.scss wp-theme/assets/css/style.css --style=compressed",
-    "watch:css": "sass wp-theme/assets/scss/style.scss wp-theme/assets/css/style.css --watch",
-    "dev": "sass wp-theme/assets/scss/style.scss wp-theme/assets/css/style.css --watch --style=expanded"
+    "build:css": "sass wp-theme/assets/scss/style.scss wp-theme/assets/css/style.css --style=compressed --source-map",
+    "watch:css": "sass wp-theme/assets/scss/style.scss wp-theme/assets/css/style.css --watch --source-map",
+    "dev": "sass wp-theme/assets/scss/style.scss wp-theme/assets/css/style.css --watch --style=expanded --source-map",
+    "lint:scss": "stylelint 'wp-theme/assets/scss/**/*.scss'",
+    "lint:scss:fix": "stylelint 'wp-theme/assets/scss/**/*.scss' --fix",
+    "lint:js": "eslint 'wp-theme/assets/js/**/*.js'",
+    "lint:js:fix": "eslint 'wp-theme/assets/js/**/*.js' --fix",
+    "lint": "npm run lint:scss && npm run lint:js",
+    "format": "prettier --write 'wp-theme/assets/**/*.{scss,js}' '*.{json,md}' 'docs/**/*.md'",
+    "format:check": "prettier --check 'wp-theme/assets/**/*.{scss,js}' '*.{json,md}' 'docs/**/*.md'"
   },
   "devDependencies": {
-    "sass": "^1.69.0"
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "sass": "^1.69.0",
+    "stylelint": "^16.2.1",
+    "stylelint-config-standard-scss": "^13.0.0"
   },
   "keywords": [
     "wordpress",
@@ -18,4 +29,3 @@
   "author": "",
   "license": "GPL-2.0-or-later"
 }
-
