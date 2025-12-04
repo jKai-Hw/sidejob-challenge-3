@@ -1,0 +1,30 @@
+{
+  "extends": ["stylelint-config-standard-scss"],
+  "rules": {
+    "selector-class-pattern": [
+      "^[a-z][a-z0-9]*(-[a-z0-9]+)*(__[a-z0-9]+(-[a-z0-9]+)*)?(--[a-z0-9]+(-[a-z0-9]+)*)?$|^js-[a-z][a-z0-9]*(-[a-z0-9]+)*$|^u-[a-z][a-z0-9]*(-[a-z0-9]+)*$|^wp-[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+      {
+        "message": "Expected class selector to be BEM format, js-, u-, or wp- prefix"
+      }
+    ],
+    "scss/dollar-variable-pattern": [
+      "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+      {
+        "message": "Expected variable to be kebab-case"
+      }
+    ],
+    "declaration-block-no-redundant-longhand-properties": null,
+    "no-descending-specificity": null,
+    "scss/at-extend-no-missing-placeholder": null,
+    "color-function-notation": "legacy",
+    "alpha-value-notation": "number",
+    "scss/comment-no-empty": null,
+    "scss/double-slash-comment-empty-line-before": null,
+    "declaration-empty-line-before": null,
+    "at-rule-empty-line-before": null,
+    "color-hex-length": null
+  },
+  "ignoreFiles": [
+    "wp-theme/assets/css/**/*"
+  ]
+}

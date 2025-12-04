@@ -1,0 +1,236 @@
+---
+description: WordPressテーマ開発・CPT・ACF実装ルール
+globs: 
+  - "wp-theme/**/*.php"
+  - "wp-theme/**/*.scss"
+alwaysApply: false
+---
+
+# WordPress開発ガイドライン
+
+## 基本方針
+
+- **クラシックテーマ**（.php）で開発
+- Figmaデザインに忠実に実装
+- アクセシビリティ（WCAG 2.1 AA準拠）を意識
+- **SCSS** でスタイリング
+- **jQuery** 使用OK（WordPress同梱版）
+
+---
+
+## 📁 ディレクトリ構造
+
+```
+wp-theme/
+├── assets/
+│   ├── scss/
+│   │   ├── _variables.scss
+│   │   ├── _mixins.scss
+│   │   ├── _base.scss
+│   │   ├── components/
+│   │   ├── sections/
+│   │   └── style.scss
+│   ├── css/
+│   ├── js/
+│   └── images/
+├── inc/
+│   ├── custom-post-types.php
+│   └── custom-taxonomies.php
+├── template-parts/
+├── acf-json/
+├── header.php
+├── footer.php
+├── front-page.php
+├── page.php
+├── single.php
+├── archive.php
+├── 404.php
+├── index.php
+├── functions.php
+└── style.css
+```
+
+---
+
+## 📄 テンプレート階層
+
+| テンプレート | 用途 |
+|-------------|------|
+| `front-page.php` | トップページ |
+| `page.php` | 汎用固定ページ |
+| `page-{slug}.php` | 特定スラッグの固定ページ |
+| `single.php` | 投稿詳細 |
+| `single-{post_type}.php` | CPT詳細 |
+| `archive.php` | 汎用アーカイブ |
+| `archive-{post_type}.php` | CPTアーカイブ |
+
+### テンプレートパーツの呼び出し
+```php
+<?php get_header(); ?>
+<?php get_footer(); ?>
+<?php get_template_part( 'template-parts/card', 'service' ); ?>
+```
+
+---
+
+## 📦 カスタム投稿タイプ（CPT）
+
+### 登録例（inc/custom-post-types.php）
+```php
+function theme_register_service_post_type() {
+  $labels = array(
+    'name'          => 'サービス',
+    'singular_name' => 'サービス',
+    'menu_name'     => 'サービス',
+    'add_new'       => '新規追加',
+  );
+
+  $args = array(
+    'labels'        => $labels,
+    'public'        => true,
+    'show_in_rest'  => true,  // ブロックエディタ対応
+    'rewrite'       => array( 'slug' => 'service' ),
+    'has_archive'   => true,
+    'menu_icon'     => 'dashicons-portfolio',
+    'supports'      => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
+  );
+
+  register_post_type( 'service', $args );
+}
+add_action( 'init', 'theme_register_service_post_type' );
+```
+
+### タクソノミー登録例
+```php
+function theme_register_service_category() {
+  register_taxonomy( 'service_category', array( 'service' ), array(
+    'labels'       => array( 'name' => 'サービスカテゴリー' ),
+    'hierarchical' => true,
+    'public'       => true,
+    'show_in_rest' => true,
+  ) );
+}
+add_action( 'init', 'theme_register_service_category' );
+```
+
+---
+
+## 🔧 ACF（Advanced Custom Fields）
+
+### フィールド取得の基本
+```php
+// 単一フィールド
+$headline = get_field( 'hero_headline' );
+$image = get_field( 'hero_image' );
+
+// リピーターフィールド
+if ( have_rows( 'features' ) ) :
+  while ( have_rows( 'features' ) ) : the_row();
+    $title = get_sub_field( 'feature_title' );
+    ?>
+    <div class="feature">
+      <h3><?php echo esc_html( $title ); ?></h3>
+    </div>
+    <?php
+  endwhile;
+endif;
+
+// オプションページから取得
+$phone = get_field( 'phone_number', 'option' );
+```
+
+### よく使うフィールドタイプ
+| タイプ | 用途 |
+|--------|------|
+| テキスト | キャッチコピー |
+| テキストエリア | 説明文 |
+| 画像 | メインビジュアル |
+| リピーター | 特徴リスト、FAQ |
+| リンク | CTAボタン |
+
+---
+
+## 🎠 動的要素
+
+### スライダー（Swiper.js）
+```javascript
+// assets/js/slider.js
+document.addEventListener('DOMContentLoaded', function() {
+  new Swiper('.js-hero-slider', {
+    loop: true,
+    autoplay: { delay: 5000 },
+    pagination: { el: '.swiper-pagination', clickable: true },
+  });
+});
+```
+
+### Ajax絞り込み
+```php
+// functions.php
+function theme_filter_posts() {
+  check_ajax_referer( 'theme_filter_nonce', 'nonce' );
+  $category = sanitize_text_field( $_POST['category'] );
+  
+  $query = new WP_Query( array(
+    'post_type' => 'service',
+    'tax_query' => array(
+      array(
+        'taxonomy' => 'service_category',
+        'field'    => 'slug',
+        'terms'    => $category,
+      ),
+    ),
+  ) );
+
+  while ( $query->have_posts() ) : $query->the_post();
+    get_template_part( 'template-parts/card', 'service' );
+  endwhile;
+  
+  wp_die();
+}
+add_action( 'wp_ajax_filter_posts', 'theme_filter_posts' );
+add_action( 'wp_ajax_nopriv_filter_posts', 'theme_filter_posts' );
+```
+
+---
+
+## 🔒 セキュリティ
+
+### 必須のエスケープ処理
+```php
+// テキスト
+echo esc_html( $text );
+
+// URL
+echo esc_url( $url );
+
+// 属性値
+echo esc_attr( $attr );
+
+// HTML許可
+echo wp_kses_post( $html );
+```
+
+### 入力のサニタイズ
+```php
+$page = sanitize_text_field( $_GET['page'] );
+$email = sanitize_email( $_POST['email'] );
+```
+
+---
+
+## 📋 実装チェックリスト
+
+### CPT実装時
+- [ ] `show_in_rest` を true に設定
+- [ ] パーマリンク設定を再保存
+
+### ACF実装時
+- [ ] フィールド名は英語スネークケース
+- [ ] 出力時に適切なエスケープ
+- [ ] 空値チェックをしている
+
+### 動的要素実装時
+- [ ] JSエラーが出ていない
+- [ ] SP/タブレット/PCで動作確認
+- [ ] ローディング状態の表示

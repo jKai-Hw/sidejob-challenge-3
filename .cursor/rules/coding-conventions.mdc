@@ -1,0 +1,239 @@
+---
+description: コーディング規約・レスポンシブ実装ルール
+globs:
+  - "**/*.php"
+  - "**/*.scss"
+  - "**/*.js"
+  - "**/*.html"
+alwaysApply: false
+---
+
+# コーディング規約
+
+## 🎯 基本原則
+
+- **可読性優先**: 他の人が読んでも理解できるコード
+- **一貫性**: プロジェクト全体で同じスタイルを維持
+- **モバイルファースト**: ベースをSPで書き、大きい画面に向けて拡張
+
+---
+
+## 📐 インデント・フォーマット
+
+| 項目 | 設定 |
+|------|------|
+| インデント | **スペース2つ** |
+| 行末スペース | 削除 |
+| ファイル末尾 | 空行1つ |
+| 最大行長 | 120文字（目安） |
+
+---
+
+## 📛 命名規則
+
+### ファイル名
+| 種類 | 形式 | 例 |
+|------|------|-----|
+| SCSS | `_kebab-case.scss` | `_hero-section.scss` |
+| PHP | `kebab-case.php` | `custom-post-types.php` |
+| JS | `kebab-case.js` | `slider-init.js` |
+
+### CSS/SCSSクラス名（BEM記法）
+```scss
+// Block
+.card { }
+
+// Element（__で接続）
+.card__image { }
+.card__title { }
+
+// Modifier（--で接続）
+.card--featured { }
+
+// JavaScript用（js-接頭辞）
+.js-slider { }
+```
+
+### SCSS変数名
+```scss
+// カラー: $color-{用途}
+$color-primary: #3B82F6;
+
+// フォント: $font-{プロパティ}-{サイズ}
+$font-size-base: 1rem;
+
+// スペーシング: $spacing-{サイズ}
+$spacing-md: 1.5rem;
+
+// ブレークポイント: $breakpoint-{サイズ}
+$breakpoint-md: 768px;
+```
+
+### PHP関数名・変数名
+```php
+// 関数: snake_case（プレフィックス付き）
+function theme_get_featured_posts() { }
+
+// 変数: snake_case
+$post_id = get_the_ID();
+```
+
+### JavaScript
+```javascript
+// 変数・関数: camelCase
+const menuToggle = document.querySelector('.js-menu-toggle');
+function initSlider() { }
+
+// jQueryオブジェクト: $接頭辞
+const $slider = $('.js-slider');
+```
+
+---
+
+## 💬 コメントルール
+
+### SCSS
+```scss
+// ============================================
+// セクション区切り（大見出し）
+// ============================================
+
+// 単一行コメント（説明）
+.component {
+  width: calc(100% - 40px); // 左右20pxずつの余白を引く
+}
+
+// TODO: あとで対応
+// FIXME: 修正が必要
+```
+
+### PHP
+```php
+/**
+ * 関数の説明
+ *
+ * @param int $post_id 投稿ID
+ * @return string|false 画像URL
+ */
+function theme_get_thumbnail_url( $post_id ) {
+  return get_the_post_thumbnail_url( $post_id, 'large' );
+}
+```
+
+---
+
+## 📱 レスポンシブ設計
+
+### ブレークポイント
+```scss
+$breakpoint-sm: 640px;   // 小型タブレット
+$breakpoint-md: 768px;   // タブレット
+$breakpoint-lg: 1024px;  // PC
+$breakpoint-xl: 1280px;  // 大画面
+```
+
+### メディアクエリMixin
+```scss
+// SP（〜767px）
+@mixin sp {
+  @media (max-width: #{$breakpoint-md - 1px}) { @content; }
+}
+
+// タブレット以上（768px〜）
+@mixin tablet-up {
+  @media (min-width: $breakpoint-md) { @content; }
+}
+
+// PC（1024px〜）
+@mixin pc {
+  @media (min-width: $breakpoint-lg) { @content; }
+}
+```
+
+### モバイルファーストの書き方
+```scss
+// ✅ 正しい書き方
+.section {
+  padding: $spacing-md;  // ベース: SP
+  
+  @include tablet-up {
+    padding: $spacing-lg;
+  }
+  
+  @include pc {
+    padding: $spacing-xl;
+  }
+}
+```
+
+### グリッドレイアウト例
+```scss
+.card-grid {
+  display: grid;
+  gap: $spacing-md;
+  grid-template-columns: 1fr;  // SP: 1カラム
+  
+  @include tablet-up {
+    grid-template-columns: repeat(2, 1fr);  // タブレット: 2カラム
+  }
+  
+  @include pc {
+    grid-template-columns: repeat(3, 1fr);  // PC: 3カラム
+  }
+}
+```
+
+---
+
+## 🖼️ 画像のレスポンシブ対応
+
+```scss
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// アスペクト比維持
+.image-container {
+  aspect-ratio: 16 / 9;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+```
+
+---
+
+## 🚫 アンチパターン
+
+```scss
+// ❌ 避ける
+#header { }           // IDセレクタ
+div.card { }          // 不要な要素セレクタ
+!important            // 極力避ける
+
+// ✅ 推奨
+.header { }
+.card { }
+```
+
+```php
+// ❌ 避ける
+echo $var;                    // エスケープなし
+
+// ✅ 推奨
+echo esc_html( $var );
+```
+
+---
+
+## ✅ コミット前チェック
+
+- [ ] インデントは統一されているか（スペース2つ）
+- [ ] 命名規則に従っているか
+- [ ] console.log / var_dump は削除したか
+- [ ] PHPの出力はエスケープしているか
