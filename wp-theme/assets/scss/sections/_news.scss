@@ -103,14 +103,16 @@
 
   // カード部分（右端にくっつける）
   &__card {
-    @include pc {
-      flex-shrink: 0;
-      width: 400px;
-      margin-left: auto;
-    }
-
     @include sp {
       width: 100%;
+    }
+
+    @include pc {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 400px;
+      flex-shrink: 0;
     }
   }
 }
