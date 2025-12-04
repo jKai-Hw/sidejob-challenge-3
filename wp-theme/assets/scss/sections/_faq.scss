@@ -11,11 +11,12 @@
   &__inner {
     @include container;
     max-width: 1000px; // Limit width for readability as per design
+    padding: 0 $spacing-md; // SP padding
   }
 
   &__title {
     text-align: center;
-    margin-bottom: $spacing-2xl;
+    margin-bottom: $spacing-xl; // SP: Smaller margin
     
     // FIGMA: 40px Bold
     font-size: 32px;
@@ -23,24 +24,33 @@
     color: $color-dark;
     letter-spacing: 0.1em;
 
-    @include mq(md) {
+    @include mq($breakpoint-md) {
       font-size: 40px;
+      margin-bottom: $spacing-2xl;
     }
   }
 
   &__list {
     display: flex;
     flex-direction: column;
-    gap: $spacing-lg;
+    gap: $spacing-md; // SP: Smaller gap
+
+    @include mq($breakpoint-md) {
+      gap: $spacing-lg;
+    }
   }
 
   /* FAQ Item Card */
   &__item {
     background-color: $color-white;
     border: 2px solid #93C572; // FIGMA: Green border
-    border-radius: 50px; // FIGMA: 50px radius
+    border-radius: 30px; // SP: Smaller radius
     overflow: hidden;
     transition: all $transition-base;
+
+    @include mq($breakpoint-md) {
+      border-radius: 50px; // PC: Larger radius
+    }
 
     // &.is-open {
     //   // Optional: Change style when open if needed
@@ -52,46 +62,68 @@
     width: 100%;
     display: flex;
     align-items: center; // Center vertically
-    padding: $spacing-md $spacing-xl;
+    padding: $spacing-md $spacing-md; // SP: Smaller padding
     background: none;
     border: none;
     cursor: pointer;
     text-align: left;
     position: relative;
-    min-height: 70px; // FIGMA: 70px height for closed state
+    min-height: 60px; // SP: Smaller min-height
+    touch-action: manipulation; // Better touch handling
 
-    @include mq(sm) {
+    @include mq($breakpoint-md) {
+      padding: $spacing-md $spacing-xl;
+      min-height: 70px; // PC: FIGMA: 70px height for closed state
+    }
+
+    @include mq($breakpoint-lg) {
       padding: $spacing-md $spacing-2xl;
     }
   }
 
   &__label-q {
     font-family: 'Archivo Narrow', sans-serif;
-    font-size: 35px; // FIGMA: 35px
+    font-size: 28px; // SP: Smaller
     color: #93C572; // FIGMA: Green
-    margin-right: $spacing-md;
+    margin-right: $spacing-sm; // SP: Smaller margin
     line-height: 1;
     flex-shrink: 0;
+
+    @include mq($breakpoint-md) {
+      font-size: 35px; // PC: FIGMA: 35px
+      margin-right: $spacing-md;
+    }
   }
 
   &__question-text {
-    font-size: 16px;
+    font-size: 14px; // SP: Smaller
     font-weight: $font-weight-bold;
     color: #555555;
     flex-grow: 1;
-    padding-right: $spacing-lg; // Space for icon
+    padding-right: $spacing-md; // SP: Smaller padding
+    line-height: 1.5; // SP: Better readability
 
-    @include mq(md) {
+    @include mq($breakpoint-md) {
+      font-size: 16px;
+      padding-right: $spacing-lg; // Space for icon
+    }
+
+    @include mq($breakpoint-lg) {
       font-size: 20px; // FIGMA: 20px
     }
   }
 
   /* Toggle Icon (+ / -) */
   &__icon {
-    width: 20px;
-    height: 20px;
+    width: 18px; // SP: Smaller
+    height: 18px;
     position: relative;
     flex-shrink: 0;
+
+    @include mq($breakpoint-md) {
+      width: 20px;
+      height: 20px;
+    }
 
     &::before,
     &::after {
@@ -143,34 +175,47 @@
   }
 
   &__answer-inner {
-    padding: 0 $spacing-xl $spacing-xl; // Bottom and side padding
+    padding: 0 $spacing-md $spacing-md; // SP: Smaller padding
     display: flex;
     align-items: flex-start;
 
-    @include mq(sm) {
+    @include mq($breakpoint-md) {
+      padding: 0 $spacing-xl $spacing-xl; // Bottom and side padding
+    }
+
+    @include mq($breakpoint-lg) {
       padding: 0 $spacing-2xl $spacing-xl;
     }
   }
 
   &__label-a {
     font-family: 'Archivo Narrow', sans-serif;
-    font-size: 35px; // FIGMA: 35px
+    font-size: 28px; // SP: Smaller
     color: #F7B560; // FIGMA: Orange
-    margin-right: $spacing-md;
+    margin-right: $spacing-sm; // SP: Smaller margin
     line-height: 1;
     flex-shrink: 0;
+
+    @include mq($breakpoint-md) {
+      font-size: 35px; // PC: FIGMA: 35px
+      margin-right: $spacing-md;
+    }
   }
 
   &__answer-text {
-    font-size: 16px;
+    font-size: 14px; // SP: Smaller
     font-weight: $font-weight-medium; // FIGMA: Medium
     color: #555555;
-    line-height: 1.5;
-    margin-top: 8px; // Align visually with A label
+    line-height: 1.6; // SP: Better readability
+    margin-top: 4px; // SP: Smaller margin
 
-    @include mq(md) {
+    @include mq($breakpoint-md) {
+      font-size: 16px;
+      margin-top: 8px; // Align visually with A label
+    }
+
+    @include mq($breakpoint-lg) {
       font-size: 20px; // FIGMA: 20px
     }
   }
 }
-

@@ -46,9 +46,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
     <!-- ハンバーガーメニューボタン（SP用） -->
     <button class="site-header__hamburger" type="button" aria-label="メニューを開く" aria-expanded="false">
-      <span class="site-header__hamburger-line"></span>
-      <span class="site-header__hamburger-line"></span>
-      <span class="site-header__hamburger-line"></span>
+      <div class="site-header__hamburger-lines">
+        <span class="site-header__hamburger-line"></span>
+        <span class="site-header__hamburger-line"></span>
+        <span class="site-header__hamburger-line"></span>
+      </div>
+      <span class="site-header__hamburger-text">MENU</span>
     </button>
   </div>
 </header>

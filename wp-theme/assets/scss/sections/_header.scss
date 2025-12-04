@@ -13,17 +13,20 @@
 
 .site-header {
   position: fixed;
-  top: $spacing-sm; // SP
+  top: 0; // SP: 0
   left: 0;
   right: 0;
   z-index: 100;
-  background-color: transparent;
-  padding: 0 $spacing-sm; // SPは画面端の余白
+  background-color: $color-white; // SP: White background
+  padding: 0; // SP: Full width
   transition: top $transition-base;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.16); // SP: Shadow on header itself
 
   @include pc {
-    top: 32px; // 推定値またはFigmaから読み取った値
+    top: 32px;
     padding: 0 $spacing-md;
+    background-color: transparent;
+    box-shadow: none;
   }
 
   // スクロール時の挙動
@@ -41,18 +44,17 @@
   &__inner {
     @include flex-between;
     width: 100%;
-    max-width: 1292px; // Figma: 1292px
+    max-width: 100%; // SP
     height: 60px; // SP
     margin: 0 auto;
-    background-color: $color-white;
-    border-radius: 100px; // Figma: 100px
-    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.16); // Figma values
-    padding: 0 $spacing-md; // SP
-
+    padding: 0 $spacing-sm; // SP
+    
     @include pc {
-      height: 90px; // Figma: 90px
-      // Figma padding: Left 44px, Right 30px (Button end)
-      // Button padding adjustment is handled in button style
+      max-width: 1292px;
+      height: 90px;
+      background-color: $color-white;
+      border-radius: 100px;
+      box-shadow: 0 3px 3px rgba(0, 0, 0, 0.16);
       padding: 0 30px 0 44px;
     }
   }
@@ -79,7 +81,7 @@
       width: auto;
       
       @include pc {
-        height: 23px; // Figmaロゴ高さ推定
+        height: 23px;
       }
     }
   }
@@ -89,7 +91,7 @@
     // SP・タブレット: 全画面オーバーレイ
     @include mq-max($breakpoint-lg) {
       position: fixed;
-      top: 0;
+      top: 60px; // Header height
       left: 0;
       right: 0;
       bottom: 0;
@@ -102,6 +104,7 @@
       visibility: hidden;
       transition: opacity $transition-base, visibility $transition-base;
       z-index: 99;
+      padding-bottom: 60px; // Bottom safe area
 
       &.is-open {
         opacity: 1;
@@ -169,12 +172,15 @@
   &__hamburger {
     position: relative;
     z-index: 101;
-    width: 32px;
-    height: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     background: transparent;
     border: none;
     padding: 0;
+    gap: 4px; // Gap between lines and text
 
     @include pc {
       display: none;
@@ -185,12 +191,18 @@
     }
   }
 
+  &__hamburger-lines {
+    position: relative;
+    width: 32px;
+    height: 14px; // Compact height for lines
+  }
+
   &__hamburger-line {
     position: absolute;
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: $color-text;
+    background-color: $color-primary; // Green color from image
     transition: transform $transition-base, opacity $transition-base;
     border-radius: 2px;
 
@@ -209,7 +221,7 @@
 
     // オープン時のアニメーション
     .site-header__hamburger.is-open & {
-      background-color: $color-text;
+      background-color: $color-primary;
 
       &:nth-child(1) {
         top: 50%;
@@ -225,6 +237,14 @@
         transform: translateY(50%) rotate(-45deg);
       }
     }
+  }
+
+  &__hamburger-text {
+    font-size: 10px;
+    color: $color-primary;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.05em;
   }
 }
 

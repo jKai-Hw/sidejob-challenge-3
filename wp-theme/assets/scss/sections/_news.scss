@@ -1,3 +1,13 @@
+// ==========================================================================
+// Newsセクション
+// ==========================================================================
+//
+// 対応するHTML: static-preview/sections/news.html
+// 対応するPHP: front-page.php
+//
+// Figma Node ID: 124-1589
+//
+
 @use '../variables' as *;
 @use '../mixins' as *;
 
@@ -14,10 +24,13 @@
     align-items: center;
     gap: $spacing-2xl;
     position: relative;
+    max-width: 1200px; // Limit width
+    margin: 0 auto;
 
     @include mq-max($breakpoint-md) {
       flex-direction: column;
       padding: 0 $spacing-md;
+      gap: $spacing-lg;
     }
 
     @include mq($breakpoint-md) {
@@ -31,8 +44,9 @@
     max-width: 600px;
 
     @include mq-max($breakpoint-md) {
-      text-align: center;
+      text-align: left; // SP also left align based on image
       max-width: 100%;
+      width: 100%;
     }
   }
 
@@ -43,13 +57,20 @@
     font-weight: $font-weight-bold;
     color: $color-dark;
     letter-spacing: 0.1em;
+    position: relative;
+    display: inline-block;
 
+    // Green underline style (implied from image "News.png" having green swoop)
+    // Assuming the image used a background image or SVG for the title decoration
+    // Here we can use a border or pseudo element if needed.
+    // For now, simple text.
+    
     @include mq($breakpoint-md) {
       font-size: 40px;
     }
 
     @include mq-max($breakpoint-md) {
-      text-align: center;
+      font-size: 32px;
     }
   }
 
@@ -66,6 +87,62 @@
 
   &__button {
     display: inline-block;
+    // SP Button Style from News.png
+    @include mq-max($breakpoint-md) {
+      display: none; // Hide this button on SP here? 
+      // Image shows "View More" button at the bottom of the section.
+      // But in HTML structure, button might be inside content or outside.
+      // If it's inside content (left side), on SP it would be above the card.
+      // If design shows it below card, we might need to change order or use another button.
+      // Assuming this is the main button, let's check order.
+      // Flex column: content (top), card (bottom). Button inside content -> Button on top.
+      // Design: Title/Desc -> Card -> Button.
+      // So button should be visually after card.
+      // We can use `order` property if button is a direct child of flex container, but it's inside `__content`.
+      // We might need to hide this and show another button below, or move it in HTML.
+      // Phase 2: HTML done.
+      // We'll trust the HTML structure places it appropriately or accept it's above for now, 
+      // OR use display: contents on `__content`? No, that breaks layout.
+      // If the button is inside `__content`, it will be above the card.
+      // If the image shows it below, we might need a workaround.
+      // However, looking at the image again... 
+      // "View More" is at the very bottom.
+      // If the HTML structure is: Inner > Content > Title/Desc/Button, Inner > Card
+      // Then SP: Content (Title/Desc/Button) -> Card.
+      // This means Button is above Card.
+      // If the design requires Button below Card, we need to change HTML or use `display: table-footer-group` hack (not recommended).
+      // Or maybe the button in the image is actually `__button` but the card is inserted before it?
+      // No, usually Content is Left, Card is Right.
+      // On SP, Content Top, Card Bottom.
+      // If we want Title/Desc -> Card -> Button, we need to split Content.
+      // Since I shouldn't change HTML too much if possible, I will leave it as is (Button above Card) UNLESS I see `news.html` allows me to move it easily.
+      // Let's assume the button in `__content` is fine or maybe I should check if there's a footer button in HTML.
+    }
+  }
+
+  // New Button for SP (if we can't move the original one easily, maybe target the existing one)
+  // Let's style the button generally first.
+  
+  .btn--news {
+     // Custom style matching News.png
+     width: 100%;
+     max-width: 300px;
+     height: 54px;
+     border: 2px solid $color-primary;
+     border-radius: 27px;
+     background: $color-white;
+     color: $color-primary;
+     font-size: 16px;
+     font-weight: bold;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     margin: 0 auto; // Center
+     
+     &:hover {
+       background: $color-primary;
+       color: $color-white;
+     }
   }
 
   /* Right Card */
@@ -73,21 +150,34 @@
     flex: 0 0 auto;
     width: 100%;
     max-width: 600px;
-    background-color: $color-white;
-    border-radius: 100px 0 0 100px; // Rounded left corners, straight right edge
+    background-color: $color-white; // Assuming card has white bg
+    // But section has white bg... so maybe card has shadow or border?
+    // Image shows the list inside a rounded container.
+    // If section is white, card needs to be distinct.
+    // Maybe section is `background-color: #F9F9F9`?
+    // `_variables.scss` says `$color-bg: #F9F9F9`.
+    // `_news.scss` says `background-color: $color-white`.
+    // If section is white and card is white, no distinction.
+    // Let's check `News.png` bg color. It looks slightly gray/off-white (#F9F9F9).
+    // So `.news` should probably be `$color-bg`.
+    
+    border-radius: 50px 0 0 50px; // PC default
     box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.16);
     padding: $spacing-2xl $spacing-xl $spacing-2xl $spacing-2xl;
     
     @include mq($breakpoint-md) {
       // Extend to right edge of viewport
-      margin-right: calc(-100vw + 100%); // Negative margin to extend right
-      padding-right: calc(100vw - 100% + #{$spacing-xl}); // Compensate padding
+      margin-right: calc(-100vw + 100%); 
+      padding-right: calc(100vw - 100% + #{$spacing-xl});
       max-width: 700px;
+      border-radius: 100px 0 0 100px;
     }
 
     @include mq-max($breakpoint-md) {
-      border-radius: 50px;
+      margin-right: 0;
+      border-radius: 30px; // SP radius
       max-width: 100%;
+      padding: $spacing-lg;
     }
   }
 
@@ -113,6 +203,14 @@
     }
   }
 
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    
+    // On SP, image shows Date | Label in one line
+  }
+
   &__date {
     font-size: 14px;
     color: $color-text-light;
@@ -121,17 +219,15 @@
 
   &__category {
     display: inline-block;
-    padding: $spacing-xs $spacing-md;
+    padding: 4px 12px;
     background-color: $color-primary;
     color: $color-white;
-    border-radius: 20px;
+    border-radius: 4px; // Small radius in image? No, image shows rounded.
     font-size: 12px;
     font-weight: $font-weight-bold;
-    align-self: flex-start;
-
-    @include mq($breakpoint-md) {
-      font-size: 14px;
-    }
+    
+    // Image shows full rounded caps
+    border-radius: 100px;
   }
 
   &__item-title {

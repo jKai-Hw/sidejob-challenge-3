@@ -15,8 +15,12 @@
   position: relative;
   width: 100%;
   height: 100vh;
-  min-height: 600px;
+  min-height: 600px; // SP
   overflow: hidden;
+
+  @include pc {
+    min-height: 700px;
+  }
 
   // ----- 背景画像 -----
   &__bg {
@@ -26,21 +30,14 @@
     width: 100%;
     height: 100%;
     background-image: url('../img/FV.jpg');
-    background-position: center;
+    background-position: center bottom; // SP: 画像の下の方を見せる調整が必要かも
     background-size: cover;
     background-repeat: no-repeat;
     z-index: 1;
 
-    // 必要に応じてオーバーレイを追加
-    // &::after {
-    //   content: '';
-    //   position: absolute;
-    //   top: 0;
-    //   left: 0;
-    //   width: 100%;
-    //   height: 100%;
-    //   background: rgba(0, 0, 0, 0.1);
-    // }
+    @include pc {
+      background-position: center;
+    }
   }
 
   // ----- コンテンツ（ロゴ・キャッチコピー） -----
@@ -52,6 +49,7 @@
     align-items: center;
     justify-content: center;
     padding-bottom: 80px; // ロゴ位置調整
+    padding-top: 60px; // Header height offset for SP
   }
 
   &__main {
@@ -64,7 +62,7 @@
 
     img {
       width: auto;
-      height: 120px; // 少し小さめに調整
+      height: 120px; // SP
       
       @include pc {
         height: 180px;
@@ -75,11 +73,15 @@
   &__copy {
     font-family: "Yu Gothic", "YuGothic", sans-serif;
     font-weight: 700;
-    font-size: 20px; // SPは少し小さく
+    font-size: 20px; // SP: 20px
     color: $color-primary; // #93C572
     line-height: 1.5;
     letter-spacing: 0.1em;
     text-shadow: 0 2px 4px rgba($color-white, 0.8); // 視認性確保
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
 
     @include pc {
       font-size: 50px; // Figma: 50px
@@ -89,7 +91,7 @@
     }
 
     &-line {
-      display: inline-block; // SPで改行する場合
+      display: inline-block;
       
       @include pc {
         display: inline;
@@ -141,18 +143,26 @@
 
   // ----- Newsエリア -----
   &__news {
-    position: fixed; // 画面右端に固定
-    bottom: 100px;
-    right: 0; // 画面右端
-    z-index: 100; // ヘッダーより上に表示
+    position: absolute; // SP: Absolute to stick to bottom right of Hero
+    bottom: 0;
+    right: 0;
+    z-index: 100;
     width: 90%;
-    max-width: 337px;
+    max-width: 280px; // SP
     background-color: $color-accent; // #F7B560
     border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
+    border-bottom-left-radius: 0; // SP: No bottom radius as it sits on edge
     box-shadow: $shadow-base;
-    padding: 20px 24px;
+    padding: 16px 20px;
     transition: opacity $transition-slow, visibility $transition-slow, transform $transition-slow;
+    
+    // PCではFixedに切り替える場合
+    @include pc {
+      position: fixed;
+      bottom: 80px;
+      max-width: 380px;
+      border-bottom-left-radius: 20px;
+    }
     
     // FVを過ぎたら非表示にするクラス
     &.is-hidden {
@@ -160,17 +170,6 @@
       visibility: hidden;
       transform: translateX(20px);
       pointer-events: none; // クリック不可にする
-    }
-
-    @include mq($breakpoint-md) {
-      bottom: 80px;
-      max-width: 380px;
-    }
-
-    @include mq-max($breakpoint-sm) {
-      bottom: 60px;
-      max-width: 280px;
-      padding: 16px 20px;
     }
   }
 
@@ -222,4 +221,3 @@
     transform: translateY(100%);
   }
 }
-

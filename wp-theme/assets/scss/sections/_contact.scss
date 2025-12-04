@@ -11,59 +11,89 @@
   &__inner {
     @include container;
     max-width: 900px;
+    padding: 0 $spacing-md; // SP padding
   }
 
   &__card {
     background-color: #F7B560; // Orange color from design
-    border-radius: 50px;
-    padding: $spacing-3xl $spacing-xl;
+    border-radius: 30px; // SP: Smaller radius
+    padding: $spacing-xl $spacing-md; // SP: Smaller padding
     text-align: center;
     box-shadow: $shadow-base;
 
     @include mq($breakpoint-md) {
+      border-radius: 50px;
+      padding: $spacing-3xl $spacing-xl;
+    }
+
+    @include mq($breakpoint-lg) {
       padding: $spacing-3xl $spacing-2xl;
     }
   }
 
   &__title {
-    font-size: 28px;
+    font-size: 24px; // SP: Smaller
     font-weight: $font-weight-bold;
     color: $color-white;
-    margin-bottom: $spacing-md;
+    margin-bottom: $spacing-sm; // SP: Smaller margin
     letter-spacing: 0.1em;
+    line-height: 1.4;
 
     @include mq($breakpoint-md) {
+      font-size: 28px;
+      margin-bottom: $spacing-md;
+    }
+
+    @include mq($breakpoint-lg) {
       font-size: 36px;
       margin-bottom: $spacing-lg;
     }
   }
 
   &__description {
-    font-size: 14px;
+    font-size: 13px; // SP: Smaller
     color: $color-white;
     line-height: 1.8;
-    margin-bottom: $spacing-xl;
+    margin-bottom: $spacing-lg; // SP: Smaller margin
 
     @include mq($breakpoint-md) {
+      font-size: 14px;
+      margin-bottom: $spacing-xl;
+    }
+
+    @include mq($breakpoint-lg) {
       font-size: 16px;
     }
   }
 
   &__button {
     display: inline-block;
-    padding: $spacing-md $spacing-2xl;
+    padding: $spacing-md $spacing-xl; // SP: Smaller padding
     background-color: $color-white;
     color: $color-primary; // 緑色
     border: 2px solid $color-primary; // 緑の枠線
     border-radius: 30px;
-    font-size: 16px;
+    font-size: 16px; // SP: Keep readable
     font-weight: $font-weight-bold;
     text-decoration: none;
     transition: all $transition-base;
-    margin-bottom: $spacing-xl;
+    margin-bottom: $spacing-lg; // SP: Smaller margin
     box-shadow: $shadow-sm;
+    min-height: 48px; // SP: Touch target size
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%; // SP: Full width
+    max-width: 300px; // SP: Max width
 
     @include mq($breakpoint-md) {
+      width: auto;
+      max-width: none;
+      padding: $spacing-md $spacing-2xl;
+      margin-bottom: $spacing-xl;
+    }
+
+    @include mq($breakpoint-lg) {
       font-size: 18px;
       padding: $spacing-md $spacing-3xl;
     }
@@ -77,38 +107,57 @@
   }
 
   &__info {
-    padding-top: $spacing-lg;
-    margin-top: $spacing-md;
+    padding-top: $spacing-md; // SP: Smaller padding
+    margin-top: $spacing-sm; // SP: Smaller margin
+
+    @include mq($breakpoint-md) {
+      padding-top: $spacing-lg;
+      margin-top: $spacing-md;
+    }
   }
 
   &__tel {
-    font-size: 14px;
+    font-size: 13px; // SP: Smaller
     color: $color-white;
     margin-bottom: $spacing-xs;
 
     @include mq($breakpoint-md) {
+      font-size: 14px;
+    }
+
+    @include mq($breakpoint-lg) {
       font-size: 16px;
     }
   }
 
   &__tel-number {
-    font-size: 18px;
+    font-size: 20px; // SP: Larger for readability
     font-weight: $font-weight-bold;
     letter-spacing: 0.05em;
+    display: block;
+    margin-top: $spacing-xs;
 
     @include mq($breakpoint-md) {
+      font-size: 18px;
+    }
+
+    @include mq($breakpoint-lg) {
       font-size: 22px;
     }
   }
 
   &__hours {
-    font-size: 12px;
+    font-size: 11px; // SP: Smaller
     color: $color-white;
     margin-top: $spacing-xs;
+    line-height: 1.6;
 
     @include mq($breakpoint-md) {
+      font-size: 12px;
+    }
+
+    @include mq($breakpoint-lg) {
       font-size: 14px;
     }
   }
 }
-

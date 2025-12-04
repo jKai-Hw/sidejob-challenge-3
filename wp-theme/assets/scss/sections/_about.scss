@@ -29,6 +29,9 @@
 
     @include mq-max($breakpoint-lg) {
       min-height: auto;
+      flex-direction: column;
+      padding-top: 180px; // Top images space
+      padding-bottom: 200px; // Bottom images space
     }
   }
 
@@ -45,15 +48,11 @@
     z-index: 1;
 
     @include mq-max($breakpoint-lg) {
-      position: relative;
-      height: auto;
-      transform: none;
+      // SP: Keep absolute but adjust to cover the whole inner area
       left: 0;
-      margin-bottom: $spacing-xl;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
+      transform: none;
+      width: 100%;
+      height: 100%;
     }
   }
 
@@ -76,13 +75,6 @@
     }
 
     @include mq-max($breakpoint-lg) {
-      position: relative;
-      top: auto !important;
-      bottom: auto !important;
-      left: auto !important;
-      right: auto !important;
-      width: 120px !important;
-      height: auto !important;
       opacity: 1; // SPはアニメーションなし（または別途調整）
       transform: none;
     }
@@ -96,6 +88,8 @@
 
       @include mq-max($breakpoint-lg) {
         width: 140px;
+        top: 20px;
+        left: 20px; // Adjust based on visual
       }
     }
 
@@ -107,7 +101,9 @@
       transition-delay: 0.4s;
 
       @include mq-max($breakpoint-lg) {
-        width: 140px;
+        width: 120px;
+        top: 40px;
+        right: 20px;
       }
     }
 
@@ -119,7 +115,9 @@
       transition-delay: 0.6s;
 
       @include mq-max($breakpoint-lg) {
-        width: 130px;
+        width: 140px;
+        bottom: 30px;
+        left: 20px;
       }
     }
 
@@ -131,7 +129,9 @@
       transition-delay: 0.8s;
 
       @include mq-max($breakpoint-lg) {
-        width: 150px;
+        width: 160px;
+        bottom: 20px;
+        right: 10px;
       }
     }
   }
@@ -145,7 +145,8 @@
     padding: $spacing-xl 0;
 
     @include mq-max($breakpoint-lg) {
-      padding: $spacing-lg 0;
+      padding: 0; // Padding handled by inner
+      width: 100%;
     }
   }
 
@@ -157,7 +158,8 @@
       height: auto;
 
       @include mq-max($breakpoint-lg) {
-        width: 200px;
+        width: 240px; // Slightly smaller
+        margin: 0 auto;
       }
     }
   }
@@ -182,6 +184,7 @@
       font-size: 14px;
       line-height: 1.9;
       margin-bottom: $spacing-md;
+      text-align: center; // Ensure center
     }
   }
 

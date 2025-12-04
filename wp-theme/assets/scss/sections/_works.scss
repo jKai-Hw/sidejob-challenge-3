@@ -17,59 +17,69 @@
   /* Card Container */
   &__card {
     background-color: $color-white;
-    border-radius: 0 100px 0 100px; // FIGMA: rectangleCornerRadii: [0, 100, 0, 100]
+    border-radius: 0 100px 0 100px; // PC: FIGMA: rectangleCornerRadii: [0, 100, 0, 100]
     box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.16); // FIGMA: Drop Shadow
     padding: $spacing-2xl 0 $spacing-lg; // Adjust padding as needed
     overflow: hidden; // Clip content to border-radius
     margin-bottom: $spacing-xl;
+
+    @include mq-max($breakpoint-md) {
+      border-radius: 30px; // SP: More rounded
+      padding: $spacing-lg $spacing-md $spacing-md;
+    }
   }
 
   &__title {
     margin-bottom: $spacing-xl;
-    // FIGMA: 40px Bold, Center aligned within card
-    font-size: 40px;
+    font-size: 32px; // SP
     font-weight: $font-weight-bold;
     letter-spacing: 0.1em;
-    text-align: center; // Title is centered in Figma
+    text-align: left; // SP: Left aligned
     color: $color-text;
+    padding: 0 $spacing-md; // SP padding
 
-    @include mq(sm) {
-      text-align: left; // FIGMA seems to show left alignment for content generally, but title is often centered. Keeping center for title based on common patterns, but can adjust. 
-      // Wait, user said "left aligned". Let's check the image. 
-      // Image shows Title "活動紹介" top left-ish aligned relative to tabs? 
-      // Actually in the image provided, Title is top left of the content block.
-      padding-left: $spacing-2xl; // Add left padding for alignment
-      text-align: left;
+    @include mq($breakpoint-md) {
+      font-size: 40px;
+      text-align: center;
+      padding: 0 $spacing-2xl;
     }
   }
 
   /* Tabs */
   &__tabs {
     display: flex;
-    justify-content: center; // Default center for mobile
-    gap: $spacing-md;
+    justify-content: flex-start; // SP: Left align
+    gap: $spacing-sm; // SP: Smaller gap
     margin-bottom: $spacing-xl;
     flex-wrap: wrap;
-    padding: 0 $spacing-lg;
+    padding: 0 $spacing-md; // SP padding
+    overflow-x: auto; // Allow horizontal scroll if needed
+    -webkit-overflow-scrolling: touch;
 
-    @include mq(sm) {
-      justify-content: flex-start; // Left align on larger screens
+    @include mq($breakpoint-md) {
+      justify-content: center;
+      gap: $spacing-md;
+      padding: 0 $spacing-lg;
+    }
+
+    @include mq($breakpoint-lg) {
+      justify-content: flex-start;
       padding-left: $spacing-2xl;
     }
   }
 
   &__tab {
-    // FIGMA: 190x65 rectangle
-    width: 160px; // Responsive adjustment
-    height: 50px;
+    width: 140px; // SP: Smaller
+    height: 48px; // SP: Smaller
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0; // Prevent shrinking
     
     border-radius: 20px; // FIGMA: 20px radius
     background-color: $color-white;
     color: #F7B560; // FIGMA: Gold/Orange text
-    font-size: 18px; // FIGMA: 20px
+    font-size: 16px; // SP: Smaller
     font-weight: $font-weight-bold;
     cursor: pointer;
     transition: all $transition-base;
@@ -86,7 +96,13 @@
       box-shadow: none; // Often shadows are removed or changed on active state
     }
 
-    @include mq(md) {
+    @include mq($breakpoint-md) {
+      width: 160px;
+      height: 50px;
+      font-size: 18px;
+    }
+
+    @include mq($breakpoint-lg) {
       width: 190px;
       height: 65px;
       font-size: 20px;
@@ -96,17 +112,22 @@
   /* Content Area */
   &__content {
     max-width: 100%;
-    margin-bottom: $spacing-2xl;
-    padding: 0 $spacing-lg;
+    margin-bottom: $spacing-xl; // SP: Smaller margin
+    padding: 0 $spacing-md; // SP padding
 
-    @include mq(sm) {
+    @include mq($breakpoint-md) {
+      margin-bottom: $spacing-2xl;
+      padding: 0 $spacing-lg;
+    }
+
+    @include mq($breakpoint-lg) {
       padding-left: $spacing-2xl;
     }
   }
 
   &__text {
-    font-size: 16px; // FIGMA: 16px
-    line-height: 24px; // FIGMA: 24px
+    font-size: 14px; // SP: Smaller
+    line-height: 1.8; // SP: More readable
     color: #555555; // FIGMA: #555555
     font-weight: $font-weight-medium; // FIGMA: Medium
     text-align: left;
@@ -116,6 +137,11 @@
     &.is-hidden {
       opacity: 0;
     }
+
+    @include mq($breakpoint-md) {
+      font-size: 16px;
+      line-height: 24px;
+    }
   }
 
   /* Slider (Marquee) */
@@ -123,7 +149,11 @@
     width: 100%;
     overflow: hidden;
     padding-bottom: $spacing-lg;
-    margin-top: $spacing-xl;
+    margin-top: $spacing-lg; // SP: Smaller margin
+
+    @include mq($breakpoint-md) {
+      margin-top: $spacing-xl;
+    }
   }
 
   &__slider {
@@ -135,19 +165,23 @@
 
   &__slider-track {
     display: flex;
-    gap: $spacing-md;
+    gap: $spacing-sm; // SP: Smaller gap
     animation: marquee 40s linear infinite;
     padding-left: $spacing-md;
 
     &:hover {
       animation-play-state: paused;
     }
+
+    @include mq($breakpoint-md) {
+      gap: $spacing-md;
+    }
   }
 
   &__slider-item {
     flex: 0 0 auto;
-    width: 250px;
-    height: 180px;
+    width: 200px; // SP: Smaller
+    height: 150px; // SP: Smaller
     border-radius: 20px; // FIGMA: 20px radius
     overflow: hidden;
     
@@ -162,7 +196,12 @@
       }
     }
 
-    @include mq(md) {
+    @include mq($breakpoint-md) {
+      width: 250px;
+      height: 180px;
+    }
+
+    @include mq($breakpoint-lg) {
       width: 300px;
       height: 250px; // FIGMA: 300x250
     }
