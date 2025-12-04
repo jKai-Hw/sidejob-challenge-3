@@ -1,0 +1,118 @@
+// ==========================================================================
+// お知らせセクション
+// ==========================================================================
+
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.section-news {
+  padding: $spacing-2xl 0;
+  background-color: $color-bg-alt;
+
+  &__inner {
+    @include container;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xl;
+
+    @include pc {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: $spacing-2xl;
+      position: relative;
+    }
+  }
+
+  &__content {
+    flex: 1;
+
+    @include pc {
+      max-width: 600px;
+    }
+  }
+
+  &__title {
+    @include heading-style;
+    font-size: $font-size-3xl;
+    margin-bottom: $spacing-lg;
+
+    @include sp {
+      font-size: $font-size-2xl;
+    }
+  }
+
+  &__list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 $spacing-lg 0;
+  }
+
+  &__item {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-md;
+    padding: $spacing-md 0;
+    border-bottom: 1px solid $color-border;
+
+    &:first-child {
+      border-top: 1px solid $color-border;
+    }
+  }
+
+  &__date {
+    font-size: $font-size-sm;
+    color: $color-text-light;
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: 80px;
+  }
+
+  &__link {
+    color: $color-text;
+    text-decoration: none;
+    transition: color $transition-base;
+    flex: 1;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  &__more {
+    margin-top: $spacing-md;
+  }
+
+  &__more-link {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-xs;
+    color: $color-primary;
+    font-weight: $font-weight-semibold;
+    text-decoration: none;
+    transition: gap $transition-base;
+
+    &:hover {
+      gap: $spacing-sm;
+    }
+  }
+
+  &__empty {
+    color: $color-text-light;
+    padding: $spacing-lg 0;
+  }
+
+  // カード部分（右端にくっつける）
+  &__card {
+    @include sp {
+      width: 100%;
+    }
+
+    @include pc {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 400px;
+      flex-shrink: 0;
+    }
+  }
+}
