@@ -6,32 +6,36 @@
    ========================================================================== */
 .news {
   padding: $spacing-3xl 0;
-  background-color: transparent; // Body bg shows through
+  background-color: $color-bg;
   position: relative;
-  overflow: hidden; // For card extending to right edge
 
   &__inner {
     @include container;
-    display: flex;
-    flex-direction: column;
     position: relative;
+  }
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
 
     @include mq(md) {
       flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
+      align-items: flex-start; // Align top for header vs list
     }
   }
 
-  /* Left Content */
-  &__content {
-    margin-bottom: $spacing-2xl;
-    padding: 0 $spacing-md;
+  /* Left Side: Header */
+  &__header {
+    width: 100%;
+    text-align: center;
+    margin-bottom: $spacing-xl;
 
     @include mq(md) {
-      width: 40%; // Adjust width as needed
-      margin-bottom: 0;
-      padding-right: $spacing-xl;
+      width: 40%;
+      text-align: left;
+      padding-top: $spacing-xl; // Visual adjustment
     }
   }
 
@@ -40,95 +44,78 @@
     font-size: 40px;
     font-weight: $font-weight-bold;
     letter-spacing: 0.1em;
-    color: $color-text;
-    text-align: left;
     
-    // Underline style if needed from base/mixins or image
-    // Image shows a green underline/swoosh. Assuming simple line or background image for now.
-    // Or using the .section-title__ja logic if it includes decoration.
+    // Decorative underline (from image)
+    // Ideally this would be an SVG or image background if complex, 
+    // but using simple border or pseudo for now if needed. 
+    // Using section-title standard for consistency unless specialized.
   }
 
   &__desc {
     font-size: 16px;
-    line-height: 2; // Relaxed
-    color: #555555;
+    line-height: 2;
     margin-bottom: $spacing-xl;
+    color: $color-text;
   }
 
   &__button {
-    // Assuming button styles are imported.
-    // Specific adjustments if needed:
-    min-width: 240px;
-    border-radius: 50px; // Capsule
-    border: 1px solid #93C572;
+    display: inline-block;
+    padding: 15px 60px;
+    border: 1px solid #93C572; // Green border
+    border-radius: 50px;
     color: #93C572;
-    
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    transition: all $transition-base;
+    background: transparent;
+
     &:hover {
       background-color: #93C572;
-      color: white;
+      color: $color-white;
     }
   }
 
-  /* Right Card */
-  &__card {
+  /* Right Side: News List Card */
+  &__list-card {
+    width: 100%;
     background-color: $color-white;
-    // Rounded corners: Top-Left, Bottom-Right 100px
-    border-radius: 100px 0 100px 0; // FIGMA: Mirror of Works (which was 0 100 0 100)
-    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.16);
-    padding: $spacing-2xl $spacing-xl;
+    border-radius: 50px 0 50px 0; // FIGMA: 50px top-left, bottom-right? 
+    // Image shows top-left rounded, bottom-right rounded? 
+    // Wait, image shows Card is on the RIGHT. 
+    // Shape looks like: Top-Left rounded significantly (maybe 100px?), Top-Right square (extends to edge), Bottom-Right square/rounded?, Bottom-Left square.
+    // Let's look at the provided image specifically.
+    // Image: White card on the right side.
+    // Top-Left corner: Rounded (large radius).
+    // Top-Right: Looks like it goes off screen or square. User said "画面右にぴったりくっつけてもらっちゃって大丈夫".
+    // So Top-Right and Bottom-Right are likely 0 radius if touching edge.
+    // Bottom-Left: Rounded (large radius).
     
+    padding: $spacing-2xl;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+
     @include mq(md) {
-      width: 55%; // Card width
-      // "画面右にぴったりくっつけて" -> Extend to right edge
-      // One way is to make it wide and absolute or use negative margin/transform
-      // Or simply use flex layout and let it align right in the container, 
-      // but if it needs to touch viewport edge:
-      margin-right: calc(50% - 50vw); // Break out of container to right
-      padding-right: calc(50vw - 50% + #{$spacing-xl}); // Add padding to keep content within bounds
-      border-top-right-radius: 0; // Usually edge-touching cards lose corner radius on that side?
-      // Image shows rounded corners on right too? 
-      // "画面右にぴったりくっつけて" -> usually implies 0 margin right. 
-      // If image shows rounded corners on right, it might just be close to edge or overflowing?
-      // Looking at image: The card itself has rounded corners. It looks contained within a width but aligned right.
-      // BUT user said: "カードのやつは 画面右にぴったりくっつけてもらっちゃって大丈夫です"
-      // This usually means width: 50% + calc(50vw - 50%) margin-right... 
-      // Let's try to make it extend to the right edge of the screen.
-      
-      // Simple approach for "touching right edge":
-      // Make container relative, card absolute right? No, responsive issues.
-      // Negative margin approach:
-      margin-right: calc(-50vw + 50%); 
-      padding-right: calc(50vw - 50% + #{$spacing-xl}); // Keep content aligned nicely
-      
-      // Re-check border radius in this context. 
-      // If it touches edge, right corners might look weird if rounded. 
-      // User image: Seems to have margin on right. 
-      // "画面右にぴったりくっつけて" might mean "align right" or "no gap".
-      // I will follow the instruction to attach to right edge.
-      border-top-right-radius: 0; 
-      border-bottom-right-radius: 0;
-      // Actually image shows rounded corners (top-left, bottom-right 100px). 
-      // If I attach to edge, bottom-right radius 100px might be invisible or cut off.
-      // Let's stick to the specific visual style: 
-      // The visual style "rounded corners" suggests it's a card *floating* on the right, not necessarily full bleed.
-      // But instruction "画面右にぴったりくっつけて" suggests full bleed or 0 margin.
-      // I will interpret "touching right edge" as 0 margin from viewport edge.
-      
-      // Let's try a cleaner layout:
-      // Use a wrapper or grid that extends to right.
+      width: 55%;
+      margin-right: calc(50% - 50vw); // Break out of container to the right
+      border-radius: 100px 0 0 100px; // Large radius on Left side (Top & Bottom)
+      padding: $spacing-3xl;
     }
   }
 
   &__list {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-lg;
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
 
   &__item {
-    border-bottom: 1px solid $color-border;
-    padding-bottom: $spacing-lg;
-    
+    border-bottom: 1px solid #E5E7EB; // Light border
+    padding: $spacing-lg 0;
+
+    &:first-child {
+      padding-top: 0;
+    }
     &:last-child {
       border-bottom: none;
       padding-bottom: 0;
@@ -149,23 +136,38 @@
   }
 
   &__category {
-    background-color: #93C572; // Green
+    display: inline-block;
+    background-color: #93C572; // Green bg
     color: $color-white;
     font-size: 12px;
     padding: 4px 12px;
-    border-radius: 4px;
+    border-radius: 4px; // Small radius
   }
 
   &__link {
-    display: block;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #555555;
-    transition: color $transition-base;
-    font-weight: $font-weight-medium;
+    text-decoration: none;
+    color: inherit;
+    transition: opacity $transition-base;
 
     &:hover {
-      color: #93C572;
+      opacity: 0.7;
+    }
+  }
+
+  &__item-title {
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: $font-weight-medium;
+    margin: 0;
+    
+    // Ellipsis if too long
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    @include mq(md) {
+      font-size: 18px;
     }
   }
 }
