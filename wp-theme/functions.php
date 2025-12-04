@@ -64,11 +64,10 @@ add_action( 'after_setup_theme', 'figma_theme_setup' );
 function figma_theme_scripts() {
   $theme_version = wp_get_theme()->get( 'Version' );
 
-  // Google Fonts - Noto Sans JP
-  // 実際の案件ではFigmaのデザインに合わせてフォントを変更
+  // Google Fonts - Archivo Narrow
   wp_enqueue_style(
     'figma-theme-fonts',
-    'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap',
+    'https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600;700&display=swap',
     array(),
     null
   );
@@ -235,3 +234,95 @@ function theme_acf_json_load_point( $paths ) {
   return $paths;
 }
 add_filter( 'acf/settings/load_json', 'theme_acf_json_load_point' );
+
+/**
+ * ============================================
+ * メタタグ・OGP設定
+ * ============================================
+ */
+
+/**
+ * ページ別のタイトル・ディスクリプション設定
+ */
+function theme_meta_tags() {
+  $title = '';
+  $description = '';
+  $og_image = get_template_directory_uri() . '/assets/img/og-image.jpg'; // デフォルトOGP画像
+
+  // トップページ
+  if ( is_front_page() ) {
+    $title = '自然の恵み農園｜自然の恵みを感じ、豊かな未来をつくる';
+    $description = '自然の恵み農園は、農園運営・牧場運営・オンライン販売を通じ、自然の恵みを感じて、かな未来を想像して頂ける取り組みを行なっています。';
+  }
+  // お知らせ一覧（投稿アーカイブ）
+  elseif ( is_home() || is_category() || is_tag() || is_archive() ) {
+    $title = 'お知らせ一覧｜自然の恵み農園';
+    $description = '季節の農作物のお知らせ、見学ツアーのご案内、オンライン販売セールのお知らせなど、自然の恵み農園の最新情報をお届けします。';
+  }
+  // お問い合わせページ
+  elseif ( is_page() ) {
+    $page_slug = get_post_field( 'post_name', get_the_ID() );
+    if ( strpos( $page_slug, 'contact' ) !== false || strpos( $page_slug, 'お問い合わせ' ) !== false ) {
+      $title = 'お問い合わせ|自然の恵み農園';
+      $description = '自然の恵み農園への、お仕事のご相談、農園体験、牧場の見学、その他ご質問など、お気軽にお問い合わせください。';
+    }
+  }
+
+  // タイトルが設定されていない場合はデフォルト
+  if ( empty( $title ) ) {
+    $title = wp_get_document_title();
+  }
+  if ( empty( $description ) ) {
+    $description = get_bloginfo( 'description' );
+  }
+
+  // OGP画像の設定（アイキャッチ画像があれば優先）
+  if ( is_singular() && has_post_thumbnail() ) {
+    $og_image = get_the_post_thumbnail_url( get_the_ID(), 'large' );
+  }
+
+  // メタタグ出力
+  echo '<meta name="description" content="' . esc_attr( $description ) . '">' . "\n";
+  
+  // OGPタグ
+  echo '<meta property="og:title" content="' . esc_attr( $title ) . '">' . "\n";
+  echo '<meta property="og:description" content="' . esc_attr( $description ) . '">' . "\n";
+  echo '<meta property="og:type" content="' . ( is_front_page() ? 'website' : 'article' ) . '">' . "\n";
+  echo '<meta property="og:url" content="' . esc_url( get_permalink() ) . '">' . "\n";
+  echo '<meta property="og:image" content="' . esc_url( $og_image ) . '">' . "\n";
+  echo '<meta property="og:site_name" content="' . esc_attr( get_bloginfo( 'name' ) ) . '">' . "\n";
+  
+  // Twitter Card
+  echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
+  echo '<meta name="twitter:title" content="' . esc_attr( $title ) . '">' . "\n";
+  echo '<meta name="twitter:description" content="' . esc_attr( $description ) . '">' . "\n";
+  echo '<meta name="twitter:image" content="' . esc_url( $og_image ) . '">' . "\n";
+}
+add_action( 'wp_head', 'theme_meta_tags', 1 );
+
+/**
+ * タイトルタグのカスタマイズ
+ */
+function theme_document_title( $title_parts ) {
+  // トップページ
+  if ( is_front_page() ) {
+    $title_parts['title'] = '自然の恵み農園｜自然の恵みを感じ、豊かな未来をつくる';
+    $title_parts['site'] = '';
+  }
+  // お知らせ一覧
+  elseif ( is_home() || ( is_archive() && ! is_post_type_archive() ) ) {
+    $title_parts['title'] = 'お知らせ一覧';
+    $title_parts['site'] = '自然の恵み農園';
+  }
+  // お問い合わせページ
+  elseif ( is_page() ) {
+    $page_slug = get_post_field( 'post_name', get_the_ID() );
+    if ( strpos( $page_slug, 'contact' ) !== false || strpos( $page_slug, 'お問い合わせ' ) !== false ) {
+      $title_parts['title'] = 'お問い合わせ';
+      $title_parts['site'] = '自然の恵み農園';
+    }
+  }
+  
+  return $title_parts;
+}
+add_filter( 'document_title_parts', 'theme_document_title' );

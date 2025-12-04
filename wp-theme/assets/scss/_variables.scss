@@ -18,25 +18,25 @@
 // FIGMA: デザインのカラーパレットに合わせて変更
 
 // メインカラー
-$color-primary: #3B82F6;        // FIGMA: プライマリカラー
-$color-primary-hover: #2563EB;  // FIGMA: プライマリのホバー色（10%暗く）
-$color-secondary: #10B981;      // FIGMA: セカンダリカラー
-$color-secondary-hover: #059669;
-$color-accent: #F59E0B;         // FIGMA: アクセントカラー（あれば）
+$color-primary: #93C572;        // メインカラー（自然の恵み農園）
+$color-primary-hover: #7BA85A;  // メインカラーのホバー色（10%暗く）
+$color-secondary: #93C572;      // セカンダリカラー（メインと同じ）
+$color-secondary-hover: #7BA85A;
+$color-accent: #F7B560;         // アクセントカラー
 
 // ベースカラー
-$color-dark: #1F2937;           // FIGMA: 最も暗い色（見出し等）
-$color-light: #F9FAFB;          // FIGMA: 薄い背景色
+$color-dark: #555555;           // テキストカラー
+$color-light: #F9F9F9;          // 背景カラー
 $color-white: #FFFFFF;
 
 // テキストカラー
-$color-text: $color-dark;              // FIGMA: 本文テキスト色
-$color-text-light: #6B7280;            // FIGMA: 補足テキスト色
-$color-text-inverse: $color-white;     // 暗い背景上のテキスト
+$color-text: #555555;                 // テキストカラー
+$color-text-light: #888888;          // 補足テキスト色（少し薄く）
+$color-text-inverse: $color-white;  // 暗い背景上のテキスト
 
 // 背景カラー
-$color-bg: $color-white;        // FIGMA: メイン背景色
-$color-bg-alt: $color-light;    // FIGMA: セクション背景色（交互に使う等）
+$color-bg: #F9F9F9;        // 背景カラー
+$color-bg-alt: $color-white;    // セクション背景色（交互に使う等）
 
 // ボーダーカラー
 $color-border: #E5E7EB;         // FIGMA: 線・区切りの色
@@ -47,8 +47,8 @@ $color-border: #E5E7EB;         // FIGMA: 線・区切りの色
 // FIGMA: デザインのフォント設定に合わせて変更
 
 // フォントファミリー
-$font-family-base: 'Noto Sans JP', sans-serif;     // FIGMA: 本文フォント
-$font-family-heading: 'Noto Sans JP', sans-serif;  // FIGMA: 見出しフォント
+$font-family-base: 'Archivo Narrow', sans-serif;     // 本文フォント
+$font-family-heading: 'Archivo Narrow', sans-serif;  // 見出しフォント
 
 // フォントサイズ
 // FIGMA: デザインの文字サイズに合わせて調整

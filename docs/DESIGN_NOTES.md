@@ -13,10 +13,10 @@
 
 | 項目 | 内容 |
 |------|------|
-| ファイルURL | <!-- https://www.figma.com/design/xxxxx/... --> |
-| ファイル名 | <!-- デザインファイル名 --> |
-| デザイナー | <!-- 担当デザイナー名 --> |
-| 最終更新日 | <!-- Figmaの最終更新日 --> |
+| ファイルURL | https://www.figma.com/design/RUha4oHPE6Vs8lwgRplgnc/%E8%87%AA%E7%84%B6%E3%81%AE%E6%81%B5%E3%81%BF%E8%BE%B2%E5%9C%92?node-id=124-2&t=PT1PmdvUh7rVwCPH-1 |
+| ファイル名 | 自然の恵み農園 |
+| デザイナー | - |
+| 最終更新日 | 2025-01-27 |
 
 ---
 
@@ -28,24 +28,24 @@
 
 | 用途 | カラー名 | HEX | SCSS変数 |
 |------|----------|-----|----------|
-| プライマリ | <!-- Primary Blue --> | <!-- #3B82F6 --> | `$color-primary` |
-| セカンダリ | <!-- Secondary Green --> | <!-- #10B981 --> | `$color-secondary` |
-| アクセント | <!-- Accent Orange --> | <!-- #F59E0B --> | `$color-accent` |
+| プライマリ | メインカラー | #93C572 | `$color-primary` |
+| セカンダリ | メインカラー（同じ） | #93C572 | `$color-secondary` |
+| アクセント | アクセントカラー | #F7B560 | `$color-accent` |
 
 ### テキストカラー
 
 | 用途 | HEX | SCSS変数 |
 |------|-----|----------|
-| 本文 | <!-- #1F2937 --> | `$color-text` |
-| サブテキスト | <!-- #6B7280 --> | `$color-text-light` |
-| 反転テキスト | <!-- #FFFFFF --> | `$color-text-inverse` |
+| 本文 | #555555 | `$color-text` |
+| サブテキスト | #888888 | `$color-text-light` |
+| 反転テキスト | #FFFFFF | `$color-text-inverse` |
 
 ### 背景カラー
 
 | 用途 | HEX | SCSS変数 |
 |------|-----|----------|
-| メイン背景 | <!-- #FFFFFF --> | `$color-bg` |
-| 代替背景 | <!-- #F9FAFB --> | `$color-bg-alt` |
+| メイン背景 | #F9F9F9 | `$color-bg` |
+| 代替背景 | #FFFFFF | `$color-bg-alt` |
 
 ---
 
@@ -55,8 +55,8 @@
 
 | 用途 | フォント名 | SCSS変数 |
 |------|------------|----------|
-| 本文 | <!-- Noto Sans JP --> | `$font-family-base` |
-| 見出し | <!-- Noto Sans JP --> | `$font-family-heading` |
+| 本文 | Archivo Narrow | `$font-family-base` |
+| 見出し | Archivo Narrow | `$font-family-heading` |
 
 ### フォントサイズ
 
@@ -94,7 +94,7 @@
 
 | パーツ名 | Node ID | 備考 |
 |----------|---------|------|
-| スタイルガイド | <!-- 123-456 --> | 最初に取得 |
+| スタイルガイド | なし（カキ情報のみ） | カラー・フォント情報を直接反映済み |
 | ヘッダー | <!-- --> | |
 | フッター | <!-- --> | |
 | ボタン（コンポーネント） | <!-- --> | |
