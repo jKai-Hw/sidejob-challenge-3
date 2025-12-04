@@ -1,0 +1,96 @@
+// ==========================================================================
+// よくあるご質問セクション
+// ==========================================================================
+
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.section-faq {
+  padding: $spacing-2xl 0;
+  background-color: $color-bg;
+
+  &__inner {
+    @include container;
+  }
+
+  &__title {
+    @include heading-style;
+    font-size: $font-size-3xl;
+    text-align: center;
+    margin-bottom: $spacing-xl;
+
+    @include sp {
+      font-size: $font-size-2xl;
+    }
+  }
+
+  &__list {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  &__item {
+    border-bottom: 1px solid $color-border;
+    padding: $spacing-md 0;
+
+    &:first-child {
+      border-top: 1px solid $color-border;
+    }
+  }
+
+  &__question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: $spacing-sm 0;
+
+    &-text {
+      font-weight: $font-weight-semibold;
+      font-size: $font-size-lg;
+      color: $color-text;
+
+      @include sp {
+        font-size: $font-size-base;
+      }
+    }
+
+    &-icon {
+      font-size: $font-size-2xl;
+      color: $color-primary;
+      transition: transform $transition-base;
+      flex-shrink: 0;
+      margin-left: $spacing-md;
+    }
+
+    &:hover {
+      .section-faq__question-text {
+        color: $color-primary;
+      }
+    }
+
+    &.is-open {
+      .section-faq__question-icon {
+        transform: rotate(45deg);
+      }
+    }
+  }
+
+  &__answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height $transition-base;
+    padding: 0 $spacing-md;
+
+    p {
+      color: $color-text-light;
+      line-height: $line-height-base;
+      padding: $spacing-sm 0;
+    }
+
+    .section-faq__question.is-open ~ & {
+      max-height: 500px;
+      padding-top: $spacing-sm;
+    }
+  }
+}
